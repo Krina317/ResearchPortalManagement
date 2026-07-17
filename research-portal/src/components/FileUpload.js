@@ -11,17 +11,22 @@ const FileUpload = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [showColumnPanel, setShowColumnPanel] = useState(false);
-
+    
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
 
         reader.onload = (event) => {
             const rawData = event.target.result;
-            const workbook = XLSX.read(rawData, { type: "array" });
+            const workbook = XLSX.read(rawData, {
+                type: "array",
+                cellDates: true
+            });
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+                raw: false
+            });
 
             setData(jsonData);
             const extractedColumns = Object.keys(jsonData[0]).filter(col => col !== "Download File");
@@ -59,9 +64,7 @@ const FileUpload = () => {
         visibleColumns.every((col) => {
             const filterValue = filters[col];
             if (!filterValue) return true; // no filter set for this column, don't exclude
-            return String(row[col] ?? "")
-                .toLowerCase()
-                .includes(filterValue.toLowerCase());
+            return String(row[col] ?? "") === filterValue;
         })
     );
 
@@ -79,7 +82,41 @@ const FileUpload = () => {
     const totalPages = Math.ceil(sortedData.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
     const pagedData = sortedData.slice(startIndex, startIndex + rowsPerPage);
-
+    const getDistinctValues = (column) => {
+        return [...new Set(
+            data
+                .map(row => row[column])
+                .filter(value => value !== undefined && value !== null && value !== "")
+        )].sort();
+    };
+    const exportCurrentView = () => {
+        const exportData = sortedData.map((row) => {
+            const newRow = {};
+    
+            visibleColumns.forEach((col) => {
+                newRow[col] = row[col];
+            });
+    
+            return newRow;
+        });
+    
+        const worksheet = XLSX.utils.json_to_sheet(exportData);
+    
+        const workbook = XLSX.utils.book_new();
+    
+        XLSX.utils.book_append_sheet(
+            workbook,
+            worksheet,
+            "Filtered Data"
+        );
+    
+        const today = new Date().toISOString().split("T")[0];
+    
+        XLSX.writeFile(
+            workbook,
+            `Research_Data_${today}.xlsx`
+        );
+    };
     return (
         <div>
             <input type="file" onChange={handleFileChange} />
@@ -106,33 +143,79 @@ const FileUpload = () => {
             </div>
 
             {/* per-column filter inputs */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "10px" }}>
+            <div
+                style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "10px",
+                    marginBottom: "10px"
+                }}
+                >
                 {visibleColumns.map((col) => (
-                    <input
-                        key={col}
-                        placeholder={`Filter ${col}`}
-                        value={filters[col] || ""}
-                        onChange={(e) => handleFilterChange(col, e.target.value)}
-                    />
+                    <div key={col}>
+                        <label style={{ display: "block", fontWeight: "bold" }}>
+                            {col}
+                        </label>
+
+                        <select
+                            value={filters[col] || ""}
+                            onChange={(e) => handleFilterChange(col, e.target.value)}
+                        >
+                            <option value="">All</option>
+
+                            {getDistinctValues(col).map((value) => (
+                                <option key={value} value={value}>
+                                    {value}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 ))}
             </div>
 
             {/* rows-per-page dropdown */}
-            <label>
-                Rows per page:{" "}
-                <select
-                    value={rowsPerPage}
-                    onChange={(e) => {
-                        setRowsPerPage(Number(e.target.value));
-                        setCurrentPage(1);
-                    }}
-                >
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
-                </select>
-            </label>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: "15px",
+                    marginBottom: "15px"
+                }}
+            >
 
+                <label>
+                    Rows per page:{" "}
+                    <select
+                        value={rowsPerPage}
+                        onChange={(e) => {
+                            setRowsPerPage(Number(e.target.value));
+                            setCurrentPage(1);
+                        }}
+                    >
+                        <option value={10}>10</option>
+                        <option value={20}>20</option>
+                        <option value={50}>50</option>
+                    </select>
+                </label>
+
+                <button
+                    onClick={exportCurrentView}
+                    disabled={sortedData.length === 0}
+                >
+                    Download Excel
+                </button>
+
+            </div>
+
+            <div
+                style={{
+                    marginBottom: "10px",
+                    fontWeight: "bold"
+                }}
+            >
+                Showing {filteredData.length} of {data.length} records
+            </div>
             <table border="1" style={{ marginTop: "10px" }}>
                 <thead>
                     <tr>
