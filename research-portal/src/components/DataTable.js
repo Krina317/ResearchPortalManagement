@@ -29,89 +29,101 @@ const DataTable = ({
 
     return (
 
-        <table border="1" style={{ marginTop: "10px" }}>
+        <div className="table-scroll">
 
-            <thead>
+            <table>
 
-                <tr>
+                <thead>
+
+                    <tr>
+
+                        {
+
+                            visibleColumns.map(column => (
+
+                                <th
+
+                                    key={column}
+
+                                    onClick={() =>
+                                        handleSort(column)
+                                    }
+
+                                >
+
+                                    {column}
+
+                                    {
+
+                                        sortColumn === column &&
+
+                                        (
+
+                                            sortDirection === "asc"
+
+                                                ? " ▲"
+
+                                                : " ▼"
+
+                                        )
+
+                                    }
+
+                                </th>
+
+                            ))
+
+                        }
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
 
                     {
 
-                        visibleColumns.map(column => (
+                        pagedData.length === 0 ? (
 
-                            <th
+                            <tr>
+                                <td colSpan={visibleColumns.length || 1}>
+                                    No records match the current filters.
+                                </td>
+                            </tr>
 
-                                key={column}
+                        ) : (
 
-                                style={{
-                                    cursor: "pointer"
-                                }}
+                            pagedData.map((row, i) => (
 
-                                onClick={() =>
-                                    handleSort(column)
-                                }
+                                <tr key={i}>
 
-                            >
+                                    {
 
-                                {column}
+                                        visibleColumns.map(column => (
 
-                                {
+                                            <td key={column}>
 
-                                    sortColumn === column &&
+                                                {row[column]}
 
-                                    (
+                                            </td>
 
-                                        sortDirection === "asc"
+                                        ))
 
-                                            ? " ▲"
+                                    }
 
-                                            : " ▼"
+                                </tr>
 
-                                    )
+                            ))
 
-                                }
-
-                            </th>
-
-                        ))
+                        )
 
                     }
 
-                </tr>
+                </tbody>
 
-            </thead>
+            </table>
 
-            <tbody>
-
-                {
-
-                    pagedData.map((row, i) => (
-
-                        <tr key={i}>
-
-                            {
-
-                                visibleColumns.map(column => (
-
-                                    <td key={column}>
-
-                                        {row[column]}
-
-                                    </td>
-
-                                ))
-
-                            }
-
-                        </tr>
-
-                    ))
-
-                }
-
-            </tbody>
-
-        </table>
+        </div>
 
     );
 

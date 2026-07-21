@@ -19,6 +19,8 @@ export const analyzeColumns = (columns, data) => {
     let fromDateColumn = null;
     let toDateColumn = null;
 
+    let singleDateColumn = null;
+
     let monthColumn = null;
     let yearColumn = null;
 
@@ -82,6 +84,21 @@ export const analyzeColumns = (columns, data) => {
             ])
         ) {
             toDateColumn = column;
+            return;
+        }
+
+        // ----------------------------
+        // Single "date"-ish column
+        // (e.g. "Date", "Submission Date", "Publish Date")
+        // Only used as fallback if no explicit from/to pair
+        // or month/year pair is found.
+        // ----------------------------
+
+        if (
+            name.includes("date") &&
+            !singleDateColumn
+        ) {
+            singleDateColumn = column;
             return;
         }
 
@@ -307,6 +324,29 @@ export const analyzeColumns = (columns, data) => {
             monthColumn,
 
             yearColumn
+
+        });
+
+    }
+
+    // Fallback: a single date-ish column (e.g. "Date") with no
+    // explicit from/to or month/year pair found. Use it as both
+    // the start and end column so range filtering still works.
+    else if (singleDateColumn) {
+
+        filters.push({
+
+            id: "dateRange",
+
+            label: "Date Range",
+
+            type: FILTER_TYPES.DATE_RANGE,
+
+            mode: "full",
+
+            fromColumn: singleDateColumn,
+
+            toColumn: singleDateColumn
 
         });
 

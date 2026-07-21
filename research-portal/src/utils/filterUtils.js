@@ -34,16 +34,32 @@ const parseDate = (value) => {
     if (typeof value === "string") {
         const parts = value.split("/");
         if (parts.length === 3) {
-            let day = Number(parts[0]);
-            let month = Number(parts[1]) - 1;
+            let p1 = Number(parts[0]);
+            let p2 = Number(parts[1]);
             let year = Number(parts[2]);
             if (year < 100)
                 year += 2000;
-            return new Date(
-                year,
-                month,
-                day
-            );
+
+            // Disambiguate dd/mm vs mm/dd: if the first part
+            // can't be a month (>12), it must be a day, so treat
+            // as dd/mm/yyyy. Otherwise assume mm/dd/yyyy since
+            // that's what Excel/XLSX raw:false export typically
+            // produces on US locales. Adjust here if your data
+            // is consistently dd/mm/yyyy.
+            let day, month;
+            if (p1 > 12) {
+                day = p1;
+                month = p2 - 1;
+            } else if (p2 > 12) {
+                day = p2;
+                month = p1 - 1;
+            } else {
+                // ambiguous, default to mm/dd/yyyy
+                month = p1 - 1;
+                day = p2;
+            }
+
+            return new Date(year, month, day);
         }
     }
     const date = new Date(value);
@@ -135,6 +151,27 @@ const filterAuthor = (
 // ==========================================
 // DEPARTMENT GROUP
 // ==========================================
+const normalizeDept = (value) =>
+    String(value ?? "")
+        .toLowerCase()
+        .replace(/[\s.]+/g, " ")
+        .trim();
+
+// Build a lookup of normalized-name -> group key for every
+// explicitly named group (everything except OTHER).
+const buildNamedDeptLookup = () => {
+    const lookup = new Map();
+    Object.entries(departmentGroups).forEach(([groupKey, names]) => {
+        if (groupKey === "OTHER") return;
+        names.forEach(name => {
+            lookup.set(normalizeDept(name), groupKey);
+        });
+    });
+    return lookup;
+};
+
+const namedDeptLookup = buildNamedDeptLookup();
+
 const filterDepartmentGroup = (
     row,
     filter,
@@ -144,11 +181,18 @@ const filterDepartmentGroup = (
         filters.departmentGroup;
     if (!selected)
         return true;
-    const groups =
-        departmentGroups[selected] || [];
-    return groups.includes(
-        row[filter.column]
-    );
+
+    const rawValue = row[filter.column];
+    const normalized = normalizeDept(rawValue);
+
+    const matchedGroup = namedDeptLookup.get(normalized);
+
+    if (selected === "OTHER") {
+        // OTHER = anything that didn't match a named group
+        return !matchedGroup;
+    }
+
+    return matchedGroup === selected;
 };
 // ==========================================
 // DATE RANGE
@@ -164,7 +208,7 @@ const filterDateRange = (
         parseDate(filters.endDate);
     if (!start && !end)
         return true;
-    // -------- Full Date --------
+    // -------- Full Date (single or dual column) --------
     if (filter.mode === "full") {
         const recordStart =
             parseDate(

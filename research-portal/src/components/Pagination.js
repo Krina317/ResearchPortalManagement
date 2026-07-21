@@ -6,9 +6,11 @@ const Pagination = ({
 
     return (
 
-        <div style={{ marginTop: "15px" }}>
+        <div className="pagination">
 
             <button
+
+                className="btn-ghost"
 
                 disabled={currentPage === 1}
 
@@ -18,17 +20,19 @@ const Pagination = ({
 
             >
 
-                Prev
+                ← Prev
 
             </button>
 
-            <span style={{ margin: "0 10px" }}>
+            <span className="pagination-status">
 
-                Page {currentPage} of {totalPages || 1}
+                Page <strong>{currentPage}</strong> of {totalPages || 1}
 
             </span>
 
             <button
+
+                className="btn-ghost"
 
                 disabled={
                     currentPage === totalPages ||
@@ -41,7 +45,7 @@ const Pagination = ({
 
             >
 
-                Next
+                Next →
 
             </button>
 

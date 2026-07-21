@@ -7,6 +7,7 @@ import Pagination from "./Pagination";
 import { filterData, getDistinctValues } from "../utils/filterUtils";
 import { sortData } from "../utils/sortUtils";
 import { analyzeColumns } from "../utils/columnAnalyzer";
+import "./App.css";
 
 function App() {
   const [data, setData] = useState([]);
@@ -33,49 +34,73 @@ function App() {
   //     );
   // };
   return (
-        <div>
-            <FileUpload
-                setData={setData}
-                setColumns={setColumns}
-                setSelectedColumns={setSelectedColumns}
-            />
-            <FilterBar
-                filterMetadata = {filterMetadata}
-                data={data}
-                filters={filters}
-                setFilters={setFilters}
-                getDistinctValues={(column) =>
-                  getDistinctValues(data, column)
-                }
-            />
-            <Toolbar
-                rowsPerPage={rowsPerPage}
-                setRowsPerPage={setRowsPerPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                data={data}
-                filteredData={filteredData}
-                sortedData={sortedData}
-                visibleColumns={visibleColumns}
-                showColumnPanel={showColumnPanel}
-                setShowColumnPanel={setShowColumnPanel}
-                columns={columns}
-                selectedColumns={selectedColumns}
-                setSelectedColumns={setSelectedColumns}
-            />
-            <DataTable
-                pagedData={pagedData}
-                visibleColumns={visibleColumns}
-                sortColumn={sortColumn}
-                sortDirection={sortDirection}
-                setSortColumn={setSortColumn}
-                setSortDirection={setSortDirection}
-            />
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                setCurrentPage={setCurrentPage}
-            />
+        <div className="App">
+            <header className="app-header">
+                <div className="app-eyebrow">Research Data Explorer</div>
+                <h1>Publication Records</h1>
+                <p className="app-subtitle">
+                    Upload a spreadsheet to browse, filter, and export book chapter
+                    and publication records.
+                </p>
+            </header>
+
+            <div className="container">
+                <section className="card">
+                    <p className="card-label">Dataset</p>
+                    <FileUpload
+                        setData={setData}
+                        setColumns={setColumns}
+                        setSelectedColumns={setSelectedColumns}
+                    />
+                </section>
+
+                {columns.length > 0 && (
+                    <section className="card">
+                        <p className="card-label">Filters</p>
+                        <FilterBar
+                            filterMetadata = {filterMetadata}
+                            data={data}
+                            filters={filters}
+                            setFilters={setFilters}
+                            getDistinctValues={(column) =>
+                              getDistinctValues(data, column)
+                            }
+                        />
+                    </section>
+                )}
+
+                <section className="card">
+                    <p className="card-label">Records</p>
+                    <Toolbar
+                        rowsPerPage={rowsPerPage}
+                        setRowsPerPage={setRowsPerPage}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        data={data}
+                        filteredData={filteredData}
+                        sortedData={sortedData}
+                        visibleColumns={visibleColumns}
+                        showColumnPanel={showColumnPanel}
+                        setShowColumnPanel={setShowColumnPanel}
+                        columns={columns}
+                        selectedColumns={selectedColumns}
+                        setSelectedColumns={setSelectedColumns}
+                    />
+                    <DataTable
+                        pagedData={pagedData}
+                        visibleColumns={visibleColumns}
+                        sortColumn={sortColumn}
+                        sortDirection={sortDirection}
+                        setSortColumn={setSortColumn}
+                        setSortDirection={setSortDirection}
+                    />
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        setCurrentPage={setCurrentPage}
+                    />
+                </section>
+            </div>
         </div>
     );
 }

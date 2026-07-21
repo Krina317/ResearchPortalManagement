@@ -36,84 +36,70 @@ const Toolbar = ({
 
             {/* Column Selector */}
 
-            <div style={{ margin: "10px 0" }}>
+            <div className="toolbar-top">
 
                 <button
+                    className="btn-ghost"
                     onClick={() =>
                         setShowColumnPanel(prev => !prev)
                     }
                 >
-                    Columns ▾
+                    Columns {showColumnPanel ? "▴" : "▾"}
                 </button>
 
-                {
-
-                    showColumnPanel && (
-
-                        <div
-                            style={{
-                                border: "1px solid #ccc",
-                                padding: "10px",
-                                marginTop: "5px"
-                            }}
-                        >
-
-                            {
-
-                                columns.map(column => (
-
-                                    <label
-                                        key={column}
-                                        style={{
-                                            display: "block",
-                                            marginBottom: "4px"
-                                        }}
-                                    >
-
-                                        <input
-
-                                            type="checkbox"
-
-                                            checked={
-                                                selectedColumns.includes(column)
-                                            }
-
-                                            onChange={() =>
-                                                handleCheckboxChange(column)
-                                            }
-
-                                        />
-
-                                        {column}
-
-                                    </label>
-
-                                ))
-
-                            }
-
-                        </div>
-
-                    )
-
-                }
+                <span className="record-stamp">
+                    <strong>{filteredData.length}</strong> of {data.length} records
+                </span>
 
             </div>
 
+            {
+
+                showColumnPanel && (
+
+                    <div className="column-panel">
+
+                        {
+
+                            columns.map(column => (
+
+                                <label key={column}>
+
+                                    <input
+
+                                        type="checkbox"
+
+                                        checked={
+                                            selectedColumns.includes(column)
+                                        }
+
+                                        onChange={() =>
+                                            handleCheckboxChange(column)
+                                        }
+
+                                    />
+
+                                    {column}
+
+                                </label>
+
+                            ))
+
+                        }
+
+                    </div>
+
+                )
+
+            }
+
             {/* Toolbar */}
 
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "15px"
-                }}
-            >
+            <div className="toolbar-row">
 
-                <label>
+                <div className="rows-per-page">
 
-                    Rows per page{" "}
+                    <label>Rows per page</label>
 
                     <select
 
@@ -137,9 +123,10 @@ const Toolbar = ({
 
                     </select>
 
-                </label>
+                </div>
 
                 <button
+                    className="btn-accent"
 
                     onClick={() =>
                         exportToExcel(
@@ -152,20 +139,9 @@ const Toolbar = ({
 
                 >
 
-                    Download Excel
+                    ⇩ Download Excel
 
                 </button>
-
-            </div>
-
-            <div
-                style={{
-                    marginBottom: "10px",
-                    fontWeight: "bold"
-                }}
-            >
-
-                Showing {filteredData.length} of {data.length} records
 
             </div>
 
