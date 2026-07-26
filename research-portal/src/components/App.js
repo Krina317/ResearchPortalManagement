@@ -37,10 +37,9 @@ function App() {
         <div className="App">
             <header className="app-header">
                 <div className="app-eyebrow">Research Data Explorer</div>
-                <h1>Publication Records</h1>
+                <h1>Records</h1>
                 <p className="app-subtitle">
-                    Upload a spreadsheet to browse, filter, and export book chapter
-                    and publication records.
+                    Upload a spreadsheet to browse, filter, and export.
                 </p>
             </header>
 
