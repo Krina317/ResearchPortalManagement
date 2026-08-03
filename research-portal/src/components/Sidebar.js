@@ -4,15 +4,32 @@ import {
   Newspaper,
   BookOpen,
   BookMarked,
-  UploadCloud,
+  LayoutDashboard,
   Menu,
   X,
 } from "lucide-react";
 
 const navItems = [
-  { path: "/conference", label: "Conference", icon: Newspaper },
-  { path: "/journal", label: "Journal", icon: BookOpen },
-  { path: "/book-chapters", label: "Book Chapters", icon: BookMarked },
+  {
+    path: "/",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    path: "/conference",
+    label: "Conference",
+    icon: Newspaper,
+  },
+  {
+    path: "/journal",
+    label: "Journal",
+    icon: BookOpen,
+  },
+  {
+    path: "/book-chapters",
+    label: "Book Chapters",
+    icon: BookMarked,
+  },
 ];
 
 export default function Sidebar() {
@@ -29,9 +46,12 @@ export default function Sidebar() {
     <>
       {/* Mobile top bar */}
       <div className="md:hidden flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-white">
-        <span className="text-lg font-semibold tracking-tight">
-          Research Portal
-        </span>
+        <span className="text-lg font-semibold tracking-tight text-gray-900">
+          Nirma Research
+       </span>
+        <p className="text-xs text-gray-500 mt-1">
+          Data Portal
+        </p>
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="p-1.5 rounded-md hover:bg-gray-100"
@@ -57,9 +77,13 @@ export default function Sidebar() {
         `}
       >
         <div className="mb-6 px-2 hidden md:block">
-          <span className="text-lg font-semibold tracking-tight text-gray-900">
-            Research Portal
-          </span>
+        <span className="text-lg font-semibold tracking-tight text-gray-900">
+            Nirma Research
+        </span>
+
+        <p className="text-xs text-gray-500 mt-1">
+            Data Portal
+        </p>
         </div>
 
         <p className="text-[11px] font-semibold text-gray-400 px-2 mb-1.5 tracking-wider uppercase">
@@ -79,17 +103,6 @@ export default function Sidebar() {
             </NavLink>
           ))}
         </nav>
-
-        <div className="my-3 border-t border-gray-100" />
-
-        <NavLink
-          to="/upload"
-          className={linkClasses}
-          onClick={() => setIsOpen(false)}
-        >
-          <UploadCloud size={16} />
-          Upload File (.xls)
-        </NavLink>
       </aside>
     </>
   );

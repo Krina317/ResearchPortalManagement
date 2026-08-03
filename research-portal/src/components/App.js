@@ -1,7 +1,10 @@
 import './App.css';
-import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Sidebar from "./Sidebar";
 import UploadPage from "./UploadPage";
+import Dashboard from "./Dashboard";
+import TopBar from "./TopBar";
+import ConferencePage from "./ConferencePage";
 
 function Placeholder({ title }) {
   return (
@@ -17,15 +20,30 @@ function App() {
     <BrowserRouter>
       <div className="flex">
         <Sidebar />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Navigate to="/upload" replace />} />
-            <Route path="/conference" element={<Placeholder title="Conference" />} />
-            <Route path="/journal" element={<Placeholder title="Journal" />} />
-            <Route path="/book-chapters" element={<Placeholder title="Book Chapters" />} />
-            <Route path="/upload" element={<UploadPage />} />
-          </Routes>
-        </main>
+        <div className="flex-1 flex flex-col bg-gray-50 min-h-screen">
+          <TopBar />
+          <main className="flex-1">
+              <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route
+                      path="/conference"
+                      element={<ConferencePage/>}
+                  />
+                  <Route
+                      path="/journal"
+                      element={<Placeholder title="Journal" />}
+                  />
+                  <Route
+                      path="/book-chapters"
+                      element={<Placeholder title="Book Chapters" />}
+                  />
+                  <Route
+                      path="/upload/:publicationType"
+                      element={<UploadPage />}
+                  />
+              </Routes>
+          </main>
+        </div>
       </div>
     </BrowserRouter>
   );
