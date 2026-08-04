@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ExcelColumnMapRepository extends JpaRepository<ExcelColumnMap, Long>{
-	List<ExcelColumnMap> findsByPublicationTypeAndEnabledTrue(PublicationType publicationType);
+	List<ExcelColumnMap> findByPublicationTypeAndEnabledTrue(PublicationType publicationType);
 
 }

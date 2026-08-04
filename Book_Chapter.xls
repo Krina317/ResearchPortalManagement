@@ -1,0 +1,870 @@
+<div id="ContentPlaceHolder1_pnlReport">
+	<span>Nirma University<br />INSTITUTE OF TECHNOLOGY<br />Criteria - 3<br />Book Chapter Publication <br />From Academic Year : 2025-26 to 2025-26</span>
+        <div class="col-lg-12 col-md-12">
+            <hr />
+        </div>
+        <div class="col-lg-12 col-md-12" style="width:100%; height:300px; overflow:scroll;">
+
+            <div>
+		<table class="rounded_corners" cellspacing="0" cellpadding="4" rules="cols" id="ContentPlaceHolder1_GridView1" style="color:Black;background-color:White;border-color:#DEDFDE;border-width:1px;border-style:None;width:100%;border-collapse:collapse;">
+			<tr style="color:White;background-color:#6B696B;font-weight:bold;">
+				<th scope="col">Download File</th><th scope="col">id</th><th scope="col">Book Title</th><th scope="col">Book Chapter Title</th><th scope="col">FileName</th><th scope="col">Name of Book Publisher</th><th scope="col">Month</th><th scope="col">Year</th><th scope="col">Year of Publication</th><th scope="col">ISBNNo No</th><th scope="col">Publication Type</th><th scope="col">Publication City</th><th scope="col">Author1</th><th scope="col">Author2</th><th scope="col">Author3</th><th scope="col">Author4</th><th scope="col">Author5</th><th scope="col">Author6</th><th scope="col">Author7</th><th scope="col">Author8</th><th scope="col">Author9</th><th scope="col">Author10</th><th scope="col">Institute Name</th><th scope="col">Department Name</th>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_0" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1496&amp;cid=386">Click Here</a>
+                        </td><td>2</td><td>PHOTOCATALYTIC PEROVSKITE MATERIALS</td><td>MODERN METHODS FOR IMPROVING PHOTOCATALYTIC ACTIVITY OF PEROVSKITE MATERIALS</td><td>First_page_Chapter_Pervoskite.pdf</td><td>ELSEVIER</td><td>7</td><td>2025</td><td>2025-26</td><td>978-0-443-23616-7</td><td>Chapter in Book</td><td>Amsterdam</td><td>BORA LEENA VIJAYKUMAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CHEMICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_1" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1525&amp;cid=386">Click Here</a>
+                        </td><td>8</td><td>NANOIONICS: FUNDAMENTALS AND APPLICATIONS</td><td>FUNDAMENTALS OF NANOIONICS AND THEIR APPLICATIONS</td><td>Nanoionics_Chapter_proof.pdf</td><td>JOHN WILEY &amp; SONS, INC.</td><td>9</td><td>2025</td><td>2025-26</td><td>9781394313914</td><td>Chapter in Book</td><td>Beverly, MA</td><td>BORA LEENA VIJAYKUMAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CHEMICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_2" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1580&amp;cid=386">Click Here</a>
+                        </td><td>31</td><td>ENGINEERING APPLICATIONS OF POLYMER-BASED NANOCOMPOSITES</td><td>SIGNIFICANCE OF LIFE CYCLE ASSESSMENT OF CLEAN WASTEWATER TREATMENT TECHNOLOGIES USING POLYMERS TO ACHIEVE SUSTAINABILITY</td><td>firstpage_bookchapter.pdf</td><td>SPRINGER NATURE</td><td>8</td><td>2025</td><td>2025-26</td><td>978-3-031-93463-6</td><td>Chapter in Book</td><td>Singapore</td><td>PATNI NEHA</td><td>VRUTI SHAH</td><td>PRIYA SHAH</td><td>HIMANDRI ZALA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CHEMICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_3" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1624&amp;cid=386">Click Here</a>
+                        </td><td>44</td><td>HYDROGEN ENERGY PRODUCTION AND FUEL GENERATION</td><td>SOLAR-DRIVEN WATER SPLITTING FOR HYDROGEN PRODUCTION</td><td>First_page.pdf</td><td>JOHN WILEY &amp; SONS, INC.</td><td>9</td><td>2025</td><td>2025-26</td><td>9781394248513</td><td>Chapter in Book</td><td>Beverly, MA</td><td>BORA LEENA VIJAYKUMAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CHEMICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_4" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1725&amp;cid=386">Click Here</a>
+                        </td><td>93</td><td>FLUID MECHANICS FUNDAMENTALS, ADVANCED CONCEPTS, AND SMART TECHNOLOGIES</td><td>FLUID STATICS AND PRESSURE MEASUREMENT</td><td>Fluid_mechanics_chapter_proof.pdf</td><td>CRC PRESS</td><td>4</td><td>2026</td><td>2025-26</td><td>9781003739159</td><td>Chapter in Book</td><td>Boca Raton</td><td>BORA LEENA VIJAYKUMAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CHEMICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_5" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1733&amp;cid=386">Click Here</a>
+                        </td><td>99</td><td>LECTURE NOTES IN CIVIL ENGINEERING</td><td>MECHANICAL PROPERTIES OF JUTE FIBER REINFORCED CONCRETE</td><td>First_page_Mechanical_Properties_of_Jute_Fiber_Sanket_Jahanvi.pdf</td><td>SPRINGER</td><td>2</td><td>2026</td><td>2025-26</td><td>2366-2557</td><td>Chapter in Book</td><td>Singapore</td><td>SUTHAR JAHANVI MITESHKUMAR</td><td>SANKALP SONANI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_6" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1754&amp;cid=386">Click Here</a>
+                        </td><td>105</td><td>PLASTIC WASTE VALORIZATION</td><td>USE OF WASTE PLASTIC IN PREPARATION OF VALUE-ADDED  CONSTRUCTION MATERIALS</td><td>Book_Chapter.pdf</td><td>ELSEVIER</td><td>3</td><td>2026</td><td>2025-26</td><td>9780443416309</td><td>Chapter in Book</td><td>Cambridge, US</td><td>AKANKSHA GAUTAM GUPTA</td><td>PARMESH KU CHAUDHARI</td><td>PRABIR GHOSH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_7" OnClick="Download_Click"></a>
+                        </td><td>113</td><td>MULTI-ATTRIBUTE DECISION-MAKING</td><td>RANKING OF CRICKET TEAMS USING MULTI-ATTRIBUTE DECISION-MAKING APPROACH BHARAT</td><td>&nbsp;</td><td>CRC PRESS TYLOR &amp; FRANCIS</td><td>3</td><td>2026</td><td>2025-26</td><td>9781003735328</td><td>Chapter in Book</td><td>Boca Roton</td><td>PATEL ANANT DARSHANBHAI</td><td>SANJAYKUMAR M. YADAV</td><td>MANISH KUMAR</td><td>AYUSHI PANCHAL</td><td>SHRUTI PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_8" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1644&amp;cid=386">Click Here</a>
+                        </td><td>53</td><td>PROCEEDINGS OF INTERNATIONAL CONFERENCE ON ADVANCES IN MATERIALS, MODELING, AND ANALYSIS FOR SUSTAINABLE AND RESILIENT INFRASTRUCTURE</td><td>MONITORING AND CONTROLLING CONSTRUCTION PROJECT THROUGH EARNED VALUEMANAGEMENT AND IDENTIFICATION OF RISK FACTORS RESPONSIBLE FOR TIMEAND COST OVERRUN: A CASE STUDY FOR RAIL GAUGE CONVERSION PROJECT ININDIA</td><td>first_page_of_paper.pdf</td><td>SPRINGER NATURE</td><td>11</td><td>2025</td><td>2025-26</td><td>978-981-95-0229</td><td>Chapter in Proceeding</td><td>Singapore</td><td>PATEL PARUL RUCHIR</td><td>MAHIPAL PRAJAPATI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_9" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1647&amp;cid=386">Click Here</a>
+                        </td><td>56</td><td>PROCEEDINGS OF THE 7TH INTERNATIONAL CONFERENCE ON MODELLING AND SIMULATION IN CIVIL ENGINEERING 2024, VOLUME II</td><td>PROPERTIES OF TERNARY-BLENDED ALKALI-ACTIVATED CONCRETE WITH RECYCLED COARSE AGGREGATES</td><td>index_of_proceding_TKM.pdf</td><td>SPRINGER NATURE - SINGAPORE</td><td>12</td><td>2025</td><td>2025-26</td><td>978-981-95-3203-2</td><td>Chapter in Proceeding</td><td>Singapore</td><td>THAKKAR SONAL PRAGNESH</td><td>ABHISHEK CHANDA</td><td>MALLICK A</td><td>PREET MISTRI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_10" OnClick="Download_Click"></a>
+                        </td><td>58</td><td>INTERNATIONAL CONFERENCE ON RECENT ADVANCES IN STRUCTURAL ENGINEERING</td><td>DURABILITY AND SUSTAINABILITY STUDIES FOR SELECTION OF ULTRA-HIGH PERFORMANCE CONCRETE</td><td>&nbsp;</td><td>SPRINGER NATURE</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-96-8830-2</td><td>Chapter in Book</td><td>Singapore</td><td>VINEET KOTHARI</td><td>URMIL DAVE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_11" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1656&amp;cid=386">Click Here</a>
+                        </td><td>62</td><td>PROCEEDINGS OF THE CANADIAN SOCIETY FOR CIVIL ENGINEERING ANNUAL CONFERENCE 2024, VOLUME 10 STRUCTURAL ENGINEERING</td><td>ANALYTICAL EVALUATION OF LOAD-CARRYING CAPACITY OF CORRODED REINFORCED CONCRETE BEAMS</td><td>Jay_Rishi_UVD_CSCE2-1-2.pdf</td><td>LECTURE NOTES IN CIVIL ENGINEERING VOLUME 682</td><td>10</td><td>2025</td><td>2025-26</td><td>2366-2565</td><td>Chapter in Proceeding</td><td>Canadian Society of Civil Engineers, Canada</td><td>JAYKUMAR VIRADIYA</td><td>RISHI GUPTA</td><td>URMIL DAVE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_12" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1567&amp;cid=386">Click Here</a>
+                        </td><td>22</td><td>INTERNATIONAL CONFERENCE ON RECENT ADVANCES IN STRUCTURAL ENGINEERING V2</td><td>TORSIONAL BEHAVIOUR OF FIRE-DAMAGED REINFORCED CONCRETE BEAM STRENGTHENED USING STAINLESS STEEL WIRE MESH</td><td>2025_TorsionalBehaviourofFireDamagedRCbeamStrengthenedUsignSSWM.pdf</td><td>SPRINGER</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-96-8829-6</td><td>Chapter in Proceeding</td><td>Singapore</td><td>SHUBH RATHI</td><td>RAIYANI SUNIL DINESHBHAI</td><td>PATEL PARESH V</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_13" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1569&amp;cid=386">Click Here</a>
+                        </td><td>24</td><td>PROCEEDINGS OF THE 3RD INTERNATIONAL CONFERENCE ON ADVANCES IN CONCRETE, STRUCTURAL, AND GEOTECHNICAL ENGINEERING—VOLUME 2</td><td>EXPERIMENTAL INVESTIGATION ON CONCRETE FILLED DOUBLE SKINNED STEEL TUBULAR (CFDST) COLUMN WITH CONCRETE IMPERFECTIONS</td><td>2.0_Bits_ACSGE-Authors_only_Aug-2025.pdf</td><td>SPINGER</td><td>8</td><td>2025</td><td>2025-26</td><td>978-981-96-0750-1</td><td>Chapter in Proceeding</td><td>Singapore</td><td>PATEL ARTH JITENDRAKUMAR</td><td>PUROHIT SHARADKUMAR P.</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_14" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1574&amp;cid=386">Click Here</a>
+                        </td><td>26</td><td>RECENT TRENDS AND ADVANCES IN CONSTRUCTION, REAL ESTATE, INFRASTRUCTURE AND PROJECT MANAGEMENT (CRIP) SECTOR</td><td>DEVELOPMENT OF MIXTURE DESIGN OF LIGHTWEIGHT CONCRETE USING LIGHTWEIGHT MATERIALS</td><td>LNCE_SabitaPradhan_Published.pdf</td><td>LECTURE NOTES IN CIVIL ENGINEERING</td><td>10</td><td>2025</td><td>2025-26</td><td>2366-2565</td><td>Chapter in Book</td><td>Singapore</td><td>JOSHI TEJAS MUKUNDBHAI</td><td>SABITA PRADHAN</td><td>PARTH SHAH</td><td>SHAKTI RATHORE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_15" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1575&amp;cid=386">Click Here</a>
+                        </td><td>27</td><td>RECENT TRENDS AND ADVANCES IN CONSTRUCTION, REAL ESTATE, INFRASTRUCTURE AND PROJECT MANAGEMENT (CRIP) SECTOR</td><td>DEVELOPMENT OF MIXTURE DESIGN OF FLOATING CONCRETE USING SUSTAINABLE MATERIALS</td><td>LNCE_Jeet_Published.pdf</td><td>LECTURE NOTES IN CIVIL ENGINEERING</td><td>10</td><td>2025</td><td>2025-26</td><td>2366-2565</td><td>Chapter in Book</td><td>Singapore</td><td>JOSHI TEJAS MUKUNDBHAI</td><td>JEET MACHHOYA</td><td>URMIL DAVE</td><td>VEDANSHI SHAH</td><td>KISHAN VARSANI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_16" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1592&amp;cid=386">Click Here</a>
+                        </td><td>33</td><td>INTERNATIONAL CONFERENCE ON ENVIRONMENTAL SCIENCE AND TECHNOLOGY</td><td>A COMPARATIVE STUDY ON THE EFFECT OF FIBER ON THE MECHANICAL PROPERTIES OF NOVEL GEOPOLYMER CONCRETE USING CALCIUM CARBIDE RESIDUE</td><td>SVNIT_Conference_proof.pdf</td><td>SPRINGER NATURE - SINGAPORE</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-95-1441-0</td><td>Chapter in Proceeding</td><td>Singapore</td><td>ABHISHEK CHANDA</td><td>THAKKAR SONAL PRAGNESH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_17" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1593&amp;cid=386">Click Here</a>
+                        </td><td>34</td><td>RECENT ADVANCES IN STRUCTURAL ENGINEERING : VOL 2</td><td>BIOCHAR : SUSTAINABLE MATERIALS FOR CONSTRUCTION</td><td>Biochar_book_chapter_proof.pdf</td><td>SPRINGER NATURE - SINGAPORE</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-96-8829-6</td><td>Chapter in Proceeding</td><td>Singapore</td><td>THAKKAR SONAL PRAGNESH</td><td>UPDHYAY DEVESH</td><td>ABHISHEK CHANDA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>CIVIL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_18" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1527&amp;cid=386">Click Here</a>
+                        </td><td>9</td><td>COMPUTER, INFORMATION, AND TELECOMMUNICATION SYSTEMS</td><td>X-SENSE: EXPLAINABLE ML-BASED INTELLIGENT SENSOR ENVIRONMENT FOR WIRELESS NETWORK SECURITY</td><td>X_Sense.pdf</td><td>IEEE</td><td>8</td><td>2025</td><td>2025-26</td><td>979-8-3315-1437-2</td><td>Chapter in Proceeding</td><td>Colmar, France</td><td>AYUSHI SHAH</td><td>MOHAMMAD S OBAIDAT</td><td>DIVYAM SHAH</td><td>SAUMYA SHAH</td><td>RAJESH GUPTA</td><td>SUDEEP TANWAR</td><td>JITENDRA BHATIA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_19" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1528&amp;cid=386">Click Here</a>
+                        </td><td>10</td><td>SMART AND SUSTAINABLE TECHNOLOGIES</td><td>U-FIRST: TRANSFORMER-BASED FRAMEWORK FOR SECURE AND INTELLIGENT UAV COMMUNICATION IN BATTLEFIELD ENVIRONMENT UNDERLYING 5G</td><td>U_First.pdf</td><td>IEEE</td><td>7</td><td>2025</td><td>2025-26</td><td>978-953-290-142-9</td><td>Chapter in Proceeding</td><td>Croatia</td><td>LAKSHIN PATHAK</td><td>SHIVANSHI BHATT</td><td>SHREYA BHATIA</td><td>RAJESH GUPTA</td><td>SUDEEP TANWAR</td><td>JITENDRA BHATIA</td><td>KASHIF SALEEM</td><td>JOEL JPC RODRIGUES</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_20" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1545&amp;cid=386">Click Here</a>
+                        </td><td>15</td><td>BLOCKCHAIN IN HEALTH SCIENCES</td><td>THE ROLE OF BLOCKCHAIN IN GENOMICS SCIENCES</td><td>The_Role_of_Blockchain_in_Genomics_Sciences_-_Blockchain_in_Health_Sciences_-_Wiley_Online_Library.pdf</td><td>JOHN WILEY &amp; SONS, INC.</td><td>7</td><td>2025</td><td>2025-26</td><td>9781394336012</td><td>Chapter in Book</td><td>USA</td><td>SUNIL GAUTAM</td><td>MANSI MENON</td><td>ROSHNI RANA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_21" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1546&amp;cid=386">Click Here</a>
+                        </td><td>16</td><td>BLOCKCHAIN IN HEALTH SCIENCES</td><td>IMPLEMENTING CNN ALGORITHM FOR MEDICAL IMAGE ANALYSIS</td><td>Implementing_CNN_Algorithm_for_Medical_Image_Analysis_-_Blockchain_in_Health_Sciences_-_Wiley_Online_Library.pdf</td><td>JOHN WILEY &amp; SONS, INC.</td><td>7</td><td>2025</td><td>2025-26</td><td>9781394336012</td><td>Chapter in Book</td><td>USA</td><td>VAISHALI CHOUREY</td><td>MOHD. ARSH</td><td>JAHNVI CHOUREY</td><td>SUNIL GAUTAM</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_22" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1547&amp;cid=386">Click Here</a>
+                        </td><td>17</td><td>BLOCKCHAIN IN HEALTH SCIENCES</td><td>E-HEALTH USING AI WITH BLOCKCHAIN</td><td>E-Health_Using_AI_with_Blockchain_-_Blockchain_in_Health_Sciences_-_Wiley_Online_Library.pdf</td><td>JOHN WILEY &amp; SONS, INC.</td><td>7</td><td>2025</td><td>2025-26</td><td>9781394336012</td><td>Chapter in Book</td><td>USA</td><td>SUNIL GAUTAM</td><td>POOJA PATEL</td><td>HEER RAMAVAT</td><td>GAURAV AGARWAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_23" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1563&amp;cid=386">Click Here</a>
+                        </td><td>19</td><td>2025 INTERNATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE AND EMERGING TECHNOLOGIES (ICAIET)</td><td>RECIPE SUGGESTION BASED ON INGREDIENTS USING LARGE LANGUAGE MODELS</td><td>Recipe_Suggestion_Based_on_Ingredients_Using_Large_Language_Models___IEEE_Conference_Publication___IEEE_Xplore.pdf</td><td>IEEE</td><td>10</td><td>2025</td><td>2025-26</td><td>979-8-3315-1375-7</td><td>Chapter in Proceeding</td><td>India</td><td>MARGI PATEL</td><td>DHYEY BHALANI</td><td>ALOK SINH CHUDASAMA</td><td>NITIN RATHORE</td><td>SUNIL GAUTAM</td><td>RAMESH RAM NAIK</td><td>VINOD PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_24" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1564&amp;cid=386">Click Here</a>
+                        </td><td>20</td><td>2025 INTERNATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE AND EMERGING TECHNOLOGIES (ICAIET)</td><td>FACIAL EXPRESSION-BASED SONG RECOMMENDATION  SYSTEM USING AI</td><td>Facial_Expression-Based_Song_Recommendation_System_Using_Ai___IEEE_Conference_Publication___IEEE_Xplore.pdf</td><td>IEEE</td><td>10</td><td>2025</td><td>2025-26</td><td>979-8-3315-1375-7</td><td>Chapter in Proceeding</td><td>Bhubaneswar, India</td><td>MARGI PATEL</td><td>KEVAL SAVALIYA</td><td>ABHISHEK RATHOD</td><td>NITIN RATHORE</td><td>SUNIL GAUTAM</td><td>RAMESH RAM NAIK</td><td>VINOD PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_25" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1653&amp;cid=386">Click Here</a>
+                        </td><td>59</td><td>LECTURE NOTES IN ELECTRICAL ENGINEERING</td><td>FEATURE EXTRACTION IN COLLABORATIVE FILTERING RECOMMENDER SYSTEMS USING DEEP AUTOENCODERS</td><td>Screenshot_2026-01-21_at_8.41.20?AM.png</td><td>SPRINGER</td><td>1</td><td>2026</td><td>2025-26</td><td>1876-1119</td><td>Chapter in Book</td><td>Jammu</td><td>SONIA MITTAL</td><td>TEJAL UPADHYAY</td><td>DISHA LIMBASIYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_26" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1669&amp;cid=386">Click Here</a>
+                        </td><td>66</td><td>ICT: APPLICATIONS AND SOCIAL INTERFACES: PROCEEDINGS OF ICTCS 2024, VOLUME 1</td><td>DATA SPARSITY ISSUE</td><td>Screenshot.png</td><td>SPRINGER NATURE</td><td>9</td><td>2025</td><td>2025-26</td><td>9819641365, 9789819641369</td><td>Chapter in Proceeding</td><td>Jaipur</td><td>SHIVAM ARDESHNA</td><td>RONAKKUMAR PATEL</td><td>THAKKAR PRIYANK BHUPENDRABHAI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_27" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1671&amp;cid=386">Click Here</a>
+                        </td><td>68</td><td>2025 INTERNATIONAL CONFERENCE ON INTELLIGENT COMPUTING, INFORMATION AND CONTROL SYSTEMS (ICOIICS)</td><td>HUMAN-IN-THE-LOOP AI FOR WASTE SEGREGATION: ACCURACY, EQUITY, AND PATHWAYS TO SCALE</td><td>Human-in-the-Loop_AI_for_Waste_Segregation__Accuracy,_Equity,_and_Pathways_to_Scale___IEEE_Conference_Publication___IEEE_Xplore.pdf</td><td>IEEE</td><td>2</td><td>2026</td><td>2025-26</td><td>979-8-3315-9897-6</td><td>Chapter in Proceeding</td><td>Nepal</td><td>VINOD PATEL</td><td>MARGI PATEL</td><td>AKASH BHASNEY</td><td>ANAND GADWAL</td><td>NITIN RATHORE</td><td>RAMESH NAIK</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_28" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1684&amp;cid=386">Click Here</a>
+                        </td><td>70</td><td>INFORMATION SYSTEMS FOR INTELLIGENT SYSTEMS</td><td>SECURING SYSTEMS THROUGH LOG ANOMALY DETECTION: FROM TRADITIONAL LEARNING TO LLMS</td><td>ISBM_2026_first_page.png</td><td>SPRINGER, CHAM</td><td>1</td><td>2026</td><td>2025-26</td><td>978-3-032-13196-6</td><td>Chapter in Proceeding</td><td>Cham</td><td>PIMAL KHANPARA</td><td>PRASHAM SHAH</td><td>SHARADA VALIVETI</td><td>GAURANG RAVAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_29" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1685&amp;cid=386">Click Here</a>
+                        </td><td>71</td><td>2025 INTERNATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE AND MACHINE VISION (AIMV)</td><td>EFFICIENT AND SECURE ENCRYPTED SEARCH WITH CLUSTERING AND ENHANCED R-TREE STRUCTURE</td><td>AIMV2026_Heli_first_page.png</td><td>IEEE</td><td>10</td><td>2025</td><td>2025-26</td><td>979-8-3315-2697-9</td><td>Chapter in Proceeding</td><td>Gandhinagar, India</td><td>PIMAL KHANPARA</td><td>HELI NAIK</td><td>JAYDATT DHOLAKIA</td><td>PREETI KATHIRIA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_30" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1686&amp;cid=386">Click Here</a>
+                        </td><td>72</td><td>2025 INTERNATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE AND MACHINE VISION (AIMV)</td><td>EEG-ASSISTED NAVIGATION FOR MOTOR-IMPAIRED INDIVIDUALS: A WHEELCHAIR CONTROL SYSTEM</td><td>AIMV_2026_Kush_First_Page.png</td><td>IEEE</td><td>10</td><td>2025</td><td>2025-26</td><td>979-8-3315-2697-9</td><td>Chapter in Proceeding</td><td>Gandhinagar</td><td>KUSH ACHARYA</td><td>REBAKAH GEDDAM</td><td>PIMAL KHANPARA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_31" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1687&amp;cid=386">Click Here</a>
+                        </td><td>73</td><td>ICT FOR INTELLIGENT SYSTEMS. ICTIS 2025</td><td>A NOVEL ZERO-KNOWLEDGE PROOF-BASED VERIFICATION AND AUTHENTICATION PROTOCOL (ZKPVA) FOR WEB SECURITY</td><td>ICTIS_2025_Raj_First_page.png</td><td>SPRINGER</td><td>1</td><td>2026</td><td>2025-26</td><td>978-981-96-8898-2</td><td>Chapter in Book</td><td>Singapore</td><td>RAJ MEHTA</td><td>PRASHAM SHAH</td><td>PIMAL KHANPARA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_32" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1621&amp;cid=386">Click Here</a>
+                        </td><td>42</td><td>WEARABLE MEDICAL DEVICE SECURITY AND NETWORK PROTECTION FOR RELIABLE HEALTHCARE</td><td>IMPLANTABLE MEDICAL DEVICES: NAVIGATING TYPES, UNVEILING RISKS, AND SECURING SOLUTIONS</td><td>WhatsApp_Image_2026-02-15_at_11.01.52_PM.jpeg</td><td>IGI GLOBAL SCIENTIFIC PUBLISHING</td><td>12</td><td>2025</td><td>2025-26</td><td>9798337344126</td><td>Chapter in Book</td><td>-</td><td>OZA PARITA RAJIV</td><td>PARISHI SHAH</td><td>ASHU PABREJA</td><td>SMITA AGRAWAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_33" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1622&amp;cid=386">Click Here</a>
+                        </td><td>43</td><td>ENSURING SECURE CONNECTIVITY THROUGH AI-POWERED WIRELESS SYSTEMS</td><td>ILLUMINATING CONNECTIVITY: A COMPREHENSIVE REVIEW OF LI-FI FROM ARCHITECTURE TO ECOSYSTEM INTEGRATION</td><td>first_page_proof.pdf</td><td>IGI GLOBAL SCIENTIFIC PUBLISHING</td><td>12</td><td>2025</td><td>2025-26</td><td>9798337335766</td><td>Chapter in Book</td><td>-</td><td>RICHA YADAV</td><td>SHREYA SEJANI</td><td>BHAVYA SHAH</td><td>PARITA OZA</td><td>SMITA AGRAWAL</td><td>DARSHNA UPADHYAY</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_34" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1760&amp;cid=386">Click Here</a>
+                        </td><td>106</td><td>COMMUNICATIONS IN COMPUTER AND INFORMATION SCIENCE</td><td>ENHANCING BB84 QUANTUM KEY DISTRIBUTION: ANALYZING THE IMPACT OF NOISY CHANNELS AND FUTURE ADVANCEMENTS</td><td>First_page.pdf</td><td>SPRINGER</td><td>2</td><td>2026</td><td>2025-26</td><td>1865-0937</td><td>Chapter in Proceeding</td><td>Jammu</td><td>UPADHYAY TEJAL UNMESH</td><td>SHAILEE KAPADIA</td><td>SONIA MITTAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_35" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1761&amp;cid=386">Click Here</a>
+                        </td><td>107</td><td>INTERNATIONAL CONFERENCE ON FRONTIERS IN COMPUTING AND SYSTEMS</td><td>COMPARATIVE ANALYSIS OF DEEP LEARNING BASED MODELS FOR PLANT DISEASE DETECTION</td><td>Comparative_Analysis_of_Deep_Learning_Based_Models_for_Plant_Disease_Detection___Springer_Nature_Link.pdf</td><td>SPRINGER NATURE</td><td>4</td><td>2026</td><td>2025-26</td><td>978-981-96-9983-4</td><td>Chapter in Proceeding</td><td>Singapore</td><td>POOJA CHATURVEDI</td><td>UMESH BODKHE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_36" OnClick="Download_Click"></a>
+                        </td><td>108</td><td>SECURING ELECTRIC MOBILITY</td><td>UNDERSTANDING THREATS TO ELECTRIC VEHICLES AND EFFECTIVE COUNTERMEASURES</td><td>&nbsp;</td><td>ELSEVIER</td><td>5</td><td>2026</td><td>2025-26</td><td>9780443339240</td><td>Chapter in Book</td><td>Elsevier</td><td>PIMAL KANPARA</td><td>KRUTI LAVINGIA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_37" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1763&amp;cid=386">Click Here</a>
+                        </td><td>109</td><td>INTERNATIONAL CONFERENCE ON INTERNET OF THINGS AND APPLICATIONS (IOT)</td><td>B-DDIM: BLOCKCHAIN-DRIVEN DECENTRALIZED DIGITAL IDENTITY MANAGEMENT FRAMEWORK TO ENSURE SECURITY, PRIVACY, AND INTEROPERABILITY</td><td>BDDIM_proof.pdf</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>979-8-3315-4983-1</td><td>Chapter in Proceeding</td><td>Esfahan, Iran, Islamic Republic of</td><td>JIGNA JETHABHAI HATHALIYA</td><td>APARNA KUMARI</td><td>RAJESH GUPTA</td><td>SUDEEP TANWAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_38" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1764&amp;cid=386">Click Here</a>
+                        </td><td>110</td><td>INTERNATIONAL CONFERENCE ON EMERGING TRENDS AND INNOVATIONS IN ICT (ICEI)</td><td>REVOLUTIONIZING MICROCONTROLLER VIRTUALIZATION: EXPLORING MICRO-CONTROLLER AS A SERVICE (MAAS) ON AWS</td><td>Conference_Revolution.pdf</td><td>IEEE</td><td>3</td><td>2026</td><td>2025-26</td><td>979-8-3315-3818-7</td><td>Chapter in Proceeding</td><td>DANVER</td><td>VIJAY SAVANI</td><td>PALAK KAPURIYA</td><td>TAPAN PATEL</td><td>JITENDRA BHATIA</td><td>MALARAM</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_39" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1747&amp;cid=386">Click Here</a>
+                        </td><td>103</td><td>GRENZE INTERNATIONAL JOURNAL OF ENGINEERING AND TECHNOLOGY</td><td>BANK CUSTOMER CHURN PREDICTION USING MACHINE LEARNING</td><td>Bank_Custome_Churn_Prediction.pdf</td><td>GRENZE SCIENTIFIC SOCIETY</td><td>7</td><td>2025</td><td>2025-26</td><td>GRENZE ID: 01.GIJET.11.1.372_1</td><td>Chapter in Proceeding</td><td>Kochi</td><td>PARIKH VISHAL UMESHKUMAR</td><td>PRIYANSHU SAVLA</td><td>JAY VALAKI</td><td>VATSAL VADHER</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_40" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1696&amp;cid=386">Click Here</a>
+                        </td><td>77</td><td>2025 INTERNATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE AND EMERGING TECHNOLOGIES (ICAIET)</td><td>FACIAL EXPRESSION-BASED SONG RECOMMENDATION SYSTEM USING AI</td><td>Facial_Expression-Based_Song_Recommendation_System_Using_Ai.pdf</td><td>IEEE</td><td>10</td><td>2025</td><td>2025-26</td><td>979-8-3315-1375-7</td><td>Chapter in Proceeding</td><td>Bhubaneswar India</td><td>MARGI PATEL</td><td>KEVAL SAVALIYA</td><td>ABHISHEK RATHOD</td><td>NITIN RATHORE</td><td>SUNIL GAUTAM</td><td>RAMESH RAM NAIK</td><td>VINOD PATEL</td><td>&nbsp;</td><td>0</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_41" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1697&amp;cid=386">Click Here</a>
+                        </td><td>78</td><td>2025 INTERNATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE AND EMERGING TECHNOLOGIES (ICAIET)</td><td>ANALYZING AND VISUALIZING POPULAR YOUTUBE VIDEOS: AN EXPLORATORY APPROACH</td><td>Analyzing_and_Visualizing_Popular_Youtube_Videos_An_Exploratory_Approach.pdf</td><td>IEEE</td><td>10</td><td>2025</td><td>2025-26</td><td>979-8-3315-1375-7</td><td>Chapter in Proceeding</td><td>Bhubaneswar, India</td><td>SAJAY G. PATEL</td><td>RAMESH R NAIK</td><td>UTSAV KHANDELWAL</td><td>SUNIL GAUTAM</td><td>NITIN RATHORE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_42" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1707&amp;cid=386">Click Here</a>
+                        </td><td>84</td><td>INTERNATIONAL CONFERENCE ON ADVANCEMENTS IN SMART COMPUTING AND INFORMATION SECURITY</td><td>DEEPFAKE FACE DETECTION USING CNN AND TRANSFORMER ARCHITECTURES FOR ENHANCED DIGITAL SECURITY</td><td>proof_deep_fake.pdf</td><td>SPRINGER NATURE SWITZERLAND</td><td>2</td><td>2026</td><td>2025-26</td><td>978-3-032-17834-3</td><td>Chapter in Proceeding</td><td>Switzerland</td><td>SWARI PATEL</td><td>ROMA KATARIA</td><td>VERMA JAIPRAKASH VINODKUMAR</td><td>SUMEDHA ARORA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_43" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1712&amp;cid=386">Click Here</a>
+                        </td><td>85</td><td>IEEE INDICON 2025</td><td>FEW-SHOT BIRD SOUND CLASSIFICATION WITH ADVANCED INFERENCE METHODS AND ENHANCED PANN SELECTION</td><td>indicon.png</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>2325-9418</td><td>Chapter in Proceeding</td><td>Bangalore</td><td>MANKAD SAPAN HARESH</td><td>NIKUNJ DALSANIYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_44" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1713&amp;cid=386">Click Here</a>
+                        </td><td>86</td><td>IMPROVING IMBALANCE LEARNING IN AUDIO DOMAIN THROUGH SPECTROGRAM-BASED AUGMENTATION</td><td>IEEE CONECCT 2025</td><td>conecct2025.png</td><td>IEEE</td><td>7</td><td>2025</td><td>2025-26</td><td>2766-2101</td><td>Chapter in Proceeding</td><td>Bangalore</td><td>MANKAD SAPAN HARESH</td><td>NIKUNJ DALSANIYA</td><td>PRANSHAV PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_45" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1812&amp;cid=386">Click Here</a>
+                        </td><td>121</td><td>IEEE CONFERENCE ON GLOBAL COMMUNICATIONS (GLOBECOM)</td><td>QUANTUM-RESILIENT IOT HEALTHCARE: LATTICE-BASED CRYPTOGRAPHY AND HOMOMORPHIC AGGREGATION</td><td>IEEE_globecome_2026_Quantum.pdf</td><td>IEEE</td><td>3</td><td>2026</td><td>2025-26</td><td>979-8-3315-7781-0</td><td>Chapter in Proceeding</td><td>Taipei</td><td>DRASHTI ASHRA</td><td>PARTH VYAS</td><td>JITENDRA BHATIA</td><td>RAJESH GUPTA</td><td>SUDEEP TANWAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_46" OnClick="Download_Click"></a>
+                        </td><td>122</td><td>IEEE REGION 10 HUMANITARIAN TECHNOLOGY CONFERENCE (R10-HTC)</td><td>PUF AND EDGE-ASSISTED SECURE V2V COMMUNICATION FRAMEWORK FOR ITS UNDERLYING 6G NETWORKS</td><td>&nbsp;</td><td>IEEE</td><td>2</td><td>2026</td><td>2025-26</td><td>979-8-3315-3251-2</td><td>Chapter in Proceeding</td><td>Ichikawa, Japan</td><td>PARTH VYAS</td><td>RATNESH PATEL</td><td>CHITT BHAVSAR</td><td>JITENDRA BHATIA</td><td>MALARAM KUMHAR</td><td>NILESH PATEL</td><td>RAJESH GUPTA</td><td>SUDEEP TANWAR</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_47" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1826&amp;cid=386">Click Here</a>
+                        </td><td>126</td><td>NTERNATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE AND MACHINE VISION</td><td>HYBRID INTRUSION DETECTION SYSTEM FOR IOMT</td><td>Hybrid_Intrusion_Detection_System_for_IoMT_-_Copy.pdf</td><td>IEEE</td><td>8</td><td>2025</td><td>2025-26</td><td>979-8-3315-2698-6</td><td>Chapter in Proceeding</td><td>Ahmedabad</td><td>MAITRI DHRUV</td><td>HRIDAYESH PARMAR</td><td>SUNIL GAUTAM</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_48" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1828&amp;cid=386">Click Here</a>
+                        </td><td>127</td><td>2025 INTERNATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE AND MACHINE VISION (AIMV)</td><td>TINYML IN NETWORK SECURITY: A LIGHTWEIGHT AND REAL-TIME INTRUSION DETECTION FRAMEWORK</td><td>TinyML_in_Network_Security_A_Lightweight_and_Real-Time_Intrusion_Detection_Framework_new.pdf</td><td>IEEE</td><td>8</td><td>2025</td><td>2025-26</td><td>979-8-3315-2698-6</td><td>Chapter in Proceeding</td><td>Ahmedabad</td><td>RIDDHI RAJPUT</td><td>STUTI GULATI</td><td>PRIYAL SHAH</td><td>SUNIL GAUTAM</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_49" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1829&amp;cid=386">Click Here</a>
+                        </td><td>128</td><td>2026 INTERNATIONAL CONFERENCE ON INTELLIGENT COMPUTING, NETWORKS, AND SECURITY (IC-ICNS)</td><td>COMPARATIVE ASSESSMENT OF AQUATIC ECOSYSTEM QUALITY WITH TRADITIONAL METHODS AND ADVANCED LEARNING ALGORITHMS USING SATELLITE IMAGES</td><td>Paper_Proof_2026.pdf</td><td>IEEE</td><td>3</td><td>2026</td><td>2025-26</td><td>979-8-3315-8337-8</td><td>Chapter in Proceeding</td><td>IEEE</td><td>DHRUVIN KOTAK</td><td>LATA GOHIL</td><td>VERMA JAIPRAKASH VINODKUMAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_50" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1830&amp;cid=386">Click Here</a>
+                        </td><td>129</td><td>COMPUTATIONAL INTELLIGENCE FOR A GREENER FUTURE: INNOVATIONS IN RENEWABLE ENERGY SYSTEMS</td><td>OPTIMIZATION OF ENERGY MANAGEMENT AND DISTRIBUTION</td><td>Optimization_of_Energy_Management_and_Distribution___Springer_Nature_Link.pdf</td><td>SPRINGER</td><td>1</td><td>2026</td><td>2025-26</td><td>978-3-032-06731-9</td><td>Chapter in Book</td><td>Singapore</td><td>SUNIL GAUTAM</td><td>PRANALI JOSHI</td><td>PRIYANSHI JHALA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_51" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1808&amp;cid=386">Click Here</a>
+                        </td><td>118</td><td>INTELLIGENT COMPUTING, INFORMATION AND CONTROL SYSTEMS</td><td>HUMAN-IN-THE-LOOP AI FOR WASTE SEGREGATION: ACCURACY, EQUITY, AND PATHWAYS TO SCALE</td><td>Human_RRN.pdf</td><td>IEEE</td><td>2</td><td>2026</td><td>2025-26</td><td>979-8-3315-9897-6</td><td>Chapter in Proceeding</td><td>Lalitpur, Nepal</td><td>VINOD PATEL</td><td>MARGI PATEL</td><td>AKASH BHASNEY</td><td>ANAND GADWAL</td><td>NITIN RATHORE</td><td>RAMESH NAIK</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_52" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1841&amp;cid=386">Click Here</a>
+                        </td><td>136</td><td>ICT: APPLICATIONS AND SOCIAL INTERFACES. ICTCS 2025.</td><td>DIALOGUE SYSTEMS THROUGH THE DECADES: A SURVEY OF TAXONOMIES AND SHIFTING PARADIGMS</td><td>Juhi_Conf_Paper_Proof_2.png</td><td>SPRINGER, CHAM</td><td>4</td><td>2026</td><td>2025-26</td><td>978-3-032-19674-3</td><td>Chapter in Proceeding</td><td>Jaipur</td><td>JUHI SHAH</td><td>THAKKAR PRIYANK BHUPENDRABHAI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_53" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1842&amp;cid=386">Click Here</a>
+                        </td><td>137</td><td>2025 OITS INTERNATIONAL CONFERENCE ON INFORMATION TECHNOLOGY (OCIT)</td><td>AN EXPLAINABLE VISION-BASED FRAMEWORK FOR ABNORMAL ACTIVITY DETECTION AND ALERT AUTOMATION</td><td>An_Explainable_Vision-Based_Framework_for_Abnormal_Activity_Detection_and_Alert_Automation_Page_1.pdf</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>979-8-3315-7702-5</td><td>Chapter in Proceeding</td><td>Bhubaneswar, India</td><td>SAHIL DESAI</td><td>VIJAY UKANI</td><td>THAKKAR PRIYANK BHUPENDRABHAI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_54" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1843&amp;cid=386">Click Here</a>
+                        </td><td>138</td><td>INTERNATIONAL CONFERENCE ON INFORMATION AND COMMUNICATION TECHNOLOGY FOR INTELLIGENT SYSTEMS</td><td>A HYBRID MACHINE LEARNING AND DEEP LEARNING APPROACH FOR ROBUST MALWARE DETECTION</td><td>Conf_Paper_Proof1.png</td><td>SPRINGER NATURE SINGAPORE</td><td>1</td><td>2026</td><td>2025-26</td><td>978-981-95-1353-6</td><td>Chapter in Proceeding</td><td>NewYork</td><td>SHREYA JOSHI</td><td>VIJAY UKANI</td><td>PRIYANK THAKKAR</td><td>MRUDANGI THAKKER</td><td>DHRUVANG THAKKER</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_55" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1844&amp;cid=386">Click Here</a>
+                        </td><td>139</td><td>INTERNATIONAL CONFERENCE ON INFORMATION AND COMMUNICATION TECHNOLOGY FOR COMPETITIVE STRATEGIES</td><td>TRANSFORMER AND LLM-BASED CAPTIONING MODULE FOR DENSE VIDEO CAPTIONING</td><td>Transformet_and_LLM_Conf_Proof1.png</td><td>SPRINGER NATURE SINGAPORE</td><td>8</td><td>2025</td><td>2025-26</td><td>978-981-96-4138-3</td><td>Chapter in Proceeding</td><td>Jaipur</td><td>DVIJESH BHATT</td><td>THAKKAR PRIYANK BHUPENDRABHAI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_56" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1845&amp;cid=386">Click Here</a>
+                        </td><td>140</td><td>ICT: APPLICATIONS AND SOCIAL INTERFACES</td><td>INTERNATIONAL CONFERENCE ON INFORMATION AND COMMUNICATION TECHNOLOGY FOR COMPETITIVE STRATEGIES</td><td>Data_Sparsity_Issue_Prrof_1.png</td><td>SPRINGER NATURE SINGAPORE</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-96-4135-2</td><td>Chapter in Proceeding</td><td>Jaipur</td><td>SHIVAM ARDESHNA</td><td>RONAKKUMAR PATEL</td><td>THAKKAR PRIYANK BHUPENDRABHAI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_57" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1784&amp;cid=386">Click Here</a>
+                        </td><td>112</td><td>LECTURE NOTES IN NETWORKS AND SYSTEMS: ARTIFICIAL INTELLIGENCE AND SUSTAINABLE COMPUTING</td><td>A COMPARATIVE STUDY OF GRAPH NEURAL NETWORKS FOR ROBUST NETWORK INTRUSION DETECTION SYSTEMS</td><td>Conference_paper_first_page.png</td><td>SPRINGER</td><td>5</td><td>2026</td><td>2025-26</td><td>2367-3389</td><td>Chapter in Book</td><td>Switzerland</td><td>SWETA DARGAD</td><td>ZUNNUN NARMAWALA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_58" OnClick="Download_Click"></a>
+                        </td><td>141</td><td>THE FUTURE OF GREEN ENERGY: STORAGE, MATERIALS, ALTERNATIVE FUELS, AND NET-ZERO STRATEGIES</td><td>INNOVATIONS IN OFFSHORE AND FLOATING WIND TURBINES</td><td>&nbsp;</td><td>IGI GLOBAL</td><td>9</td><td>2025</td><td>2025-26</td><td>9798337332260</td><td>Chapter in Book</td><td>Newyork, USA</td><td>CHAUHAN SIDDHARTHSINGH KAMALJITSINGH</td><td>VINEETA CHAUHAN</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_59" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1699&amp;cid=386">Click Here</a>
+                        </td><td>80</td><td>2026 INTERNATIONAL CONFERENCE ON ELECTRIC POWER AND RENEWABLE ENERGY (EPREC)</td><td>A MULTI-COMPONENT HYBRID AI MODEL FOR PREDICTION OF SOLAR POWER GENERATION</td><td>Pg1_EPEREC.pdf</td><td>IEEE</td><td>1</td><td>2026</td><td>2025-26</td><td>10.1109/EPREC66546.2026</td><td>Chapter in Proceeding</td><td>Durg</td><td>AMAR KUMAR BARIK</td><td>LAKSHYA JAIN</td><td>MANTRAM VYAS</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_60" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1795&amp;cid=386">Click Here</a>
+                        </td><td>116</td><td>2025 IEEE INTERNATIONAL CONFERENCE ON ELECTRICAL, ELECTRONICS, COMMUNICATION AND COMPUTERS (ELEXCOM)</td><td>PIONEERING ROBUST UART SYSTEMS LEVERAGING RICCATI BASED SAMPLING FOR SUPERIOR BIT ERROR RATE PERFORMANCE</td><td>Conference_Paper_Dhanbad_2026.pdf</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>979-8-3315-9078-9</td><td>Chapter in Proceeding</td><td>Dhanbad, India</td><td>HILAY PATEL</td><td>MADHAV TANDON</td><td>MAHESH A. PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_61" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1629&amp;cid=386">Click Here</a>
+                        </td><td>49</td><td>ENHANCING RENEWABLE ENERGY SYSTEMS WITH GENERATIVE AI</td><td>FORCED ISLANDING AND ADAPTIVE LOAD SHEDDING TO PREVENT BLACKOUT FOR IMPROVING POWER SYSTEM SECURITY</td><td>Forced-Islanding-and-Adaptive-Load-Shedding-to-Prevent-Blackout-for-Improving-Power-System-Security_-Micro-Grid-Islanding-to-Improve-Power-System-Security.pdf</td><td>IGI GLOBAL</td><td>11</td><td>2025</td><td>2025-26</td><td>9798337342726</td><td>Chapter in Book</td><td>Hershey, USA</td><td>NIMJE AKHILESH ARVIND</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_62" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1631&amp;cid=386">Click Here</a>
+                        </td><td>50</td><td>LECTURE NOTES IN ELECTRICAL ENGINEERING</td><td>COORDINATION OF OVERCURRENT RELAYS FOR RADIAL DISTRIBUTION USING MULTIPLE TCC AND NORTH AMERICAN STANDARD RELAYS</td><td>Paper_ID_23_(1)-1.pdf</td><td>SPRINGER NATURE</td><td>12</td><td>2025</td><td>2025-26</td><td>1876-1100</td><td>Chapter in Proceeding</td><td>Nagpur</td><td>SHANKER GODWAL</td><td>SARIKA KANOJIA</td><td>AKHILESH NIMJE</td><td>SOUMESH CHATTERJEE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_63" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1633&amp;cid=386">Click Here</a>
+                        </td><td>51</td><td>PROCEEDINGS OF IEEE INTERNATIONAL CONFERENCE ON POWER ELECTRONICS AND ENERGY (ICPEE 2025)</td><td>CHALLENGES AND MITIGATION TECHNIQUE IN OVERCURRENT RELAYCOORDINATION FOR LOW VOLTAGE RADIAL SYSTEMS</td><td>Challenges_and_Mitigation_Technique_in_Overcurrent_Relay_Coordination_for_Low_Voltage_Radial_System.docx-1.pdf</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>2329-9207</td><td>Chapter in Proceeding</td><td>Bhubaneswar</td><td>MEGHA JAISWAL</td><td>SHANKER GODWAL</td><td>AKHILESH NIMJE</td><td>SARIKA KANOJIA</td><td>SIDDHARTH MEHTA</td><td>MAITRY PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_64" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1657&amp;cid=386">Click Here</a>
+                        </td><td>63</td><td>2025 IEEE INTERNATIONAL CONFERENCE ON SMART POWER, ENERGY, RENEWABLES, AND TRANSPORTATION (SPERT)</td><td>A FASTER ANTI-ISLANDING SCHEME FOR AC MICROGRIDS USING QUADRATIC DISCRIMINANT CLASSIFIER</td><td>SPERT_2025_1st_page.pdf</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>979-8-3315-9894-5</td><td>Chapter in Proceeding</td><td>Surat</td><td>SOUMESH CHATTERJEE</td><td>MANISHA RUDRA PAUL</td><td>SUJOY DAS</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_65" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1577&amp;cid=386">Click Here</a>
+                        </td><td>29</td><td>2025 IEEE NORTH-EAST INDIA INTERNATIONAL ENERGY CONVERSION CONFERENCE AND EXHIBITION (NE-IECCE)</td><td>RESILIENT POWER SYNCHRONIZATION IN TACTICAL MILITARY BASES USING CARO TUNED ENHANCED TID CONTROLLER</td><td>Pg1_Resilient_Power_Synchronization_NEIECON25.pdf</td><td>IEEE</td><td>7</td><td>2025</td><td>2025-26</td><td>10.1109/NE-IECCE64154.2025.11183284</td><td>Chapter in Proceeding</td><td>Silchar</td><td>SMRITI JAISWAL</td><td>DULAL CHANDRA DAS</td><td>AMAR KUMAR BARIK</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_66" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1578&amp;cid=386">Click Here</a>
+                        </td><td>30</td><td>2025 IEEE NORTH-EAST INDIA INTERNATIONAL ENERGY CONVERSION CONFERENCE AND EXHIBITION (NE-IECCE)</td><td>AGRO-MICROGRID FREQUENCY STABILIZATION USING PUMA OPTIMIZER TUNED VIRTUAL SYNCHRONOUS SYSTEMS</td><td>Pg1_Agro-Microgrid_Frequency_Stabilization_NEIECON25.pdf</td><td>IEEE</td><td>7</td><td>2025</td><td>2025-26</td><td>10.1109/NE-IECCE64154.2025.11182953</td><td>Chapter in Proceeding</td><td>Silchar</td><td>SMRITI JAISWAL</td><td>DULAL CHANDRA DAS</td><td>AMAR KUMAR BARIK</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_67" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1568&amp;cid=386">Click Here</a>
+                        </td><td>23</td><td>ICT ANALYSIS AND APPLICATIONS</td><td>IMPACT OF HARDWARE TROJAN ON CACHE REPLACEMENT POLICY</td><td>43.1_1.pdf</td><td>SPRINGER</td><td>11</td><td>2025</td><td>2025-26</td><td>978-3-032-06703-6</td><td>Chapter in Book</td><td>Switzerland</td><td>SHAH DHAVAL GOPALCHANDRA</td><td>SHIVANI ANJARIYA</td><td>BHUPENDRA FATANIYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_68" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1551&amp;cid=386">Click Here</a>
+                        </td><td>18</td><td>SMART TRENDS IN COMPUTING AND COMMUNICATIONS</td><td>INCORPORATING CRYPTOPROCESSOR ON RISC V ARCHITECTURE</td><td>SMART_TRENDS_IN_COMPUTING_AND_COMMUNICATIONs.pdf</td><td>SPRINGER</td><td>7</td><td>2025</td><td>2025-26</td><td>978-3-032-06703-6</td><td>Chapter in Proceeding</td><td>Goa</td><td>MECWAN AKASH ISHUDAS</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_69" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1536&amp;cid=386">Click Here</a>
+                        </td><td>11</td><td>SMART TRENDS IN COMPUTING, LECTURE NOTES IN NETWORKS AND SYSTEMS  AND COMMUNICATIONS</td><td>DESIGN OF RESOURCE, DELAY AND POWER  EFFICIENT SINGLE CYCLE SIGNED MULTIPLIER</td><td>41._1.pdf</td><td>SPRINGER</td><td>10</td><td>2025</td><td>2025-26</td><td>ISSN 2367-3389 (ELECTRONIC)</td><td>Chapter in Proceeding</td><td>sinapore</td><td>SHAH DHAVAL GOPALCHANDRA</td><td>HEPIN GONDALIYA</td><td>PARTH MONPARA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_70" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1537&amp;cid=386">Click Here</a>
+                        </td><td>12</td><td>SMART TRENDS IN COMPUTING, LECTURE NOTES IN NETWORKS AND SYSTEMS  AND COMMUNICATIONS</td><td>IMPLEMENTATION OF SHA-256 USED  IN BITCOIN MINING ON FPGA</td><td>40._1.pdf</td><td>SPRINGER</td><td>10</td><td>2025</td><td>2025-26</td><td>ISSN 2367-3389 (ELECTRONIC)</td><td>Chapter in Proceeding</td><td>sinapore</td><td>SHAH DHAVAL GOPALCHANDRA</td><td>HETANSH SHAH</td><td>HIMANGI AGRAWAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_71" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1729&amp;cid=386">Click Here</a>
+                        </td><td>97</td><td>PROCEEDINGS OF 2026 INTERNATIONAL CONFERENCE ON EMERGING TRENDS AND INNOVATIONS IN ICT (ICEI)</td><td>REVOLUTIONIZING MICROCONTROLLER VIRTUALIZATION: EXPLORING MICRO-CONTROLLER AS A SERVICE (MAAS) ON AWS</td><td>69._RMV_Exploring_MaaS_on_AWS_(IEEE)_ICEI2026.pdf</td><td>IEEE</td><td>3</td><td>2026</td><td>2025-26</td><td>979-8-3315-3818-7</td><td>Chapter in Proceeding</td><td>Online</td><td>SAVANI VIJAY GOPALBHAI</td><td>PALAK KAPURIYA</td><td>TAPAN PATEL</td><td>JITENDRA BHATIA</td><td>MALARAM KUMHAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_72" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1730&amp;cid=386">Click Here</a>
+                        </td><td>98</td><td>PROCEEDING OF BUSINESS INTELLIGENCE AND DATA ANALYTICS. BIDA 2025. SMART INNOVATION, SYSTEMS AND TECHNOLOGIES</td><td>HANDWRITTEN DIGIT RECOGNITION USING CNN</td><td>65.pdf</td><td>SPRINGER</td><td>4</td><td>2026</td><td>2025-26</td><td>978-3-032-07837-7</td><td>Chapter in Proceeding</td><td>Online</td><td>SAVANI VIJAY GOPALBHAI</td><td>VIRANCHI PANDYA</td><td>AAKOLIYA HARSH</td><td>KEYUR PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_73" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1716&amp;cid=386">Click Here</a>
+                        </td><td>87</td><td>ADVANCES IN VLSI, COMMUNICATION, AND SIGNAL PROCESSING</td><td>CAPTURING AND ANALYSIS OF DATA PACKETS  THROUGH WIRESHARK</td><td>book_chapter_rohan.pdf</td><td>SPRINGER</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-95-0202-8</td><td>Chapter in Proceeding</td><td>Allahabad</td><td>TRIVEDI YOGESH NAGARLAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_74" OnClick="Download_Click"></a>
+                        </td><td>90</td><td>PROCEEDINGS OF THE 7TH INTERNATIONAL CONFERENCE ON INNOVATIVE DATA COMMUNICATION TECHNOLOGIES AND APPLICATION (ICIDCA-2025</td><td>PROCEEDINGS OF THE 7TH INTERNATIONAL CONFERENCE ON INNOVATIVE DATA COMMUNICATION TECHNOLOGIES AND APPLICATION (ICIDCA-2025</td><td>&nbsp;</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>979-8-3315-1414-3</td><td>Chapter in Proceeding</td><td>Coimbatore, India</td><td>FATANIYA BHUPENDRA DAMJIBHAI</td><td>DIYA SHAH</td><td>ROSHNI JARIWALA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_75" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1723&amp;cid=386">Click Here</a>
+                        </td><td>91</td><td>LECTURE NOTES IN NETWORKS AND SYSTEMS</td><td>ICT ANALYSIS AND  APPLICATIONS PROCEEDINGS OF ICT4SD 2025, VOLUME 12</td><td>First_Page_ICTS_2025.pdf</td><td>SPRINGER</td><td>11</td><td>2025</td><td>2025-26</td><td>978-3-032-06702-9</td><td>Chapter in Proceeding</td><td>Goa</td><td>DHAVAL SHAH</td><td>SHIVANI D ANJARI</td><td>BHUPENDRA FATANIYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_76" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1724&amp;cid=386">Click Here</a>
+                        </td><td>92</td><td>GRENZE INTERNATIONAL JOURNAL OF ENGINEERING AND TECHNOLOGY,</td><td>IMPLEMENTATION OF LANE TRACKING AND OBSTACLE  AVOIDANCE ALGORITHM ON JETBOT</td><td>First_Published_Implementation_of_Lane_Tracking_and_ObstacleAvoidance_algorithm_on_Jetbot.pdf</td><td>GRENZE SCIENTIFIC SOCIETY,</td><td>11</td><td>2025</td><td>2025-26</td><td>2395-5295</td><td>Chapter in Proceeding</td><td>Kolkata</td><td>FATANIYA BHUPENDRA DAMJIBHAI</td><td>HENIL GAJJAR</td><td>ISHIKA SAIJWAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_77" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1837&amp;cid=386">Click Here</a>
+                        </td><td>133</td><td>SMART INNOVATION, SYSTEMS AND TECHNOLOGIES, BUSINESS INTELLIGENCE AND DATA ANALYTICS, PROCEEDINGS OF BIDA 2025, VOLUME 2</td><td>NUMBER PLATE RECOGNITION USING MACHINE LEARNING ALGORITHMS AND CNN</td><td>First_page_Book_VP.pdf</td><td>SPRINGER NATURE</td><td>4</td><td>2026</td><td>2025-26</td><td>21903026</td><td>Chapter in Proceeding</td><td>Switzerland</td><td>VIRANCHI CHUDAMANIBHAI PANDYA</td><td>VIJAY SAVANI</td><td>YOGI AMRUTIYA</td><td>YASH ADATIYA</td><td>DHAVAL PADARIYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_78" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1814&amp;cid=386">Click Here</a>
+                        </td><td>123</td><td>PROCEEDINGS OF THE INTERNATIONAL CONFERENCE ON RECENT ADVANCES IN INTELLIGENT AND SUSTAINABLE TECHNOLOGIES (RAIST 2026)</td><td>TINYML: THE NEXTGEN AI TECHNOLOGY FOR STANDALONE  DEVICES</td><td>Page1.pdf</td><td>ATLANTIS HIGHLIGHTS IN INTELLIGENT SYSTEMS, SPRINGER NATURE</td><td>2</td><td>2026</td><td>2025-26</td><td>2589-4919/978-94-6239-707-1</td><td>Chapter in Proceeding</td><td>India</td><td>SATISHKUMAR KATARIA</td><td>PANKAJ PRAJAPATI</td><td>GAJJAR SACHIN HARISHBHAI</td><td>A MIT RATHOD</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_79" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1815&amp;cid=386">Click Here</a>
+                        </td><td>124</td><td>PERFORMANCE EVALUATION OF ZIGBEE PROTOCOL IN LUNAR WIRELESS SENSOR NETWORK DEPLOYMENTS</td><td>PERFORMANCE EVALUATION OF ZIGBEE PROTOCOL IN LUNAR WIRELESS SENSOR NETWORK DEPLOYMENTS</td><td>page1.pdf</td><td>9TH INTERNATIONAL CONFERENCE ON ELECTRONICS, COMMUNICATION AND AEROSPACE TECHNOLOGY (ICECA)</td><td>2</td><td>2026</td><td>2025-26</td><td>979-8-3315-9929-4</td><td>Chapter in Proceeding</td><td>India</td><td>KAIVAL PRAJAPATI</td><td>GAJJAR SACHIN HARISHBHAI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_80" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1855&amp;cid=386">Click Here</a>
+                        </td><td>142</td><td>MACHINE INTELLIGENCE FOR RESEARCH AND INNOVATIONS. MAITRI 2025. LECTURE NOTES IN NETWORKS AND SYSTEMS</td><td>DEEP LEARNING IN FINANCE: REVIEW, IMPLEMENTATION AND ANALYSIS</td><td>MAITRI_2025_EBOOK-389-400.pdf</td><td>SPRINGER, CHAM</td><td>6</td><td>2026</td><td>2025-26</td><td>978-3-032-22826-0</td><td>Chapter in Book</td><td>Cham, Switzerland</td><td>VRAJ SHETH</td><td>ANSH RUPAREL</td><td>KAPADIA HARSH KHODIDAS</td><td>RITESH PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_81" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1752&amp;cid=386">Click Here</a>
+                        </td><td>104</td><td>IEEE INTERNATIONAL CONFERENCE ON INTERDISCIPLINARY APPROACHES IN TECHNOLOGY AND MANAGEMENT FOR SOCIAL INNOVATION (IATMSI)</td><td>TRANSPOSABLE SRAM ARCHITECTURE ENABLING BIDIRECTIONAL ACCESS FOR SYMMETRIC STDP LEARNING IN NEUROMORPHIC SYSTEMS</td><td>First_page_Transposable_SRAM_Architecture_Enabling_Bidirectional_Access_for_Symmetric_STDP_Learning_in_Neuromorphic_Systems-1.pdf</td><td>IEEE</td><td>4</td><td>2026</td><td>2025-26</td><td>979-8-3315-4970-1</td><td>Chapter in Proceeding</td><td>Gwalior</td><td>GRISHMA BHAWSAR</td><td>SHARMA ANKIT RAVINDRA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_82" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1594&amp;cid=386">Click Here</a>
+                        </td><td>35</td><td>LECTURE NOTES IN ELECTRICAL ENGINEERING ((LNEE,VOLUME 1420))</td><td>INTELLIGENT ENERGY MANAGEMENT SYSTEMS FOR FUTURE SMART CITIES</td><td>Rushil.png</td><td>SPRINGER</td><td>10</td><td>2025</td><td>2025-26</td><td>1876-1100</td><td>Chapter in Proceeding</td><td>Pune</td><td>RUSHIL SHETH</td><td>PRIT SHILU</td><td>SONI SNEH KALPESH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_83" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1596&amp;cid=386">Click Here</a>
+                        </td><td>36</td><td>LECTURE NOTES IN ELECTRICAL ENGINEERING ((LNEE,VOLUME 1420))</td><td>NAVIGATION AND CONTROL OF SCARA ROBOT USING AUTOMATION STUDIO</td><td>SCARA.png</td><td>SPRINGER</td><td>10</td><td>2025</td><td>2025-26</td><td>1876-1100</td><td>Chapter in Proceeding</td><td>Pune</td><td>SHIVAM BHATIA</td><td>SONI SNEH KALPESH</td><td>RAJ DALWADI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_84" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1597&amp;cid=386">Click Here</a>
+                        </td><td>37</td><td>LECTURE NOTES IN MECHANICAL ENGINEERING</td><td>A SUSTAINABLE APPROACH FOR PLASTIC WASTE MANAGEMENT AND RECYCLING</td><td>IIRTAM.png</td><td>SPRINGER</td><td>11</td><td>2025</td><td>2025-26</td><td>2195-4356</td><td>Chapter in Proceeding</td><td>Ahmedabad</td><td>ARYAN THAKAR</td><td>PRIYANSHU LUNAGARIYA</td><td>POOJA LIMBASIYA</td><td>BHAVIN TANNA</td><td>SONI SNEH KALPESH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_85" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1643&amp;cid=386">Click Here</a>
+                        </td><td>52</td><td>2ND INTERNATIONAL CONFERENCE ON OPTIMIZATION TECHNIQUES IN ENGINEERING &amp; TECHNOLOGY</td><td>PRODUCT RECOMMENDATION SYSTEM: A COMPREHENSIVE REVIEW</td><td>First_page.pdf</td><td>AIP PUBLISHING</td><td>10</td><td>2025</td><td>2025-26</td><td>0094-243X</td><td>Chapter in Proceeding</td><td>Gr. Noida</td><td>RUSHIL SHETH</td><td>PRIT SHILU</td><td>KALP SHAH</td><td>SHARMA ANKIT RAVINDRA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_86" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1625&amp;cid=386">Click Here</a>
+                        </td><td>45</td><td>2025 14TH INTERNATIONAL CONFERENCE ON CONTROL, AUTOMATION AND INFORMATION SCIENCES (ICCAIS)</td><td>DESIGN AND IMPLEMENTATION OF AN AI-POWERED ROBOTIC SYSTEM FOR LASER CUTTING APPLICATION IN NUCLEAR POWER PLANT</td><td>ICCAIS_Rajat_HKP_Priyank_Meet.pdf</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>2475-7896</td><td>Chapter in Proceeding</td><td>Jeju, Korea</td><td>PATEL HIMANSHU KANTILAL</td><td>RAJAT RATHOD</td><td>PRIYANK RATHOD</td><td>MEET PARMAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_87" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1626&amp;cid=386">Click Here</a>
+                        </td><td>46</td><td>2025 14TH INTERNATIONAL CONFERENCE ON CONTROL, AUTOMATION AND INFORMATION SCIENCES (ICCAIS)</td><td>HAPTIC FEEDBACK FOR TELEROBOTIC ULTRASOUND PROCEDURES: ENHANCING SAFETY THROUGH FORCE LIMITING</td><td>ICCAIS_Meet_HKP_Rajat.pdf</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>2475-7896</td><td>Chapter in Proceeding</td><td>Jeju, Korea</td><td>PATEL HIMANSHU KANTILAL</td><td>MEET PARMAR</td><td>RAJAT RATHOD</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_88" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1627&amp;cid=386">Click Here</a>
+                        </td><td>47</td><td>2025 IEEE GUWAHATI SUBSECTION CONFERENCE (GCON)</td><td>RETINAL DISEASE CLASSIFICATION USING DEEP LEARNING</td><td>GCON_Abhishek_AS_HKP_Retinal_Diseases.pdf</td><td>IEEE</td><td>9</td><td>2025</td><td>2025-26</td><td>979-8-3315-1345-0</td><td>Chapter in Proceeding</td><td>Itanagar, India</td><td>PATEL HIMANSHU KANTILAL</td><td>ABHISHEK VANANI</td><td>ANKIT SHARMA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_89" OnClick="Download_Click"></a>
+                        </td><td>48</td><td>INTERNATIONAL CONFERENCE ON APPLIED SYSTEM INNOVATION (ICASI 2025)</td><td>PRECISE ELECTRIC FILED DERIVATION FOR PARALLEL PLATE CAPACITORS</td><td>&nbsp;</td><td>IET</td><td>9</td><td>2025</td><td>2025-26</td><td>978-1-83724-704-2</td><td>Chapter in Proceeding</td><td>Tokyo, Japan</td><td>PATEL HIMANSHU KANTILAL</td><td>PAHAL BHATTI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>ELECTRONICS &amp; INSTRUMENTATION ENGINEERING</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_90" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1678&amp;cid=386">Click Here</a>
+                        </td><td>69</td><td>IEEE INTERNATIONAL CONFERENCE ON CYBER HUMANITIES</td><td>HYPERTEXT AND REALITY: ANALYSING HERMENEUTIC BRIDGES IN DIGITAL STORYTELLING</td><td>Hypertext_and_Reality_Analysing_Hermeneutic_Bridges_in_Digital_Storytelling-1.pdf</td><td>IEEE</td><td>1</td><td>2026</td><td>2025-26</td><td>979-8-3315-1435-8</td><td>Chapter in Proceeding</td><td>Florence, Italy</td><td>DR JAINEE SHAH</td><td>DR AMAN DEEP SINGH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_91" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1605&amp;cid=386">Click Here</a>
+                        </td><td>38</td><td>THE PARIS CONFERENCE ON ARTS &amp; HUMANITIES 2025 OFFICIAL CONFERENCE PROCEEDINGS</td><td>BLACK FRANKENSTEIN: EXPLORING RACE AND TRAUMA IN VICTOR LAVALLE’S GRAPHIC FICTION DESTROYER</td><td>PCAH2025__official_proceedings_w_pg_no-255.pdf</td><td>THE INTERNATIONAL ACADEMIC FORUM</td><td>8</td><td>2025</td><td>2025-26</td><td>2758-0970</td><td>Chapter in Proceeding</td><td>Aichi, Japan</td><td>JAINEE SHAH NIMESHBHAI</td><td>AMAN DEEP SINGH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_92" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1617&amp;cid=386">Click Here</a>
+                        </td><td>39</td><td>OFFICIAL CONFERENCE PROCEEDINGS: THE 6TH BARCELONA CONFERENCE ON ARTS, MEDIA, AND CULTURE</td><td>AUTOMATED DETECTION OF HATE SPEECH AND TOXIC COMMENTS USING MACHINE LEARNING AND NATURAL LANGUAGE PROCESSING</td><td>BAMC2025_96204.pdf</td><td>IAFOR</td><td>12</td><td>2025</td><td>2025-26</td><td>2435-9475</td><td>Chapter in Proceeding</td><td>Japan</td><td>DHRUVESH VAGHASIYA</td><td>AMAN DEEP SINGH</td><td>DEV DETROJA</td><td>VEDANT VAGHASIYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_93" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1618&amp;cid=386">Click Here</a>
+                        </td><td>40</td><td>CEUR</td><td>&quot;HEALED BY CODE: HYBRID INTELLIGENCE, DIGITAL GRIEF, AND THE ETHICS OF POSTHUMAN BEREAVEMENT SUPPORTA DIGITAL HUMANITIES STUDY</td><td>Screenshot_2025-12-22_at_15-09-31_short1-3.pdf.png</td><td>CEUR</td><td>10</td><td>2025</td><td>2025-26</td><td>1613-0073</td><td>Chapter in Proceeding</td><td>AAchen Germany</td><td>MISHRA RICHA PATANJALI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_94" OnClick="Download_Click"></a>
+                        </td><td>41</td><td>IEEE</td><td>STEAM IS NEW STEM: INTEGRATING DIGITAL HUMANITIES WITH ENGINEERING EDUCATION- CASE STUDY FROM INDIA</td><td>&nbsp;</td><td>IEEE</td><td>9</td><td>2025</td><td>2025-26</td><td>--</td><td>Chapter in Proceeding</td><td>NA</td><td>MISHRA RICHA PATANJALI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_95" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1523&amp;cid=386">Click Here</a>
+                        </td><td>6</td><td>DIGITAL AND CULTURAL INFLUENCES ON MEDIA NARRATIVES AND STORYTELLING</td><td>SHADOWS IN THE STREAM: TURKISH HORROR, GOTHIC STORYTELLING, AND DIGITAL NARRATIVE</td><td>Shadows-in-the-Stream_-Turkish-Horror-Gothic-Storytelling-and-Digital-Narrative_(1).pdf</td><td>IGI GLOBAL SCIENTIFIC PUBLISHING</td><td>8</td><td>2025</td><td>2025-26</td><td>9798337320236</td><td>Chapter in Book</td><td>Pennsylvania</td><td>AMANDEEP SINGH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_96" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1524&amp;cid=386">Click Here</a>
+                        </td><td>7</td><td>OFFICIAL CONFERENCE PROCEEDINGS: THE 4TH IAFOR PARIS CONFERENCE ON ARTS &amp; HUMANITIES 2025</td><td>BLACK FRANKENSTEIN: EXPLORING RACE AND TRAUMA IN VICTOR LAVALLE&#39;&#39;S GRAPHIC FICTION DESTROYER</td><td>PCAH2025_94935.pdf</td><td>IAFOR</td><td>8</td><td>2025</td><td>2025-26</td><td>2758-0970</td><td>Chapter in Proceeding</td><td>Paris, France</td><td>JAINEE SHAH</td><td>AMANDEEP SINGH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_97" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1802&amp;cid=386">Click Here</a>
+                        </td><td>117</td><td>NARRATIVES OF THE AFRICAN FEMALE BODY: POLITICS, CULTURE, AND FAMILY STRUCTURE</td><td>RECLAIMING THE FRAME THROUGH CINEMATIC DECOLONISATION OF THE AFRICAN FEMALE BODY BEYOND THE WESTERN GAZE: A STUDY OF SELECTED FILMS</td><td>Reclaiming-the-Frame.pdf</td><td>IGI GLOBAL SCIENTIFIC PUBLISHING</td><td>6</td><td>2026</td><td>2025-26</td><td>9798337383477</td><td>Chapter in Book</td><td>New York</td><td>AMANDEEP SINGH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_98" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1436&amp;cid=386">Click Here</a>
+                        </td><td>1</td><td>DISABILITY, IDENTITY, AND SOCIAL PARTICIPATION: HEALTH, SEXUALITY &amp; REPRESENTATION</td><td>AN EXAMINATION OF RELATIONSHIP BETWEEN EXTRAVERSION AND TURN- TAKING  BEHAVIORS DURING CONVERSATIONS IN PEOPLE WHO STUTTER</td><td>Extraversion_&amp;_Turn-Taking_Published_Full_Book.pdf</td><td>IGI GLOBAL PUBLISHERS</td><td>9</td><td>2025</td><td>2025-26</td><td>9798337371580</td><td>Chapter in Book</td><td>South Africa</td><td>SHIVANGI BANERJEE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_99" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1728&amp;cid=386">Click Here</a>
+                        </td><td>96</td><td>CULTURAL IDENTITY AND GLOBALIZATION IN THE DYNAMICS OF BRAND MANAGEMENT</td><td>GLOCALISATION THROUGH GRASSROOTS INSIGHT: ANALYSING PIYUSH PANDEY&#39;&#39;S CULTURAL STRATEGY IN INDIAN BRAND ADVERTISING</td><td>Glocalisation-Through-Grassroots-Insight_3A-Analysing-Piyush-Pandeys-Cultural-Strategy-in-Indian-Brand-Advertising.pdf</td><td>IGI GLOBAL SCIENTIFIC PUBLISHING</td><td>4</td><td>2026</td><td>2025-26</td><td>9798337381640</td><td>Chapter in Book</td><td>New York</td><td>AMANDEEP SINGH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_100" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1839&amp;cid=386">Click Here</a>
+                        </td><td>134</td><td>IEEE</td><td>STEAM IS NEW STEM: INTEGRATING DIGITAL HUMANITIES WITH ENGINEERING EDUCATION- CASE STUDY FROM INDIA</td><td>Screenshot_7-7-2026_133745_ieeexplore.ieee.org.jpeg</td><td>IEEE EXPLORER</td><td>9</td><td>2025</td><td>2025-26</td><td>2473-2001</td><td>Chapter in Proceeding</td><td>Princeton, NJ, USA</td><td>MISHRA RICHA PATANJALI</td><td>PADMANABH MISHRA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>HUMANITIES AND SOCIAL SCIENCE</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_101" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1816&amp;cid=386">Click Here</a>
+                        </td><td>125</td><td>COMPARATIVE ASSESSMENT OF AQUATIC ECOSYSTEM QUALITY WITH TRADITIONAL METHODS AND ADVANCED LEARNING ALGORITHMS USING SATELLITE IMAGES</td><td>2026 INTERNATIONAL CONFERENCE ON INTELLIGENT COMPUTING, NETWORKS, AND SECURITY (IC-ICNS)</td><td>First_Page_-_Comparative_Assessment_of_Aquatic_Ecosystem_Quality_with_Traditional_Methods_and_Advanced_Learning_Algorithms_Using_Satellite_Images.pdf</td><td>IEEE</td><td>6</td><td>2026</td><td>2025-26</td><td>979-8-3315-8337-8</td><td>Chapter in Proceeding</td><td>Bhubaneswar, India</td><td>DHRUVIN KOTAK</td><td>GOHIL LATA AMRITLAL</td><td>JAIPRAKASH VERMA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>M. C. A.</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_102" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1576&amp;cid=386">Click Here</a>
+                        </td><td>28</td><td>IEEE&#160;XPLORE</td><td>PREDICTIVE MODELING FOR DIABETES USING MACHINE LEARNING: A FOCUS ON ENSEMBLE METHODS</td><td>Predictive_Modeling_for_Diabetes_Using_Machine_Learning_A_Focus_on_Ensemble_Methods.pdf</td><td>IEEE</td><td>10</td><td>2025</td><td>2025-26</td><td>979-8-3315-2697-9</td><td>Chapter in Proceeding</td><td>IEEE</td><td>PREETI KATHIRIA</td><td>ANSH SHAH</td><td>ARYANA GHUGHARAWALA</td><td>PIMAL KHANPARA</td><td>USHA PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>M. C. A.</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_103" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1670&amp;cid=386">Click Here</a>
+                        </td><td>67</td><td>INTELLIGENT SYSTEMS: EMERGING TRENDS AND CHALLENGES IN DEEP NEURO-FUZZY MODELS AND EXPLAINABLE ARTIFICIAL INTELLIGENCE</td><td>APPLICATIONS OF COMPUTATIONAL INTELLIGENCE</td><td>Scopus_-_Document_Details.pdf</td><td>CRC PRESS</td><td>2</td><td>2026</td><td>2025-26</td><td>9781003540298</td><td>Chapter in Book</td><td>Boca Raton</td><td>VASHI DEVENDRASINH ISHWARSINH</td><td>SUNIL GAUTAM</td><td>JACKY PATEL</td><td>VIDHI MEHTA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>M. C. A.</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_104" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1665&amp;cid=386">Click Here</a>
+                        </td><td>64</td><td>PROCEEDINGS OF INTERNATIONAL CONFERENCE ON “SYNERGETIC DEVELOPMENT THROUGH SMART TECHNOLOGIES &amp; DIGITAL TRANSFORMATION-2025 (SDSTD2025)”, 25-26 JUNE, 2025</td><td>FEED FORWARD NEURAL NETWORK AND BAYESIAN REGULARIZATION ALGORITHM FOR SOLVING SECOND-ORDER STIFF ORDINARY DIFFERENTIAL EQUATIONS</td><td>1st_page_of_Proceedings_SDSTD2025.pdf</td><td>VICTORIOUS PUBLISHERS</td><td>12</td><td>2025</td><td>2025-26</td><td>978-93-92338-88-5</td><td>Chapter in Proceeding</td><td>Delhi, India</td><td>MALHOTRA SANDEEP HIDESHKUMAR</td><td>DR ROOTVESH MEHTA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MATHEMATICS</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_105" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1734&amp;cid=386">Click Here</a>
+                        </td><td>100</td><td>SUSTAINABLE ENVIRONMENTAL TECHNOLOGIES: MATERIALS AND INNOVATIONS</td><td>PIEZOELECTRICITY IN F-INTERCALATED GRAPHENE NANOWIRE: GREEN’S FUNCTION APPROACH FOR NEMS APPLICATIONS</td><td>CHAPTER_4.2_Dr_Sandeep_Malhotra.png</td><td>COPUBLISHED BY SPRINGER &amp; CAPITAL PUBLISHING COMPANY</td><td>4</td><td>2026</td><td>2025-26</td><td>978-93-81891-97-1</td><td>Chapter in Book</td><td>Cham, Switzerland &amp; New Delhi, India</td><td>MALHOTRA SANDEEP HIDESHKUMAR</td><td>DR ANKUR PANDYA</td><td>DR RITESH CHOURASIYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MATHEMATICS</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_106" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1791&amp;cid=386">Click Here</a>
+                        </td><td>114</td><td>FIFTH INTERNATIONAL CONFERENCE ON ROBOTICS, INTELLIGENT AUTOMATION AND CONTROL TECHNOLOGIES (RIACT 2026)</td><td>OPTIMIZATION OF AN AUTONOMOUS UNDERWATER VEHICLE FOR ENHANCED STABILITY</td><td>Final_Published_epjconf_riact2026_01008.pdf</td><td>EPJ WEB OF CONFERENCES</td><td>2</td><td>2026</td><td>2025-26</td><td>2100-014X</td><td>Chapter in Proceeding</td><td>Chennai, Tamil Nadu</td><td>DEVARSH SOLANKI</td><td>MOKSH KANDHARI</td><td>KUTBUDDIN PETROLWALA</td><td>MIHIR CHAUHAN</td><td>AKASH MECWAN</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_107" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1792&amp;cid=386">Click Here</a>
+                        </td><td>115</td><td>FIFTH INTERNATIONAL CONFERENCE ON ROBOTICS, INTELLIGENT AUTOMATION AND CONTROL TECHNOLOGIES (RIACT 2026)</td><td>FORWARD KINEMATIC ANALYSIS AND SIMULATION OF RECONFIGURABLE FOUR-WHEELED OMNI- DRIVE MOBILE ROBOT</td><td>Final_Published_epjconf_riact2026_01008.pdf</td><td>EPJ WEB OF CONFERENCES</td><td>2</td><td>2026</td><td>2025-26</td><td>2100-014X</td><td>Chapter in Proceeding</td><td>Chennai, Tamil Nadu</td><td>DHAVALKUMAR PANCHAL</td><td>CHAUHAN MIHIR MAHENDRABHAI</td><td>VISHAL MEHTA</td><td>RUSHIRAJ VALA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_108" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1783&amp;cid=386">Click Here</a>
+                        </td><td>111</td><td>2025 IEEE 4TH INTERNATIONAL CONFERENCE ON TECHNOLOGY, ENGINEERING, MANAGEMENT FOR SOCIETAL IMPACT USING MARKETING, ENTREPRENEURSHIP AND TALENT</td><td>DEVELOPING AN IMPLEMENTATIONAL FRAMEWORK OF LEAN SIX SIGMA FOR INDIAN SMALL AND MEDIUM ENTERPRISES</td><td>IEEE_Xplore_ASP_Paper_First_Page.pdf</td><td>IEEE</td><td>4</td><td>2026</td><td>2025-26</td><td>9798331538729</td><td>Chapter in Proceeding</td><td>NewDelhi</td><td>PATEL ANAND SOMABHAI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_109" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1726&amp;cid=386">Click Here</a>
+                        </td><td>94</td><td>PROCEEDINGS OF FLUID MECHANICS AND FLUID POWER (FMFP) 2023, VOL. 6:</td><td>PERFORMANCE ENHANCEMENT OF NACA 0015 WING USING ROTATING CYLINDER VORTEX CYLINDER</td><td>148-SVJ_IIT_J.pdf</td><td>SPRINGER</td><td>4</td><td>2026</td><td>2025-26</td><td>2195-4356</td><td>Chapter in Proceeding</td><td>Singapore</td><td>JAIN SANJAY VIRENDRA</td><td>A M ACHARI</td><td>T N RAVAL</td><td>ATH SINGHAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_110" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1727&amp;cid=386">Click Here</a>
+                        </td><td>95</td><td>PROCEEDINGS OF FLUID MECHANICS AND FLUID POWER (FMFP) 2023, VOL. 6:</td><td>PASSIVE VANE-TYPE VORTEX GENERATORS FOR AIRCRAFT PERFORMANCE ENHANCEMENT: A REVIEW</td><td>150_SVJ_IIT_J.pdf</td><td>SPRINGER</td><td>4</td><td>2026</td><td>2025-26</td><td>2195-4356</td><td>Chapter in Proceeding</td><td>Singapore</td><td>JAIN SANJAY VIRENDRA</td><td>A M ACHARI</td><td>T N RAVAL</td><td>ATH SINGHAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_111" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1831&amp;cid=386">Click Here</a>
+                        </td><td>130</td><td>MATEC WEB OF CONFERENCES VOLUME 419 (2026) INTERNATIONAL CONFERENCE ON MECHANICAL AND MATERIALS ENGINEERING (ICMME 2025)</td><td>A SIMPLIFIED METHOD OF DYNAMIC BALANCING FOR AUTOMOBILE WHEEL-TIRE ASSEMBLY</td><td>matecconf_icmme2026_01010-1.pdf</td><td>MMATEC WEB OF CONFERENCES</td><td>3</td><td>2026</td><td>2025-26</td><td>2261-236X</td><td>Chapter in Book</td><td>Les Ulis, France</td><td>PATEL DHAVAL VALLABHBHAI</td><td>VIPUL MANHARLAL BHOJAWALA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_112" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1833&amp;cid=386">Click Here</a>
+                        </td><td>131</td><td>LECTURE NOTES IN MECHANICAL ENGINEERING ((LNME))</td><td>PERFORMANCE ENHANCEMENT OF NACA 0015 WING USING ROTATING CYLINDER VORTEX GENERATOR</td><td>Conference_14.pdf</td><td>SPRINGER, SINGAPORE</td><td>5</td><td>2026</td><td>2025-26</td><td>ISBN978-981-96-9599-7</td><td>Chapter in Proceeding</td><td>Singapore</td><td>DR. A. MADHUSUDAN ACHARI</td><td>S N JADHAV</td><td>AKSHAY GUPTA</td><td>AKSHAAT SINGH</td><td>HARSHVARDHAN SAXENA</td><td>S V JAIN</td><td>T N RAVAL</td><td>ATH SINGHAL</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_113" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1834&amp;cid=386">Click Here</a>
+                        </td><td>132</td><td>LECTURE NOTES IN MECHANICAL ENGINEERING ((LNME))</td><td>PASSIVE VANE-TYPE VORTEX GENERATORS FOR AIRCRAFT PERFORMANCE ENHANCEMENT: A REVIEW</td><td>Conference-15.pdf</td><td>SPRINGER, SINGAPORE</td><td>5</td><td>2026</td><td>2025-26</td><td>ISBN978-981-96-9599-7</td><td>Chapter in Proceeding</td><td>Singapore</td><td>DR. A. MADHUSUDAN ACHARI</td><td>DEVANSH TALATI</td><td>RUSHIL PALSANA</td><td>SOURABH RAI</td><td>S N JADHAV</td><td>S V JAIN</td><td>T N RAVAL</td><td>ATH SINGHAL</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_114" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1840&amp;cid=386">Click Here</a>
+                        </td><td>135</td><td>MODELING AND SIMULATION IN MANUFACTURING</td><td>INVESTIGATING THE EFFECT OF MESH PARAMETERS IN FINITE ELEMENT SIMULATION OF SINGLE POINT INCREMENTAL FORMING PROCESS</td><td>Modeling_and_Simulation_in_Manufacturing.pdf</td><td>SPRINGER NATURE</td><td>4</td><td>2026</td><td>2025-26</td><td>2195-4364</td><td>Chapter in Proceeding</td><td>Germany</td><td>KIRTAN LAD</td><td>GOHIL ASHISH MULCHAND</td><td>BHARAT MODI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_115" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1570&amp;cid=386">Click Here</a>
+                        </td><td>25</td><td>RECENT ADVANCES IN CONDITION MONITORING</td><td>FAULT IDENTIFICATION IN RUN TO FAIL SCENARIO OF BEARING</td><td>Springer_paper_to_upload.pdf</td><td>SPRINGER NATURE</td><td>11</td><td>2025</td><td>2025-26</td><td>2195-4356</td><td>Chapter in Book</td><td>Singapore</td><td>PATEL DHAVAL VALLABHBHAI</td><td>MOIZ RANGWALA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_116" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1539&amp;cid=386">Click Here</a>
+                        </td><td>13</td><td>ADVANCES AND FUTURISTIC TRENDS IN MACHINING VOLUME—I</td><td>MACHINABILITY ANALYSIS OF AISI 4140: A COMPARISON BETWEEN DRY, FLOOD, AND VEGETABLE OIL-BASED EMQL MACHINING PERFORMANCE</td><td>Screenshot_2025-11-17_182317.png</td><td>SPRINGER</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-96-8369-7</td><td>Chapter in Book</td><td>Singapore</td><td>PARTH RAVAL</td><td>MAKHESANA MAYURKUMAR ASHWINBHAI</td><td>KISHORE KUMAR GAJRANI</td><td>NAVNEET KHANNA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_117" OnClick="Download_Click"></a>
+                        </td><td>3</td><td>PROCEEDINGS OF FLUID MECHANICS AND FLUID POWER (FMFP) 2023, VOL. 6 LECTURE NOTES IN MECHANICAL ENGINEERING</td><td>PERFORMANCE ENHANCEMENT OF NACA 0015 WING USING ROTATING CYLINDER VORTEX GENERATOR</td><td>&nbsp;</td><td>SPRINGER</td><td>11</td><td>2025</td><td>2025-26</td><td>2195-4364</td><td>Chapter in Proceeding</td><td>Singapore</td><td>S N JADHAV</td><td>AKSHAY GUPTA</td><td>AKSHAAT SINGH</td><td>HARSHVARDHAN SAXENA</td><td>S V JAIN</td><td>A M ACHARI</td><td>T N RAVAL</td><td>ATH SINGHAL</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_118" OnClick="Download_Click"></a>
+                        </td><td>4</td><td>PROCEEDINGS OF FLUID MECHANICS AND FLUID POWER (FMFP) 2023, VOL. 6 LECTURE NOTES IN MECHANICAL ENGINEERING</td><td>PASSIVE VANE-TYPE VORTEX GENERATORS FOR AIRCRAFT PERFORMANCE ENHANCEMENT: A REVIEW</td><td>&nbsp;</td><td>SPRINGER</td><td>11</td><td>2025</td><td>2025-26</td><td>2195-4364</td><td>Chapter in Proceeding</td><td>Singapore</td><td>DEVANSH TALATI</td><td>RUSHIL PALSANA</td><td>SOURABH RAI</td><td>S N JADHAV</td><td>S V JAIN</td><td>A M ACHARI</td><td>T N RAVAL</td><td>ATH SINGHAL</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>MECHANICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_119" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1522&amp;cid=386">Click Here</a>
+                        </td><td>5</td><td>PROCEEDINGS OF THE 3RD INTERNATIONAL CONFERENCE ON ADVANCES IN CONCRETE, STRUCTURAL, AND GEOTECHNICAL ENGINEERING-VOLUME 2</td><td>UNI-AXIAL BEHAVIOUR OF PLAIN CONCRETE CYLINDERS CONFINED WITH HYBRID CFRP/SSWM UNDER ELEVATED TEMPERATURE</td><td>First_page_of_paper_for_RPMS.pdf</td><td>SPRINGER</td><td>8</td><td>2025</td><td>2025-26</td><td>978-981-96-0750-1</td><td>Chapter in Book</td><td>Singapore</td><td>VIPUL J. KALYANI</td><td>DIGESH D. JOSHI</td><td>PARESH V. PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>PG-CIVIL (CASAD) ENG.DEPT.</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_120" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1654&amp;cid=386">Click Here</a>
+                        </td><td>60</td><td>RECENT ADVANCES IN STRUCTURAL ENGINEERING - VOL. 2: SELECT PROCEEDINGS OF RAISE 2024</td><td>CORROSION RESISTANCE OF CONCRETE CYLINDERS STRENGTHENED WITH GFRP-SSWM HYBRID WRAPS</td><td>Corrosion_-_First_page_of_chapter_-_For_RPMS.pdf</td><td>SPRINGER NATURE</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-96-8830-2</td><td>Chapter in Book</td><td>Singapore</td><td>VIPUL J. KALYANI</td><td>RINKESH V. MAKAWANA</td><td>DIGESH D. JOSHI</td><td>PARESH V. PATEL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>PG-CIVIL (CASAD) ENG.DEPT.</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_121" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1655&amp;cid=386">Click Here</a>
+                        </td><td>61</td><td>RECENT ADVANCES IN STRUCTURAL ENGINEERING - VOL. 3: SELECT PROCEEDINGS OF RAISE 2024</td><td>REVIEW OF LONGITUDINAL FORCE DISTRIBUTION STUDIES FOR UPGRADATION OF EXISTING RAILWAY BRIDGES</td><td>Review_-_Railway_bridges_-_first_page_of_chapter_-_for_RPMS.pdf</td><td>SPRINGER NATURE</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-96-8834-0</td><td>Chapter in Book</td><td>Singapore</td><td>DHAVAL S. PARIKH</td><td>DIGESH D. JOSHI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>PG-CIVIL (CASAD) ENG.DEPT.</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_122" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1704&amp;cid=386">Click Here</a>
+                        </td><td>82</td><td>2025 OITS INTERNATIONAL CONFERENCE ON INFORMATION TECHNOLOGY (OCIT</td><td>AN EXPLAINABLE VISION-BASED FRAMEWORK FOR ABNORMAL ACTIVITY DETECTION AND ALERT AUTOMATION</td><td>1_IWAn_Explainable_Vision-Based_Framework_for_Abnormal_Activity_Detection_and_Alert_Automation.pdf</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>979-8-3315-7702-5</td><td>Chapter in Proceeding</td><td>Bhubaneswar</td><td>UKANI VIJAYKUMAR SHANTILAL</td><td>PRIYANK THAKKAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>PG-COMPUTER SCIENCE ENG.DEPT.</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_123" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1667&amp;cid=386">Click Here</a>
+                        </td><td>65</td><td>NANOSCALE DEVICE: FROM ELECTRONICS TO PHOTONICS.</td><td>MISSING CELL DEFECT ANALYSIS OF REVERSINLE 1-BIT MAGNITUDE COMPARATOR</td><td>book_chapter.jpg</td><td>CRC PRESS</td><td>1</td><td>2026</td><td>2025-26</td><td>9781779640574</td><td>Chapter in Book</td><td>-</td><td>DHARE VAISHALI HITESH</td><td>DIVY MODI</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>PG-ELECTRONIC COMMUNI.ENG.DEPT.[VLSI]</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_124" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1703&amp;cid=386">Click Here</a>
+                        </td><td>81</td><td>LECTURE NOTES IN NETWORKS AND SYSTEMS</td><td>SECURING SYSTEMS THROUGH LOG ANOMALY DETECTION: FROM TRADITIONAL LEARNING TO LLMS</td><td>Securing_Systems_Through_Log_Anomaly_Detection__From_Traditional_Learning_to&#160;LLMs___Springer_Nature_Link.pdf</td><td>SPRINGER</td><td>1</td><td>2026</td><td>2025-26</td><td>2367-3389</td><td>Chapter in Proceeding</td><td>Bangkok</td><td>PIMAL KHANPARA</td><td>PRASHAM SHAH</td><td>SHARADA VALIVETI</td><td>GAURANG RAVAL</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>PG-INFORMATION &amp; NETWORK SECURITY</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_125" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1809&amp;cid=386">Click Here</a>
+                        </td><td>119</td><td>MOTOR-IMAGERY ELECTROENCEPHALOGRAPHY SIGNAL DECODING USING ICA AND MACHINE LEARNING FOR PROSTHETIC CONTROL</td><td>2025 IEEE 2ND INTERNATIONAL CONFERENCE FOR WOMEN IN COMPUTING (INCOWOCO)</td><td>JIGAR_PROOF_1.pdf</td><td>IEEE</td><td>11</td><td>2025</td><td>2025-26</td><td>979-8-3315-7155-9</td><td>Chapter in Book</td><td>Jodhpur, India</td><td>JIGAR A GOHIL</td><td>TRIVEDI REENA RAJANIKANT</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>PG-MECHANICAL (CAD/CAM)ENG.DEPT.</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_126" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1811&amp;cid=386">Click Here</a>
+                        </td><td>120</td><td>POSITIONAL CONTROL OF A 3- D PRINTED  INDEGENUS  6 DOF ROBOTIC ARM</td><td>ASSISTIVE ROBOTICS PERSPECTIVES, CHALLENGES, AND FIRMWARE</td><td>book_ch_t_and_f.pdf</td><td>TAYLOR &amp; FRANCIS, CRC PRESS</td><td>1</td><td>2026</td><td>2025-26</td><td>9781003434412</td><td>Chapter in Book</td><td>Boca Raton</td><td>PRIYAM A PARIKH</td><td>NAITIK DALWADI</td><td>TRIVEDI REENA RAJANIKANT</td><td>DEBANIK ROY</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>PG-MECHANICAL (CAD/CAM)ENG.DEPT.</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_127" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1544&amp;cid=386">Click Here</a>
+                        </td><td>14</td><td>25 INTERNATIONAL CONFERENCE ON ADVANCES IN MODERN AGE TECHNOLOGIES FOR HEALTH AND ENGINEERING SCIENCE (AMATHE)</td><td>ANALYSIS OF LI ION BATTERY USING COMPUTATIONAL FLUID DYNAMICS</td><td>Analysis_of_Li_Ion_Battery_using_Computational_Fluid_Dynamics.pdf</td><td>IEEE</td><td>8</td><td>2025</td><td>2025-26</td><td>1930-5556</td><td>Chapter in Proceeding</td><td>new york</td><td>PRASHANT GADHVI</td><td>PARTH SHAH</td><td>REENA TRIVEDI</td><td>PRIYAM PARIKH</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY</td><td>PG-MECHANICAL (CAD/CAM)ENG.DEPT.</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_128" OnClick="Download_Click"></a>
+                        </td><td>21</td><td>IEEE INTERNATIONAL CONFERENCE ON EMERGING TECHNOLOGIES AND APPLICATIONS</td><td>IEEE INTERNATIONAL CONFERENCE ON EMERGING TECHNOLOGIES AND APPLICATIONS</td><td>&nbsp;</td><td>IEEE</td><td>8</td><td>2025</td><td>2025-26</td><td>979-8-3315-2132-5</td><td>Chapter in Proceeding</td><td>New York</td><td>PAWAN KUMAR</td><td>SNEHAL RAJPUT</td><td>SUNEEL YADAV</td><td>PRITISH KUMAR VARADWAJ</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_129" OnClick="Download_Click"></a>
+                        </td><td>32</td><td>INNOVATIVE COMPUTING AND COMMUNICATIONS:PROCEEDINGS OF ICICC 2025, VOLUME 3</td><td>ENHANCING ADAPTABILITY, SECURITY AND RESOURCE OPTIMIZATION BY CONVERGING GENERATIVE AI WITH IOT</td><td>&nbsp;</td><td>SPRINGER</td><td>10</td><td>2025</td><td>2025-26</td><td>978-981-96-6715-4</td><td>Chapter in Proceeding</td><td>Singapore</td><td>N MOLAKATALA</td><td>R DEEPA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_130" OnClick="Download_Click"></a>
+                        </td><td>57</td><td>2025 INTERNATIONAL CONFERENCE ON INTELLIGENT AND SECURE ENGINEERING SOLUTIONS (CISES)</td><td>AN EMPIRICAL COMPARISON AND COMPLEXITY ANALYSIS OF AUTOENCODERS FOR DIMENSIONALITY REDUCTION OF IMAGES</td><td>&nbsp;</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>979-8-3315-7349-2</td><td>Chapter in Proceeding</td><td>Greater Noida Gautam Budh Nagar, India</td><td>NILESHKUMAR  PATEL</td><td>YASHVI BHADANIA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_131" OnClick="Download_Click"></a>
+                        </td><td>83</td><td>2025 IEEE 13TH REGION 10 HUMANITARIAN TECHNOLOGY CONFERENCE (R10-HTC)</td><td>PUF AND EDGE-ASSISTED SECURE V2V COMMUNICATION FRAMEWORK FOR ITS UNDERLYING 6G NETWORKS</td><td>&nbsp;</td><td>IEEE</td><td>2</td><td>2026</td><td>2025-26</td><td>979-8-3315-3252-9</td><td>Chapter in Proceeding</td><td>Ichikawa, Japan</td><td>PARTH VYAS</td><td>RATNESH PATEL</td><td>CHITT BHAVSAR</td><td>JITENDRA BHATIA</td><td>MALARAM KUMHAR</td><td>NILESHKUMAR PATEL</td><td>RAJESH GUPTA</td><td>SUDEEP TANWAR</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>COMPUTER SCIENCE &amp; ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_132" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1717&amp;cid=386">Click Here</a>
+                        </td><td>88</td><td>INTERNATIONAL CONFERENCE ON SMART INNOVATIONS IN SYSTEMS, INFRASTRUCTURE, MECHANICAL, POWER AI &amp; COMPUTING TECHNOLOGIES (SISIPACT 2025)</td><td>ELECTRIC VEHICLE CHARGING USING WIRELESS POWER TRANSFER TECHNOLOGY</td><td>First_Page_Wireless_Power_Transfer.pdf</td><td>IEEE</td><td>3</td><td>2026</td><td>2025-26</td><td>10.1109/SISIMPACT67725.2025.11439344</td><td>Chapter in Proceeding</td><td>Bhopal, MP</td><td>AKASH VINOD NAGMOTE</td><td>ANIK GOSWAMI</td><td>ANAND KUMAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_133" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1718&amp;cid=386">Click Here</a>
+                        </td><td>89</td><td>IEEE INTERNATIONAL CONFERENCE ON SMART POWER, ENERGY, RENEWABLES, AND TRANSPORTATION (IEEE-SPERT) 2025</td><td>ANALYSIS OF SOLAR BASED DOMESTIC INDUCTION HEATING USING CLASS D CONVERTER</td><td>Analysis_of_solar_based_domestic_induction_heating_using_Class_D_converter_IEEEE_SPERT.pdf</td><td>IEEE</td><td>12</td><td>2025</td><td>2025-26</td><td>979-8-3315-9894-5/25/$31.00 &#169;2025 IEEE</td><td>Chapter in Proceeding</td><td>Surat, Gujarat</td><td>KUMAR   ANAND</td><td>ANIK GOSWAMI</td><td>AJAY KUMAR MAURYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_134" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1743&amp;cid=386">Click Here</a>
+                        </td><td>101</td><td>2ND INTERNATIONAL CONFERENCE ON COGNITIVE COMPUTING IN ENGINEERING, COMMUNICATIONS, SCIENCES AND BIOMEDICAL HEALTH INFORMATICS (IC3ECSBHI)</td><td>&nbsp;</td><td>PV_1.pdf</td><td>IEEE</td><td>4</td><td>2026</td><td>2025-26</td><td>979-8-3315-5692-1</td><td>Chapter in Proceeding</td><td>Greater Noida, (Delhi NCR), India</td><td>RAVI V. SHAH</td><td>YASHODHAN THIGULLA</td><td>AJAY KUMAR  MAURYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_135" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1744&amp;cid=386">Click Here</a>
+                        </td><td>102</td><td>IEEE INTERNATIONAL CONFERENCE ON SMART POWER, ENERGY, RENEWABLES, AND TRANSPORTATION (SPERT)</td><td>ANALYSIS OF SOLAR BASED DOMESTIC INDUCTION HEATING USING CLASS D CONVERTER</td><td>Anand.pdf</td><td>IEEE</td><td>4</td><td>2026</td><td>2025-26</td><td>979-8-3315-9895-2</td><td>Chapter in Proceeding</td><td>Surat, India</td><td>ANAND KUMAR</td><td>ANIK GOSWAMI</td><td>AJAY KUMAR  MAURYA</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_136" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1691&amp;cid=386">Click Here</a>
+                        </td><td>74</td><td>FLOATING PHOTOVOLTAICS</td><td>DEGRADATION OF FLOATING PHOTOVOLTAIC SYSTEMS</td><td>Book_Chapter.jpg</td><td>ELSEVIER</td><td>1</td><td>2026</td><td>2025-26</td><td>9780443337741</td><td>Chapter in Book</td><td>Amsterdam</td><td>ANIK GOSWAMI</td><td>PRADIP KUMAR SADHU</td><td>SENTHIL KUMAR NATARAJAN</td><td>PRABHAKAR MAHALINGAM</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>ELECTRICAL ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_137" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1645&amp;cid=386">Click Here</a>
+                        </td><td>54</td><td>2025 IEEE SPACE, AEROSPACE AND DEFENCE CONFERENCE (SPACE)</td><td>CONVENTIONAL VS DEEP-LEARNING METHODS FOR VISIBLE AND INFRARED IMAGE FUSION: A HUMAN PERCEPTION BASED COMPARISON</td><td>space1-1.pdf</td><td>IEEE</td><td>9</td><td>2025</td><td>2025-26</td><td>979-8-3315-1552-2</td><td>Chapter in Proceeding</td><td>Bangalore</td><td>NITHIN ESWARAPPA</td><td>SHEFALI WALDEKAR</td><td>JEEVAN K M</td><td>BIKRAM KUMAR VIVEK</td><td>KOSHY GEORGE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_138" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1646&amp;cid=386">Click Here</a>
+                        </td><td>55</td><td>2025 IEEE SPACE, AEROSPACE AND DEFENCE CONFERENCE (SPACE)</td><td>TRIMODAL IMAGE FUSION FRAMEWORK FOR A VISIBLE-INFRARED-SAR BENCHMARK DATASET</td><td>space2-1.pdf</td><td>IEEE</td><td>9</td><td>2025</td><td>2025-26</td><td>979-8-3315-1552-2</td><td>Chapter in Proceeding</td><td>Bangalore</td><td>NITHIN ESWARAPPA</td><td>JEEVAN K M</td><td>SHEFALI WALDEKAR</td><td>BIKRAM KUMAR VIVEK</td><td>KOSHY GEORGE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_139" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1698&amp;cid=386">Click Here</a>
+                        </td><td>79</td><td>TENCON 2025 - 2025 IEEE REGION 10 CONFERENCE (TENCON)</td><td>HYLAPDFN: A HYBRID APPROACH FOR INFRARED-VISIBLE IMAGE FUSION USING LAPLACIAN PYRAMID AND DECODER FUSION NETWORK</td><td>SW_Tencon25_pg1.pdf</td><td>IEEE</td><td>2</td><td>2026</td><td>2025-26</td><td>2159-3450</td><td>Chapter in Proceeding</td><td>Kota Kinabalu, Malaysia</td><td>NITHIN ESWARAPPA</td><td>JEEVAN K M</td><td>WALDEKAR  SHEFALI</td><td>BIKRAM KUMAR VIVEK</td><td>KOSHY GEORGE</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>ELECTRONICS &amp;  COMMUNICATION ENG.DEPT.(UG)</td>
+			</tr><tr style="background-color:#F7F7DE;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_140" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1694&amp;cid=386">Click Here</a>
+                        </td><td>75</td><td>HUMAN-IN-THE-LOOP AI FOR WASTE SEGREGATION: ACCURACY, EQUITY, AND PATHWAYS TO SCALE</td><td>2025 INTERNATIONAL CONFERENCE ON INTELLIGENT COMPUTING, INFORMATION AND CONTROL SYSTEMS (ICOIICS)</td><td>Human-in-the-Loop_AI_for_Waste_Segregation_Accuracy_Equity_and_Pathways_to_Scale.pdf</td><td>IEEE</td><td>2</td><td>2026</td><td>2025-26</td><td>979-8-3315-9897-6</td><td>Chapter in Proceeding</td><td>Lalitpur, Nepal</td><td>VINOD PATEL</td><td>MARGI PATEL</td><td>AKASH BHASNEY</td><td>ANAND GADWAL</td><td>NITIN RATHORE</td><td>RAMESH NAIK</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>MATHEMATICS &amp;  HUMANITIES</td>
+			</tr><tr style="background-color:White;">
+				<td align="center" valign="middle">
+                            &nbsp;&nbsp;&nbsp;
+                         
+                                 <a id="ContentPlaceHolder1_GridView1_HyperLink1_141" OnClick="Download_Click" href="https://apps.nirmauni.ac.in/rpms/pages/reports/frmshowproof.aspx?id=BC1695&amp;cid=386">Click Here</a>
+                        </td><td>76</td><td>2025 EIGHTH INTERNATIONAL CONFERENCE ON IMAGE INFORMATION PROCESSING (ICIIP)</td><td>THE IMPACT OF AUTOMATION AND AI: EXPLORING HOW AUTOMATION AND AI WILL RESHAPE TEAM DYNAMICS AND THE SKILL SET NEEDED FOR THE FUTURE HIGH-PERFORMING TEAM</td><td>The_impact_of_Automation_and_AI_Exploring_how_automation_and_AI_will_reshape_team_dynamics_and_the_skill_set_needed_for_the_future_high-performing_team_(1).pdf</td><td>IEEE</td><td>1</td><td>2026</td><td>2025-26</td><td>2640-074X</td><td>Chapter in Proceeding</td><td>Solan (Near Shimla) Himachal Pradesh, India</td><td>VINOD KUMAR  PATEL</td><td>AJIT KUMAR SINGH</td><td>ANURAG JAIN</td><td>MAHARSHI THAKER</td><td>PRASEEJARAJEEV MENON</td><td>APARNA PATRIKAR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>INSTITUTE OF TECHNOLOGY UNDER NIRMA UNIVERSITY</td><td>MATHEMATICS &amp;  HUMANITIES</td>
+			</tr>
+		</table>
+	</div>
+
+        </div>
+    
+</div>

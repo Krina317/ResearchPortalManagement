@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DepartmentListRepository extends JpaRepository<DepartmentList, Long>{
-	List<DepartmentList> findsByPubliationTypeAndActiveTrue(PublicationType publicationType);
-	Optional<DepartmentList> findsByDeptCodeAndPublicationTypeAndActiveTrue(String deptCode, PublicationType publicationType);
-	Optional<DepartmentList> findsByDeptNameAndPublicationTypeAndActiveTrue(String deptName, PublicationType publicationType);
+	List<DepartmentList> findByPublicationTypeAndActiveTrue(PublicationType publicationType);
+	Optional<DepartmentList> findByDeptCodeAndPublicationTypeAndActiveTrue(String deptCode, PublicationType publicationType);
+	Optional<DepartmentList> findByDeptNameAndPublicationTypeAndActiveTrue(String deptName, PublicationType publicationType);
 }

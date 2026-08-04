@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ConferencePaperRepository extends JpaRepository<ConferencePaper, Long> {
-	Optional<ConferencePaper> findsByPaperTitle(String paperTitle);
+	Optional<ConferencePaper> findByPaperTitle(String paperTitle);
 	boolean existsByPaperTitle(String paperTitle);
 	
 }

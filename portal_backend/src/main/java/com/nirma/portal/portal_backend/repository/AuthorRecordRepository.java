@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AuthorRecordRepository extends JpaRepository<AuthorRecord, Long> {
-	List<AuthorRecord> findsByPublicationIdAndPublicationType(Long publicationId, PublicationType publicationType);
-	List<AuthorRecord> findsByNormalisedNameContainingIgnoreCase(String normalizedName);
+	List<AuthorRecord> findByPublicationIdAndPublicationType(Long publicationId, PublicationType publicationType);
+	List<AuthorRecord> findByNormalizedNameContainingIgnoreCase(String normalizedName);
 
 }
