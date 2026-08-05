@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import com.nirma.portal.portal_backend.DTO.DepartmentListRequestDTO;
-import com.nirma.portal.portal_backend.DTO.DepartmentListResponseDTO;
+import com.nirma.portal.portal_backend.dto.DepartmentListRequestDTO;
+import com.nirma.portal.portal_backend.dto.DepartmentListResponseDTO;
 import com.nirma.portal.portal_backend.entity.DepartmentList;
 
 @Mapper(componentModel = "spring")

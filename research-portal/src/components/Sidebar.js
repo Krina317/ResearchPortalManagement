@@ -34,14 +34,12 @@ const navItems = [
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
-
   const linkClasses = ({ isActive }) =>
     `flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium tracking-tight transition-colors ${
       isActive
         ? "bg-emerald-50 text-emerald-700"
         : "text-gray-600 hover:bg-gray-50"
     }`;
-
   return (
     <>
       {/* Mobile top bar */}
@@ -59,7 +57,6 @@ export default function Sidebar() {
           {isOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
-
       {/* Overlay for mobile when open */}
       {isOpen && (
         <div
@@ -67,7 +64,6 @@ export default function Sidebar() {
           onClick={() => setIsOpen(false)}
         />
       )}
-
       {/* Sidebar */}
       <aside
         className={`
@@ -85,11 +81,9 @@ export default function Sidebar() {
             Data Portal
         </p>
         </div>
-
         <p className="text-[11px] font-semibold text-gray-400 px-2 mb-1.5 tracking-wider uppercase">
           Menu
         </p>
-
         <nav className="flex flex-col gap-0.5">
           {navItems.map(({ path, label, icon: Icon }) => (
             <NavLink

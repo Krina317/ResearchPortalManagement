@@ -1,4 +1,4 @@
-package com.nirma.portal.portal_backend.DTO;
+package com.nirma.portal.portal_backend.dto;
 
 import java.time.LocalDate;
 

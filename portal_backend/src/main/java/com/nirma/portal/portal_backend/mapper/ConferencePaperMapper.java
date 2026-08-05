@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import com.nirma.portal.portal_backend.DTO.ConferencePaperRequestDTO;
-import com.nirma.portal.portal_backend.DTO.ConferencePaperResponseDTO;
+import com.nirma.portal.portal_backend.dto.ConferencePaperRequestDTO;
+import com.nirma.portal.portal_backend.dto.ConferencePaperResponseDTO;
 import com.nirma.portal.portal_backend.entity.ConferencePaper;
 
 @Mapper(componentModel = "spring")

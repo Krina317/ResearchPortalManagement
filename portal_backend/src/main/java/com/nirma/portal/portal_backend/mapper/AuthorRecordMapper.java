@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import com.nirma.portal.portal_backend.DTO.AuthorRecordRequestDTO;
-import com.nirma.portal.portal_backend.DTO.AuthorRecordResponseDTO;
+import com.nirma.portal.portal_backend.dto.AuthorRecordRequestDTO;
+import com.nirma.portal.portal_backend.dto.AuthorRecordResponseDTO;
 import com.nirma.portal.portal_backend.entity.AuthorRecord;
-
+ 
 @Mapper(componentModel = "spring")
 public interface AuthorRecordMapper {
 	  AuthorRecordResponseDTO toResponseDTO(AuthorRecord entity);

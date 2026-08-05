@@ -1,10 +1,10 @@
 import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Sidebar from "./Sidebar";
-import UploadPage from "./UploadPage";
+import UploadPage from "./Upload/UploadPage";
 import Dashboard from "./Dashboard";
 import TopBar from "./TopBar";
-import ConferencePage from "./ConferencePage";
+import ConferencePage from "./Conference/ConferencePage";
 
 function Placeholder({ title }) {
   return (
