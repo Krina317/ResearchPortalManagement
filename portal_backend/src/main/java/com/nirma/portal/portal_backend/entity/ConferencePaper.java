@@ -22,8 +22,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ConferencePaper {
 	@Id
-	@Column(nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false)
+	private Long sourceId;
 	
 	@Column(nullable = false)
 	private String conferenceName;

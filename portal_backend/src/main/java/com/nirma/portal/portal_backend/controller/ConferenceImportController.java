@@ -1,5 +1,7 @@
 package com.nirma.portal.portal_backend.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,12 +17,13 @@ public class ConferenceImportController {
 
     private final ConferenceImportService conferenceImportService;
 
-    @PostMapping("/import")
-    public ConferenceImportResult importConference(@RequestParam("file") MultipartFile file) {
+    @PostMapping(value = "/import", consumes = "multipart/form-data")
+    public ResponseEntity<?> importConference(@RequestParam("file") MultipartFile file) {
         try {
-            return conferenceImportService.importConference(file);
+            ConferenceImportResult result = conferenceImportService.importConference(file);
+            return ResponseEntity.ok(result);
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e.getMessage(), e); // temporary — replace with your try/catch style + proper error DTO later
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }

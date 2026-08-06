@@ -20,11 +20,9 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nirma.portal.portal_backend.entity.AuthorRecord;
 import com.nirma.portal.portal_backend.entity.ConferencePaper;
 import com.nirma.portal.portal_backend.entity.ExcelColumnMap;
 import com.nirma.portal.portal_backend.entity.PublicationType;
-import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
 import com.nirma.portal.portal_backend.repository.ConferencePaperRepository;
 import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
@@ -36,12 +34,10 @@ import lombok.RequiredArgsConstructor;
 public class ConferenceImportService {
 
     private final ConferencePaperRepository conferencePaperRepository;
-    private final AuthorRecordRepository authorRecordRepository;
     private final DepartmentListRepository departmentListRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
+    private final ConferenceRowPersister conferenceRowPersister;
 
-    // Tries each of these in order until one successfully parses the date string.
-    // Covers "10/07/2025" and "10/7/25" style variations from the ERP export.
     private static final List<DateTimeFormatter> DATE_FORMATS = List.of(
             DateTimeFormatter.ofPattern("dd/MM/yyyy"),
             DateTimeFormatter.ofPattern("d/M/yyyy"),
@@ -50,7 +46,6 @@ public class ConferenceImportService {
     );
 
     private static final String CONFERENCE_PAPER_ENTITY = "ConferencePaper";
-
     private static final String AUTHOR_COLUMN_PREFIX = "Author";
     private static final int MAX_AUTHOR_COLUMNS = 10;
 
@@ -134,6 +129,8 @@ public class ConferenceImportService {
         return headerIndex;
     }
 
+    // Each row is now isolated: a bad row is recorded as an error and skipped,
+    // it no longer aborts the entire import.
     private void processRows(Elements rows, Map<String, Integer> headerIndex, List<ExcelColumnMap> mappings,
                               Set<String> allowedDeptCodes, ConferenceImportResult result) {
         for (int r = 1; r < rows.size(); r++) {
@@ -141,7 +138,11 @@ public class ConferenceImportService {
             if (cells.isEmpty() || isRowEmpty(cells)) {
                 continue;
             }
-            processRow(cells, headerIndex, mappings, allowedDeptCodes, result);
+            try {
+                processRow(cells, headerIndex, mappings, allowedDeptCodes, result);
+            } catch (Exception e) {
+                result.recordSkippedError("Row " + (r + 1) + ": " + e.getMessage());
+            }
         }
     }
 
@@ -171,14 +172,12 @@ public class ConferenceImportService {
             setFieldByReflection(paper, mapping.getFieldName(), mapping.getDataType(), rawValue);
         }
 
-        // Department filter: only keep rows whose deptCode is active in DepartmentList
         String deptCode = paper.getDeptCode() == null ? "" : paper.getDeptCode().trim().toUpperCase();
         if (!allowedDeptCodes.contains(deptCode)) {
             result.recordSkippedDepartment(paper.getPaperTitle(), deptCode);
             return;
         }
 
-        // Duplicate check: paperTitle is unique, skip instead of letting the DB throw
         if (conferencePaperRepository.existsByPaperTitle(paper.getPaperTitle())) {
             result.recordSkippedDuplicate(paper.getPaperTitle());
             return;
@@ -186,8 +185,7 @@ public class ConferenceImportService {
 
         List<String> authorNames = extractAuthorNames(cells, headerIndex);
 
-        saveConferencePaper(paper);
-        saveAuthors(paper, authorNames);
+        conferenceRowPersister.saveRow(paper, authorNames);
         result.recordSaved();
     }
 
@@ -228,7 +226,16 @@ public class ConferenceImportService {
         }
     }
 
+    // Handles BOTH cases you ran into: normal date-strings ("10/07/2025") tried against
+    // DATE_FORMATS, and Excel's numeric "serial date" (a plain integer like "45840", which
+    // is how a genuine binary .xlsx sometimes represents a date if a cell wasn't formatted
+    // as text). If the raw value is purely digits, it's treated as a serial day-count from
+    // 1899-12-30 (Excel's date epoch, off-by-one quirk included) instead of a formatted string.
     private LocalDate parseDateWithFallback(String value) {
+        if (value.matches("\\d+")) {
+            long serial = Long.parseLong(value);
+            return LocalDate.of(1899, 12, 30).plusDays(serial);
+        }
         for (DateTimeFormatter format : DATE_FORMATS) {
             try {
                 return LocalDate.parse(value, format);
@@ -237,7 +244,7 @@ public class ConferenceImportService {
             }
         }
         throw new IllegalArgumentException(
-                "Invalid date value: '" + value + "' (tried dd/MM/yyyy, d/M/yyyy, dd/MM/yy, d/M/yy)");
+                "Invalid date value: '" + value + "' (tried dd/MM/yyyy, d/M/yyyy, dd/MM/yy, d/M/yy, and Excel serial number)");
     }
 
     private List<String> extractAuthorNames(Elements cells, Map<String, Integer> headerIndex) {
@@ -253,27 +260,6 @@ public class ConferenceImportService {
             }
         }
         return authors;
-    }
-
-    private void saveConferencePaper(ConferencePaper paper) {
-        conferencePaperRepository.save(paper);
-    }
-
-    private void saveAuthors(ConferencePaper paper, List<String> authorNames) {
-        int position = 1;
-        for (String name : authorNames) {
-            AuthorRecord author = new AuthorRecord();
-            author.setDisplayName(name);
-            author.setNormalizedName(normalizeName(name));
-            author.setPublicationId(paper.getId());
-            author.setPublicationType(PublicationType.CONFERENCE);
-            author.setAuthorPosition(position++);
-            authorRecordRepository.save(author);
-        }
-    }
-
-    private String normalizeName(String name) {
-        return name.toUpperCase().replaceAll("\\s+", " ").trim();
     }
 
     private boolean isRowEmpty(Elements cells) {
