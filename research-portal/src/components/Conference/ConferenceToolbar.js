@@ -1,8 +1,8 @@
-import { Upload, Download } from "lucide-react";
+import { Upload, Download, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ColumnSelector from "./ColumnSelector";
 
-export default function ConferenceToolbar() {
+export default function ConferenceToolbar({ selectedColumns, onColumnsChange, onExport, exporting }) {
     const navigate = useNavigate();
     return (
         <div className="bg-white rounded-xl border border-gray-200 p-4 mb-5">
@@ -13,18 +13,25 @@ export default function ConferenceToolbar() {
                     </h2>
                 </div>
                 <div className="flex gap-3">
-                <button
-                    onClick={() => navigate("/upload/conference")}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
-                >
-                    <Upload size={18}/>
-                    Upload New
-                </button>
-                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50">
-                        <Download size={18}/>
-                        Export Excel
+                    <button
+                        onClick={() => navigate("/upload/conference")}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
+                    >
+                        <Upload size={18}/>
+                        Upload New
                     </button>
-                    <ColumnSelector/>
+                    <button
+                        onClick={onExport}
+                        disabled={exporting}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {exporting ? <Loader2 size={18} className="animate-spin" /> : <Download size={18}/>}
+                        {exporting ? "Exporting..." : "Export Excel"}
+                    </button>
+                    <ColumnSelector
+                        selectedColumns={selectedColumns}
+                        onColumnsChange={onColumnsChange}
+                    />
                 </div>
             </div>
         </div>
