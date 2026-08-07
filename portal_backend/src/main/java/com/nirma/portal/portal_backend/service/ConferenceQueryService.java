@@ -86,7 +86,10 @@ public class ConferenceQueryService {
         columns.add(new ColumnMetaDTO("authors", "Authors"));
         return columns;
     }
-
+    @Transactional(readOnly = true)
+    public long getTotalCount() {
+        return conferencePaperRepository.count();
+    }
     // -- helpers --
 
     private Map<Long, List<AuthorRecord>> fetchAuthorsFor(List<Long> paperIds) {
