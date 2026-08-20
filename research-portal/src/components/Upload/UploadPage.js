@@ -5,11 +5,11 @@ import UploadBox from "./UploadBox";
 import UploadPreviewTable from "./UploadPreviewTable";
 import UploadSummaryCard from "./UploadSummaryCard";
 import UploadPagination from "./UploadPagination";
-import { uploadConferenceFile } from "../../api/conferenceApi";
+import { uploadConferenceFile, uploadJournalFile } from "../../api/publicationApi";
 
 const UPLOAD_HANDLERS = {
-    conference: uploadConferenceFile
-    // journal: not implemented on backend yet
+    conference: uploadConferenceFile,
+    journal: uploadJournalFile
     // "book-chapters": not implemented on backend yet
 };
 
@@ -155,7 +155,3 @@ export default function UploadPage() {
     );
 
 }
-
-
-
-

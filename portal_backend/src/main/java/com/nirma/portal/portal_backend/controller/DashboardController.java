@@ -12,11 +12,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/dashboard")
 @RequiredArgsConstructor
 public class DashboardController {
-
     private final ConferenceQueryService conferenceQueryService;
-
     @GetMapping("/count")
-    public long getTotalConferencePapers() {
+    public long getTotalConferencePapers(){
         return conferenceQueryService.getTotalCount();
     }
 }
