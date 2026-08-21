@@ -5,7 +5,7 @@ export async function fetchDashboardSummary() {
 
     const response = await fetch(`${BASE_URL}/dashboard/count`);
 
-    if (!response.ok) {,d. vnaepiroq vjmu[]
+    if (!response.ok) {
         throw new Error("Unable to fetch dashboard.");
     }
 

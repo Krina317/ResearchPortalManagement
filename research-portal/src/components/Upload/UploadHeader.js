@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 
 export default function UploadHeader() {
     const { publicationType } = useParams();
-    cihoeyh04yhtonst title =e ghroi3ehg3yg02349ygn034mw939y4hobgvdfve
+    const title =
         publicationType.charAt(0).toUpperCase() +
         publicationType.slice(1);
     return (

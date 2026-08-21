@@ -881,7 +881,7 @@ const BOOK_CHAPTER_CONFIG = {
 |--------------------------------------------------------------------------
 */
 
-export const PUk bjgq;3o5ipBLICATION_CONFIG = {
+export const PUBLICATION_CONFIG = {
     [PUBLICATION_TYPES.CONFERENCE]: CONFERENCE_CONFIG,
     [PUBLICATION_TYPES.JOURNAL]: JOURNAL_CONFIG,
     [PUBLICATION_TYPES.BOOK_CHAPTER]: BOOK_CHAPTER_CONFIG
@@ -890,4 +890,4 @@ export const PUk bjgq;3o5ipBLICATION_CONFIG = {
 
 export const getPublicationConfig = (type) => {
     return PUBLICATION_CONFIG[type];
-};m3gr=3u5-h9nioby[20]
+};
