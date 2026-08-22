@@ -40,6 +40,12 @@ public class JournalImportService {
     private static final String AUTHOR_COLUMN_PREFIX = "Author";
     private static final int MAX_AUTHOR_COLUMNS = 10;
 
+    // The "Download File" column's cell content is just the literal text
+    // "Click Here" (an <a> tag) — the real value is in that anchor's href,
+    // not its text. This is the field name that column maps to in
+    // ExcelColumnMap; special-cased below wherever it's referenced.
+    private static final String DOWNLOAD_LINK_FIELD = "downloadFileLink";
+
     public JournalImportResult importJournal(MultipartFile file) {
         validateFile(file);
 
@@ -54,9 +60,13 @@ public class JournalImportService {
             throw new IllegalArgumentException("Sheet has no header row.");
         }
 
+        // ---- STEP 1 SETUP: column mapping ----
         List<ExcelColumnMap> mappings = excelColumnMapRepository
                 .findByPublicationTypeAndEnabledTrue(PublicationType.JOURNAL);
 
+        Map<String, Integer> headerIndex = validateHeader(rows.get(0), mappings);
+
+        // ---- STEP 2 SETUP: department filtering ----
         // deptCode -> deptName lookup, built from DB rows, used below to resolve
         // the raw "Department Name" cell text (full name) into a short deptCode.
         List<DepartmentList> departments = departmentListRepository
@@ -71,8 +81,6 @@ public class JournalImportService {
         Set<String> allowedDeptCodes = departments.stream()
                 .map(d -> d.getDeptCode().trim().toUpperCase())
                 .collect(Collectors.toCollection(HashSet::new));
-
-        Map<String, Integer> headerIndex = validateHeader(rows.get(0), mappings);
 
         JournalImportResult result = new JournalImportResult();
         processRows(rows, headerIndex, mappings, allowedDeptCodes, deptNameToCode, result);
@@ -129,38 +137,37 @@ public class JournalImportService {
         return headerIndex;
     }
 
-    // Each row is now isolated: a bad row is recorded as an error and skipped,
-    // it no longer aborts the entire import.
+    // Each row is isolated: a bad row is recorded as an error and skipped,
+    // it does not abort the entire import.
     private void processRows(Elements rows, Map<String, Integer> headerIndex, List<ExcelColumnMap> mappings,
                               Set<String> allowedDeptCodes, Map<String, String> deptNameToCode,
                               JournalImportResult result) {
         for (int r = 1; r < rows.size(); r++) {
-            Elements cells = rows.get(r).select("td");
+            Element rowElement = rows.get(r);
+            Elements cells = rowElement.select("td");
             if (cells.isEmpty() || isRowEmpty(cells)) {
                 continue;
             }
             try {
-                processRow(cells, headerIndex, mappings, allowedDeptCodes, deptNameToCode, result);
+                processRow(rowElement, cells, headerIndex, mappings, allowedDeptCodes, deptNameToCode, result);
             } catch (Exception e) {
                 result.recordSkippedError("Row " + (r + 1) + ": " + e.getMessage());
             }
         }
     }
 
-    private void processRow(Elements cells, Map<String, Integer> headerIndex, List<ExcelColumnMap> mappings,
-                             Set<String> allowedDeptCodes, Map<String, String> deptNameToCode,
-                             JournalImportResult result) {
+    private void processRow(Element rowElement, Elements cells, Map<String, Integer> headerIndex,
+                             List<ExcelColumnMap> mappings, Set<String> allowedDeptCodes,
+                             Map<String, String> deptNameToCode, JournalImportResult result) {
         JournalPaper paper = new JournalPaper();
 
+        // ---- STEP 1: apply the excel -> entity column mapping ----
         for (ExcelColumnMap mapping : mappings) {
             if (!JOURNAL_PAPER_ENTITY.equals(mapping.getEntityName())) {
                 continue;
             }
 
-            Integer colIndex = headerIndex.get(mapping.getExcelColName());
-            String rawValue = (colIndex != null && colIndex < cells.size())
-                    ? cells.get(colIndex).text().trim()
-                    : "";
+            String rawValue = extractRawValue(rowElement, cells, headerIndex, mapping);
 
             if (rawValue.isEmpty() && mapping.getDefaultValue() != null) {
                 rawValue = mapping.getDefaultValue();
@@ -171,7 +178,7 @@ public class JournalImportService {
                         "Missing required value for column '" + mapping.getExcelColName() + "'");
             }
 
-            // "deptCode" field gets special handling below: the raw Excel value here is
+            // "deptCode" field gets special handling: the raw Excel value here is
             // a full department name ("CHEMICAL ENG.DEPT.(UG)"), not a short code, so we
             // resolve it against deptNameToCode instead of setting it verbatim.
             if ("deptCode".equals(mapping.getFieldName())) {
@@ -182,15 +189,17 @@ public class JournalImportService {
             setFieldByReflection(paper, mapping.getFieldName(), mapping.getDataType(), rawValue);
         }
 
+        // ---- STEP 2: filter by allowed department ----
         String deptCode = paper.getDeptCode() == null ? "" : paper.getDeptCode().trim().toUpperCase();
         if (!allowedDeptCodes.contains(deptCode)) {
             result.recordSkippedDepartment(paper.getPaperTitle(), deptCode);
             return;
         }
 
-        // Dedupe by paperTitle only, same approach as Conference. Confirmed with
-        // prof that within the filtered departments, paper titles are reliably
-        // unique, so exact-title matching is sufficient here.
+        // ---- STEP 3: dedupe by paperTitle ----
+        // Same approach as Conference. Confirmed with prof that within the
+        // filtered departments, paper titles are reliably unique, so exact-title
+        // matching is sufficient here.
         if (journalPaperRepository.existsByPaperTitle(paper.getPaperTitle())) {
             result.recordSkippedDuplicate(paper.getPaperTitle());
             return;
@@ -200,6 +209,27 @@ public class JournalImportService {
 
         journalRowPersister.saveRow(paper, authorNames);
         result.recordSaved();
+    }
+
+    /**
+     * Reads the raw cell text for a mapped column, except for the download-link
+     * field, which is special-cased: its cell content is just "Click Here" text,
+     * the real value lives in that <a> tag's href. Rather than trusting the
+     * mapped column index (fragile if the report's HTML nests oddly), we find
+     * the row's hyperlink directly by its id pattern, which ASP.NET assigns
+     * uniquely per row (HyperLink1_0, HyperLink1_1, ...).
+     */
+    private String extractRawValue(Element rowElement, Elements cells, Map<String, Integer> headerIndex,
+                                    ExcelColumnMap mapping) {
+        if (DOWNLOAD_LINK_FIELD.equals(mapping.getFieldName())) {
+            Element linkEl = rowElement.selectFirst("a[href][id*=HyperLink]");
+            return linkEl != null ? linkEl.attr("href").trim() : "";
+        }
+
+        Integer colIndex = headerIndex.get(mapping.getExcelColName());
+        return (colIndex != null && colIndex < cells.size())
+                ? cells.get(colIndex).text().trim()
+                : "";
     }
 
     private void setFieldByReflection(Object target, String fieldName, String dataType, String rawValue) {

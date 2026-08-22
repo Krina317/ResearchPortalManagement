@@ -120,7 +120,8 @@ public class JournalQueryService {
                 paper.getYearOfPublication(), paper.getMonthOfPublication(), paper.getIndexIn(),
                 paper.getIssnNo(), paper.getVolumeNo(), paper.getIssueNo(), paper.getPageNo(),
                 paper.getWebsiteJournalLink(), paper.getArticleLink(), paper.getDoiNumber(),
-                paper.getInstituteName(), paper.getDeptCode(), authorDtos, merged
+                paper.getInstituteName(), paper.getDeptCode(),
+                authorDtos, merged, paper.getDownloadFileLink()
         );
     }
 

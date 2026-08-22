@@ -66,4 +66,6 @@ public class JournalPaper {
 
 	@Column(nullable = false)
 	private String deptCode;
+	
+	private String downloadFileLink;
 }

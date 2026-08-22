@@ -32,4 +32,5 @@ public class JournalListItemDTO {
     private String deptCode;
     private List<AuthorRecordResponseDTO> authors;
     private String mergedAuthors;
+    private String downloadFileLink;
 }

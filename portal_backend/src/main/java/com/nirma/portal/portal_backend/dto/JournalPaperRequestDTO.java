@@ -42,4 +42,6 @@ public class JournalPaperRequestDTO {
 
 	@NotBlank(message = "Department code is required")
 	private String deptCode;
+	
+	private String downloadFileLink;
 }

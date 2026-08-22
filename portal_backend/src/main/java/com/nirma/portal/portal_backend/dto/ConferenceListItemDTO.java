@@ -22,6 +22,7 @@ public class ConferenceListItemDTO {
     private LocalDate toDate;
     private String instituteName;
     private String deptCode;
+    
 
     private List<AuthorRecordResponseDTO> authors;  // ordered by authorPosition
     private String authorsMerged;                   // "A, B, C" convenience field
