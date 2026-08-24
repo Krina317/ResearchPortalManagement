@@ -1,6 +1,7 @@
 package com.nirma.portal.portal_backend.dto;
 
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,14 @@ public class JournalSearchCriteria {
     private String issueNo;
     private String pageNo;
     private String doiNumber;
+
+    private String articleLink;             // contains
+
+    private Double minImpactFactorClarivate;
+    private Double maxImpactFactorClarivate;
+    private Double minImpactFactorJournal;
+    private Double maxImpactFactorJournal;
+
     private String authorName;
     private List<Integer> authorPositions;
     private Integer fromYear;

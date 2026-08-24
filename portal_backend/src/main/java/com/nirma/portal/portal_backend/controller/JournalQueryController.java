@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 public class JournalQueryController {
 
     private static final Set<String> ALLOWED_SORT_FIELDS = Set.of("id", "yearOfPublication");
-
     private final JournalQueryService journalQueryService;
 
     @GetMapping
@@ -38,6 +37,11 @@ public class JournalQueryController {
             @RequestParam(required = false) String issueNo,
             @RequestParam(required = false) String pageNo,
             @RequestParam(required = false) String doiNumber,
+            @RequestParam(required = false) String articleLink,
+            @RequestParam(required = false) Double minImpactFactorClarivate,
+            @RequestParam(required = false) Double maxImpactFactorClarivate,
+            @RequestParam(required = false) Double minImpactFactorJournal,
+            @RequestParam(required = false) Double maxImpactFactorJournal,
             @RequestParam(required = false) String authorName,
             @RequestParam(required = false) List<Integer> authorPosition,
             @RequestParam(required = false) Integer fromYear,
@@ -57,13 +61,16 @@ public class JournalQueryController {
         JournalSearchCriteria criteria = new JournalSearchCriteria(
                 paperTitle, journalName, journalType, department, instituteName,
                 indexIn, issnNo, volumeNo, issueNo, pageNo, doiNumber,
+                articleLink,
+                minImpactFactorClarivate, maxImpactFactorClarivate,
+                minImpactFactorJournal, maxImpactFactorJournal,
                 authorName, authorPosition,
                 fromYear, fromMonth, toYear, toMonth,
                 academicYear, financialYear, calendarYear
         );
+
         Sort sort = Sort.by(Sort.Direction.fromString(sortDir), safeSortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
-
         return journalQueryService.search(criteria, pageable);
     }
 
