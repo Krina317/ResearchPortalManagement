@@ -65,7 +65,7 @@ public class JournalPaper {
 	private String instituteName;
 
 	@Column(nullable = false)
-	private String deptCode;
+	private String deptName;
 	
 	private String downloadFileLink;
 }

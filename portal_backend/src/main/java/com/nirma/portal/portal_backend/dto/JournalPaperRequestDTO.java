@@ -41,7 +41,7 @@ public class JournalPaperRequestDTO {
 	private String instituteName;
 
 	@NotBlank(message = "Department code is required")
-	private String deptCode;
+	private String deptName;
 	
 	private String downloadFileLink;
 }

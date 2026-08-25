@@ -72,18 +72,12 @@ public class JournalImportService {
         List<DepartmentList> departments = departmentListRepository
                 .findByPublicationTypeAndActiveTrue(PublicationType.JOURNAL);
 
-        Map<String, String> deptNameToCode = departments.stream()
-                .collect(Collectors.toMap(
-                        d -> d.getDeptName().trim().toUpperCase(),
-                        d -> d.getDeptCode().trim().toUpperCase(),
-                        (a, b) -> a));
-
-        Set<String> allowedDeptCodes = departments.stream()
-                .map(d -> d.getDeptCode().trim().toUpperCase())
+        Set<String> allowedDeptNames = departments.stream()
+                .map(d -> d.getDeptName().trim().toUpperCase())
                 .collect(Collectors.toCollection(HashSet::new));
 
         JournalImportResult result = new JournalImportResult();
-        processRows(rows, headerIndex, mappings, allowedDeptCodes, deptNameToCode, result);
+        processRows(rows, headerIndex, mappings, allowedDeptNames, result);
         return result;
     }
 
@@ -181,18 +175,13 @@ public class JournalImportService {
             // "deptCode" field gets special handling: the raw Excel value here is
             // a full department name ("CHEMICAL ENG.DEPT.(UG)"), not a short code, so we
             // resolve it against deptNameToCode instead of setting it verbatim.
-            if ("deptCode".equals(mapping.getFieldName())) {
-                String resolvedCode = deptNameToCode.get(rawValue.trim().toUpperCase());
-                rawValue = resolvedCode != null ? resolvedCode : rawValue.trim().toUpperCase();
-            }
-
             setFieldByReflection(paper, mapping.getFieldName(), mapping.getDataType(), rawValue);
         }
 
         // ---- STEP 2: filter by allowed department ----
-        String deptCode = paper.getDeptCode() == null ? "" : paper.getDeptCode().trim().toUpperCase();
-        if (!allowedDeptCodes.contains(deptCode)) {
-            result.recordSkippedDepartment(paper.getPaperTitle(), deptCode);
+        String deptName = paper.getDeptName() == null ? "" : paper.getDeptName().trim().toUpperCase();
+        if (!allowedDeptNames.contains(deptName)) {
+            result.recordSkippedDepartment(paper.getPaperTitle(), deptName);
             return;
         }
 

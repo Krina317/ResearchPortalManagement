@@ -28,6 +28,6 @@ public class JournalPaperResponseDTO {
 	private String doiNumber;
 	private String fileName;
 	private String instituteName;
-	private String deptCode;
+	private String deptName;
 	private String downloadFileLink;
 }

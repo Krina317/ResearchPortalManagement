@@ -29,7 +29,7 @@ public class JournalListItemDTO {
     private String articleLink;
     private String doiNumber;
     private String instituteName;
-    private String deptCode;
+    private String deptName;
     private List<AuthorRecordResponseDTO> authors;
     private String mergedAuthors;
     private String downloadFileLink;
