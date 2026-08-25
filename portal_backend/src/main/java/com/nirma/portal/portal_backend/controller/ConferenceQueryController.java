@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import com.nirma.portal.portal_backend.dto.ColumnMetaDTO;
+import com.nirma.portal.portal_backend.dto.ConferenceFilterOptionsDTO;
 import com.nirma.portal.portal_backend.dto.ConferenceListItemDTO;
 import com.nirma.portal.portal_backend.dto.ConferenceSearchCriteria;
 import com.nirma.portal.portal_backend.service.ConferenceQueryService;
@@ -66,5 +67,10 @@ public class ConferenceQueryController {
     @GetMapping("/columns")
     public List<ColumnMetaDTO> getColumns() {
         return conferenceQueryService.getColumns();
+    }
+    
+    @GetMapping("/filter-options")
+    public ConferenceFilterOptionsDTO getFilterOptions() {
+        return conferenceQueryService.getFilterOptions();
     }
 }

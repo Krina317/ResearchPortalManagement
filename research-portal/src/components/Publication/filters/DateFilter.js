@@ -3,21 +3,16 @@ export default function DateFilter({
     toDate,
     onChange
 }) {
-
     return (
         <div>
-
             <div className="
                 grid
                 grid-cols-1
                 md:grid-cols-2
                 gap-5
             ">
-
                 {/* FROM DATE */}
-
                 <div>
-
                     <label className="
                         block
                         text-sm
@@ -27,7 +22,6 @@ export default function DateFilter({
                     ">
                         From Date
                     </label>
-
                     <input
                         type="date"
                         value={fromDate ?? ""}
@@ -48,14 +42,9 @@ export default function DateFilter({
                             outline-none
                         "
                     />
-
                 </div>
-
-
                 {/* TO DATE */}
-
                 <div>
-
                     <label className="
                         block
                         text-sm
@@ -65,7 +54,6 @@ export default function DateFilter({
                     ">
                         To Date
                     </label>
-
                     <input
                         type="date"
                         value={toDate ?? ""}
@@ -86,11 +74,8 @@ export default function DateFilter({
                             outline-none
                         "
                     />
-
                 </div>
-
             </div>
-
         </div>
     );
 }

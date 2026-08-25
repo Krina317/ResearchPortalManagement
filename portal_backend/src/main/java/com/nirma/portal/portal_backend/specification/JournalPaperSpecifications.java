@@ -34,7 +34,7 @@ public class JournalPaperSpecifications {
             spec = spec.and((root, q, cb) -> cb.equal(cb.upper(root.get("journalType")), type.toUpperCase()));
         }
         if (c.getDepartments() != null && !c.getDepartments().isEmpty()) {
-            spec = spec.and((root, q, cb) -> root.get("deptCode").in(c.getDepartments()));
+            spec = spec.and((root, q, cb) -> root.get("deptName").in(c.getDepartments()));
         }
         if (notBlank(c.getInstituteName()) && !"ALL".equalsIgnoreCase(c.getInstituteName())) {
             String inst = c.getInstituteName();

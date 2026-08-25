@@ -1,5 +1,3 @@
-import { getDepartmentLabel } from "../config/publicationConfig";
-
 const BASE_URL = "http://localhost:8080/api";
 
 const ENDPOINTS = {
@@ -127,9 +125,9 @@ function normalizeRecord(record, publicationType) {
         result = { ...result, authorsMerged: record.mergedAuthors };
     }
 
-    if (publicationType === "journal" && record.deptCode !== undefined) {
-        result = { ...result, deptName: getDepartmentLabel("journal", record.deptCode) };
-    }
+    // if (publicationType === "journal" && record.deptCode !== undefined) {
+    //     result = { ...result, deptName: getDepartmentLabel("journal", record.deptCode) };
+    // }
 
     return result;
 
@@ -200,11 +198,6 @@ export async function fetchAllMatchingPublication(publicationType, filters, { so
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Uploads
-|--------------------------------------------------------------------------
-*/
 export async function uploadConferenceFile(file) {
 
     const formData = new FormData();
@@ -251,4 +244,39 @@ export async function uploadJournalFile(file) {
 
     return data;
 
+}
+
+
+export async function fetchColumns(publicationType) {
+    const endpoint = ENDPOINTS[publicationType];
+    if (!endpoint) {
+        throw new Error(`Unknown publication type: ${publicationType}`);
+    }
+    const response = await fetch(`${BASE_URL}/${endpoint}/columns`);
+    if (!response.ok) {
+        throw new Error(`Failed to load columns for ${publicationType}`);
+    }
+    const data = await response.json();
+    return data.map(column => ({
+        key: column.field,
+        label: column.label,
+        field: column.field,
+        sortable: true
+    }));
+}
+
+export async function fetchFilterOptions(publicationType) {
+    const endpoint = ENDPOINTS[publicationType];
+    if (!endpoint) {
+        throw new Error(`Unknown publication type: ${publicationType}`);
+    }
+    const response = await fetch(
+        `${BASE_URL}/${endpoint}/filter-options`
+    );
+    if (!response.ok) {
+        throw new Error(
+            `Failed to load filter options for ${publicationType}`
+        );
+    }
+    return await response.json();
 }

@@ -1,74 +1,59 @@
+import { useState, useEffect } from "react";
 export default function PublicationPagination({
     page,
     totalPages,
     onPageChange,
     pageSize,
-    pageSizeOptions = [10, 20, 50, 100],
     onPageSizeChange
 }) {
-
     const currentPage = page + 1;
-
+    const [draft, setDraft] = useState(String(pageSize));
+    useEffect(()=>{
+        setDraft(String(pageSize));
+    }, [pageSize]);
     function goToPage(newPage) {
-
         if (
-            newPage < 0 ||
+            newPage <= 0 ||
             newPage >= totalPages
         ) {
             return;
         }
-
         onPageChange(newPage);
-
     }
-
+    function commitDraft(){
+        const parsed = Number(draft);
+        if(Number.isFinite(parsed)&&parsed >= 1){
+            onPageSizeChange(Math.round(parsed));
+        }
+        else{
+            setDraft(String(pageSize));
+        }
+    }
     return (
-
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-5">
-
             <div className="flex items-center gap-4">
-
                 <p className="text-sm text-gray-500">
-
                     Page {currentPage} of{" "}
                     {Math.max(totalPages, 1)}
-
                 </p>
-
                 {onPageSizeChange && (
-
                     <div className="flex items-center gap-2">
-
                         <label className="text-sm text-gray-500">
                             Rows per page
                         </label>
-
-                        <select
-                            value={pageSize}
-                            onChange={(e) =>
-                                onPageSizeChange(Number(e.target.value))
+                        <input type="text"
+                            value={draft}
+                            onChange={(e) => setDraft(e.target.value)}
+                            onBlur={commitDraft}
+                            onKeyDown={(e) =>
+                               { if(e.key === "Enter") e.currentTarget.blur();}
                             }
-                            className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm bg-white"
-                        >
-
-                            {pageSizeOptions.map(size => (
-
-                                <option key={size} value={size}>
-                                    {size}
-                                </option>
-
-                            ))}
-
-                        </select>
-
+                            className="w-16 border border-gray-300 rounded-lg px-2 py-1.5 text-sm bg-white"
+                        />
                     </div>
-
                 )}
-
             </div>
-
             <div className="flex items-center gap-2">
-
                 <button
                     onClick={() =>
                         goToPage(page - 1)
@@ -78,7 +63,6 @@ export default function PublicationPagination({
                 >
                     Previous
                 </button>
-
                 <button
                     onClick={() =>
                         goToPage(page + 1)
@@ -91,11 +75,7 @@ export default function PublicationPagination({
                 >
                     Next
                 </button>
-
             </div>
-
         </div>
-
     );
-
 }

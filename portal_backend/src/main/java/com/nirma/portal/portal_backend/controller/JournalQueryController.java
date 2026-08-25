@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import com.nirma.portal.portal_backend.dto.ColumnMetaDTO;
+import com.nirma.portal.portal_backend.dto.JournalFilterOptionsDTO;
 import com.nirma.portal.portal_backend.dto.JournalListItemDTO;
 import com.nirma.portal.portal_backend.dto.JournalSearchCriteria;
 import com.nirma.portal.portal_backend.service.JournalQueryService;
@@ -82,5 +83,10 @@ public class JournalQueryController {
     @GetMapping("/columns")
     public List<ColumnMetaDTO> getColumns() {
         return journalQueryService.getColumns();
+    }
+    
+    @GetMapping("/filter-options")
+    public JournalFilterOptionsDTO getFilterOptions() {
+        return journalQueryService.getFilterOptions();
     }
 }

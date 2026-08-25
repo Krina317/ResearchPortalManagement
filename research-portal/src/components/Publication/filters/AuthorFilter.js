@@ -9,86 +9,59 @@ export default function AuthorFilter({
     mergeAuthors,
     onMergeAuthorsChange
 }) {
-
     const positions = [
         "1", "2", "3", "4", "5",
         "6", "7", "8", "9", "10"
     ];
-
     const [open, setOpen] = useState(false);
-
     const popupRef = useRef(null);
-
-
     useEffect(() => {
-
         function handleClickOutside(event) {
-
             if (
                 popupRef.current &&
                 !popupRef.current.contains(event.target)
             ) {
                 setOpen(false);
             }
-
         }
-
         document.addEventListener(
             "mousedown",
             handleClickOutside
         );
-
         return () => {
             document.removeEventListener(
                 "mousedown",
                 handleClickOutside
             );
         };
-
     }, []);
-
-
     function togglePosition(position) {
-
         if (selectedPositions.includes(position)) {
-
             onPositionsChange(
                 selectedPositions.filter(
                     item => item !== position
                 )
             );
-
         } else {
-
             onPositionsChange([
                 ...selectedPositions,
                 position
             ]);
-
         }
-
     }
-
-
     function selectAll() {
         onPositionsChange(positions);
     }
-
-
     function clearAll() {
         onPositionsChange([]);
     }
-
-
     return (
-
         <div className="
             bg-white
             border border-gray-200
             rounded-xl
             p-6
         ">
-
             <div className="
                 grid
                 grid-cols-1
@@ -96,11 +69,8 @@ export default function AuthorFilter({
                 xl:grid-cols-3
                 gap-5
             ">
-
                 {/* AUTHOR NAME */}
-
                 <div>
-
                     <label className="
                         block
                         text-sm
@@ -110,7 +80,6 @@ export default function AuthorFilter({
                     ">
                         Author Name
                     </label>
-
                     <input
                         type="text"
                         value={authorName}
@@ -131,17 +100,12 @@ export default function AuthorFilter({
                             outline-none
                         "
                     />
-
                 </div>
-
-
                 {/* AUTHOR POSITION */}
-
                 <div
                     className="relative"
                     ref={popupRef}
                 >
-
                     <label className="
                         block
                         text-sm
@@ -151,7 +115,6 @@ export default function AuthorFilter({
                     ">
                         Author Position
                     </label>
-
                     <button
                         type="button"
                         onClick={() =>
@@ -169,19 +132,13 @@ export default function AuthorFilter({
                             text-sm
                         "
                     >
-
                         {selectedPositions.length === 0
                             ? "Any Position"
                             : `${selectedPositions.length} Selected`
                         }
-
                         <ChevronDown size={18} />
-
                     </button>
-
-
                     {open && (
-
                         <div className="
                             absolute
                             left-0
@@ -193,20 +150,15 @@ export default function AuthorFilter({
                             shadow-xl
                             z-50
                         ">
-
                             <div className="
                                 px-5
                                 py-4
                                 border-b
                             ">
-
                                 <h2 className="font-semibold">
                                     Author Position
                                 </h2>
-
                             </div>
-
-
                             <div className="
                                 flex
                                 justify-between
@@ -214,7 +166,6 @@ export default function AuthorFilter({
                                 py-3
                                 text-sm
                             ">
-
                                 <button
                                     type="button"
                                     onClick={selectAll}
@@ -222,7 +173,6 @@ export default function AuthorFilter({
                                 >
                                     Select All
                                 </button>
-
                                 <button
                                     type="button"
                                     onClick={clearAll}
@@ -230,10 +180,7 @@ export default function AuthorFilter({
                                 >
                                     Clear
                                 </button>
-
                             </div>
-
-
                             <div className="
                                 grid
                                 grid-cols-2
@@ -241,7 +188,6 @@ export default function AuthorFilter({
                                 px-5
                                 pb-4
                             ">
-
                                 {positions.map(
                                     position => (
 
@@ -254,7 +200,6 @@ export default function AuthorFilter({
                                                 text-sm
                                             "
                                         >
-
                                             <input
                                                 type="checkbox"
                                                 checked={
@@ -268,24 +213,17 @@ export default function AuthorFilter({
                                                     )
                                                 }
                                             />
-
                                             {position}
-
                                         </label>
-
                                     )
                                 )}
-
                             </div>
-
-
                             <div className="
                                 border-t
                                 p-4
                                 flex
                                 justify-end
                             ">
-
                                 <button
                                     type="button"
                                     onClick={() =>
@@ -302,20 +240,12 @@ export default function AuthorFilter({
                                 >
                                     Apply
                                 </button>
-
                             </div>
-
                         </div>
-
                     )}
-
                 </div>
-
-
                 {/* MERGE / UNMERGE */}
-
                 <div>
-
                     <label className="
                         block
                         text-sm
@@ -325,14 +255,12 @@ export default function AuthorFilter({
                     ">
                         View Authors
                     </label>
-
                     <div className="
                         flex
                         rounded-lg
                         overflow-hidden
                         border border-gray-300
                     ">
-
                         <button
                             type="button"
                             onClick={() =>
@@ -351,7 +279,6 @@ export default function AuthorFilter({
                         >
                             Merge
                         </button>
-
                         <button
                             type="button"
                             onClick={() =>
@@ -370,13 +297,9 @@ export default function AuthorFilter({
                         >
                             Unmerge
                         </button>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     );
 }

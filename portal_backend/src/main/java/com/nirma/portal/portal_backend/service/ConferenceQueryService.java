@@ -3,6 +3,7 @@ package com.nirma.portal.portal_backend.service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -13,15 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nirma.portal.portal_backend.dto.AuthorRecordResponseDTO;
 import com.nirma.portal.portal_backend.dto.ColumnMetaDTO;
+import com.nirma.portal.portal_backend.dto.ConferenceFilterOptionsDTO;
 import com.nirma.portal.portal_backend.dto.ConferenceListItemDTO;
 import com.nirma.portal.portal_backend.dto.ConferenceSearchCriteria;
 import com.nirma.portal.portal_backend.entity.AuthorRecord;
 import com.nirma.portal.portal_backend.entity.ConferencePaper;
+import com.nirma.portal.portal_backend.entity.DepartmentList;
 import com.nirma.portal.portal_backend.entity.PublicationType;
 import com.nirma.portal.portal_backend.exception.ConferencePaperNotFoundException;
 import com.nirma.portal.portal_backend.mapper.AuthorRecordMapper;
 import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
 import com.nirma.portal.portal_backend.repository.ConferencePaperRepository;
+import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
 import com.nirma.portal.portal_backend.specification.AuthorRecordSpecifications;
 import com.nirma.portal.portal_backend.specification.ConferencePaperSpecifications;
@@ -36,6 +40,7 @@ public class ConferenceQueryService {
     private final AuthorRecordRepository authorRecordRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
     private final AuthorRecordMapper authorRecordMapper;
+    private final DepartmentListRepository departmentListRepository; 
 
     @Transactional(readOnly = true)
     public Page<ConferenceListItemDTO> search(ConferenceSearchCriteria criteria, Pageable pageable) {
@@ -123,4 +128,33 @@ public class ConferenceQueryService {
     private boolean notBlank(String s) {
         return s != null && !s.isBlank();
     }
+    
+    @Transactional(readOnly = true)
+    public ConferenceFilterOptionsDTO getFilterOptions() {
+        List<String> conferenceTypes = conferencePaperRepository.findAll()
+                .stream()
+                .map(ConferencePaper::getConferenceType)
+                .filter(Objects::nonNull)
+                .distinct()
+                .sorted()
+                .toList();
+
+        List<String> institutes = conferencePaperRepository.findAll()
+                .stream()
+                .map(ConferencePaper::getInstituteName)
+                .filter(Objects::nonNull)
+                .distinct()
+                .sorted()
+                .toList();
+		List<String> departments = departmentListRepository
+                .findByPublicationTypeAndActiveTrue(PublicationType.CONFERENCE)
+                .stream()
+                .map(DepartmentList::getDeptCode)
+                .toList();
+
+        return new ConferenceFilterOptionsDTO(conferenceTypes, institutes, departments);
+    }
+    
+    
+    
 }

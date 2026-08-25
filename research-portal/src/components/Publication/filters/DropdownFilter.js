@@ -5,14 +5,11 @@ export default function DropdownFilter({
     onChange,
     placeholder = "All"
 }) {
-
     return (
         <div>
-
             <label className="block text-sm font-medium text-gray-700 mb-2">
                 {label}
             </label>
-
             <select
                 value={value ?? ""}
                 onChange={(e) => onChange(e.target.value)}
@@ -29,24 +26,18 @@ export default function DropdownFilter({
                     outline-none
                 "
             >
-
                 <option value="">
                     {placeholder}
                 </option>
-
                 {options.map((option) => (
-
                     <option
                         key={option}
                         value={option}
                     >
                         {option}
                     </option>
-
                 ))}
-
             </select>
-
         </div>
     );
 }

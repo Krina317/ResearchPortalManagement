@@ -1,17 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Search } from "lucide-react";
-
 export default function DepartmentFilter({
     selectedDepartments = [],
     departments = [],
     onChange
 }) {
-
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
-
     const popupRef = useRef(null);
-
     /*
     |--------------------------------------------------------------------------
     | Normalize departments to {value, label} objects.
@@ -25,83 +21,57 @@ export default function DepartmentFilter({
     const normalizedDepartments = departments.map(d =>
         typeof d === "string" ? { value: d, label: d } : d
     );
-
-
     useEffect(() => {
-
         function handleClickOutside(event) {
-
             if (
                 popupRef.current &&
                 !popupRef.current.contains(event.target)
             ) {
                 setOpen(false);
             }
-
         }
-
         document.addEventListener(
             "mousedown",
             handleClickOutside
         );
-
         return () => {
             document.removeEventListener(
                 "mousedown",
                 handleClickOutside
             );
         };
-
     }, []);
-
-
     function toggleDepartment(value) {
-
         if (selectedDepartments.includes(value)) {
-
             onChange(
                 selectedDepartments.filter(
                     item => item !== value
                 )
             );
-
         } else {
-
             onChange([
                 ...selectedDepartments,
                 value
             ]);
-
         }
-
     }
-
-
     function selectAll() {
         onChange(normalizedDepartments.map(d => d.value));
     }
-
-
     function clearAll() {
         onChange([]);
     }
-
-
     const filteredDepartments = normalizedDepartments.filter(
         d =>
             d.label
                 .toLowerCase()
                 .includes(search.toLowerCase())
     );
-
-
     return (
-
         <div
             className="relative"
             ref={popupRef}
         >
-
             <label className="
                 block
                 text-sm
@@ -111,8 +81,6 @@ export default function DepartmentFilter({
             ">
                 Department
             </label>
-
-
             <button
                 type="button"
                 onClick={() =>
@@ -131,23 +99,15 @@ export default function DepartmentFilter({
                     hover:border-emerald-500
                 "
             >
-
-                <span>
-
+               <span>   
                     {selectedDepartments.length === 0
                         ? "All Departments"
                         : `${selectedDepartments.length} Selected`
                     }
-
                 </span>
-
                 <ChevronDown size={18} />
-
             </button>
-
-
             {open && (
-
                 <div className="
                     absolute
                     left-0
@@ -160,26 +120,18 @@ export default function DepartmentFilter({
                     shadow-xl
                     z-50
                 ">
-
                     <div className="
                         px-5
                         py-4
                         border-b
                     ">
-
                         <h2 className="font-semibold text-gray-800">
                             Select Departments
                         </h2>
-
                     </div>
-
-
                     {/* SEARCH */}
-
                     <div className="p-4">
-
                         <div className="relative">
-
                             <Search
                                 size={16}
                                 className="
@@ -189,7 +141,6 @@ export default function DepartmentFilter({
                                     text-gray-400
                                 "
                             />
-
                             <input
                                 type="text"
                                 value={search}
@@ -208,14 +159,9 @@ export default function DepartmentFilter({
                                     outline-none
                                 "
                             />
-
                         </div>
-
                     </div>
-
-
                     {/* SELECT / CLEAR */}
-
                     <div className="
                         flex
                         justify-between
@@ -223,7 +169,6 @@ export default function DepartmentFilter({
                         pb-3
                         text-sm
                     ">
-
                         <button
                             type="button"
                             onClick={selectAll}
@@ -234,7 +179,6 @@ export default function DepartmentFilter({
                         >
                             Select All
                         </button>
-
                         <button
                             type="button"
                             onClick={clearAll}
@@ -245,22 +189,16 @@ export default function DepartmentFilter({
                         >
                             Clear
                         </button>
-
                     </div>
-
-
                     {/* DEPARTMENTS */}
-
                     <div className="
                         max-h-60
                         overflow-y-auto
                         px-5
                         pb-4
                     ">
-
                         {filteredDepartments.map(
                             d => (
-
                                 <label
                                     key={d.value}
                                     className="
@@ -272,7 +210,6 @@ export default function DepartmentFilter({
                                         text-sm
                                     "
                                 >
-
                                     <input
                                         type="checkbox"
                                         checked={
@@ -286,18 +223,13 @@ export default function DepartmentFilter({
                                             )
                                         }
                                     />
-
                                     <span>
                                         {d.label}
                                     </span>
-
                                 </label>
-
                             )
                         )}
-
                         {filteredDepartments.length === 0 && (
-
                             <p className="
                                 text-sm
                                 text-gray-400
@@ -305,21 +237,15 @@ export default function DepartmentFilter({
                             ">
                                 No departments found.
                             </p>
-
                         )}
-
                     </div>
-
-
                     {/* APPLY */}
-
                     <div className="
                         border-t
                         p-4
                         flex
                         justify-end
                     ">
-
                         <button
                             type="button"
                             onClick={() => setOpen(false)}
@@ -335,14 +261,9 @@ export default function DepartmentFilter({
                         >
                             Apply
                         </button>
-
                     </div>
-
                 </div>
-
             )}
-
         </div>
-
     );
 }

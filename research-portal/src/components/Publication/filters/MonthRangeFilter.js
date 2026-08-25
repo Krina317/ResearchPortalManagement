@@ -6,21 +6,16 @@ export default function MonthRangeFilter({
     yearOptions = [],
     onChange
 }) {
-
     return (
         <div>
-
             <div className="
                 grid
                 grid-cols-1
                 md:grid-cols-3
                 gap-5
             ">
-
                 {/* FROM MONTH */}
-
                 <div>
-
                     <label className="
                         block
                         text-sm
@@ -30,7 +25,6 @@ export default function MonthRangeFilter({
                     ">
                         From Month
                     </label>
-
                     <select
                         value={fromMonth ?? ""}
                         onChange={(e) =>
@@ -51,11 +45,9 @@ export default function MonthRangeFilter({
                             outline-none
                         "
                     >
-
                         <option value="">
                             All
                         </option>
-
                         {monthOptions.map((month) => (
 
                             <option
@@ -64,18 +56,11 @@ export default function MonthRangeFilter({
                             >
                                 {month.label}
                             </option>
-
                         ))}
-
                     </select>
-
                 </div>
-
-
                 {/* TO MONTH */}
-
                 <div>
-
                     <label className="
                         block
                         text-sm
@@ -85,7 +70,6 @@ export default function MonthRangeFilter({
                     ">
                         To Month
                     </label>
-
                     <select
                         value={toMonth ?? ""}
                         onChange={(e) =>
@@ -106,31 +90,21 @@ export default function MonthRangeFilter({
                             outline-none
                         "
                     >
-
                         <option value="">
                             All
                         </option>
-
                         {monthOptions.map((month) => (
-
                             <option
                                 key={month.value}
                                 value={month.value}
                             >
                                 {month.label}
                             </option>
-
                         ))}
-
                     </select>
-
                 </div>
-
-
                 {/* YEAR */}
-
                 <div>
-
                     <label className="
                         block
                         text-sm
@@ -140,7 +114,6 @@ export default function MonthRangeFilter({
                     ">
                         Year
                     </label>
-
                     <select
                         value={year ?? ""}
                         onChange={(e) =>
@@ -161,13 +134,10 @@ export default function MonthRangeFilter({
                             outline-none
                         "
                     >
-
                         <option value="">
                             All
                         </option>
-
                         {yearOptions.map((item) => (
-
                             <option
                                 key={item.value}
                                 value={item.value}
@@ -176,13 +146,9 @@ export default function MonthRangeFilter({
                             </option>
 
                             ))}
-
                     </select>
-
                 </div>
-
             </div>
-
         </div>
     );
 }

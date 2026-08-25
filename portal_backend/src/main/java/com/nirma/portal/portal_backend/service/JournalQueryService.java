@@ -3,6 +3,7 @@ package com.nirma.portal.portal_backend.service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -13,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nirma.portal.portal_backend.dto.AuthorRecordResponseDTO;
 import com.nirma.portal.portal_backend.dto.ColumnMetaDTO;
+import com.nirma.portal.portal_backend.dto.JournalFilterOptionsDTO;
 import com.nirma.portal.portal_backend.dto.JournalListItemDTO;
 import com.nirma.portal.portal_backend.dto.JournalSearchCriteria;
 import com.nirma.portal.portal_backend.entity.AuthorRecord;
+import com.nirma.portal.portal_backend.entity.DepartmentList;
 import com.nirma.portal.portal_backend.entity.JournalPaper;
 import com.nirma.portal.portal_backend.entity.PublicationType;
 import com.nirma.portal.portal_backend.exception.JournalPaperNotFoundException;
@@ -25,6 +28,8 @@ import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
 import com.nirma.portal.portal_backend.repository.JournalPaperRepository;
 import com.nirma.portal.portal_backend.specification.AuthorRecordSpecifications;
 import com.nirma.portal.portal_backend.specification.JournalPaperSpecifications;
+import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +41,9 @@ public class JournalQueryService {
     private final AuthorRecordRepository authorRecordRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
     private final AuthorRecordMapper authorRecordMapper;
+    private final DepartmentListRepository departmentListRepository; 
+    
+
 
     @Transactional(readOnly = true)
     public Page<JournalListItemDTO> search(JournalSearchCriteria criteria, Pageable pageable) {
@@ -128,4 +136,32 @@ public class JournalQueryService {
     private boolean notBlank(String s) {
         return s != null && !s.isBlank();
     }
+
+    @Transactional(readOnly = true)
+    public JournalFilterOptionsDTO getFilterOptions() {
+        List<String> journalTypes = journalPaperRepository.findAll()
+                .stream()
+                .map(JournalPaper::getJournalType)
+                .filter(Objects::nonNull)
+                .distinct()
+                .sorted()
+                .toList();
+
+        List<String> institutes = journalPaperRepository.findAll()
+                .stream()
+                .map(JournalPaper::getInstituteName)
+                .filter(Objects::nonNull)
+                .distinct()
+                .sorted()
+                .toList();
+
+        List<String> departments = departmentListRepository
+                .findByPublicationTypeAndActiveTrue(PublicationType.JOURNAL)
+                .stream()
+                .map(DepartmentList::getDeptName)
+                .toList();
+
+        return new JournalFilterOptionsDTO(journalTypes, institutes, departments);
+    }
+    
 }

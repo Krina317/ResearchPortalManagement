@@ -6,15 +6,6 @@ import Dashboard from "./Dashboard";
 import TopBar from "./TopBar";
 import PublicationPage from "./Publication/PublicationPage";
 
-// function Placeholder({ title }) {
-//   return (
-//     <div className="p-8">
-//       <h1 className="text-2xl font-semibold text-gray-800">{title}</h1>
-//       <p className="text-gray-500 mt-2">Coming soon.</p>
-//     </div>
-//   );
-// }
-
 function App() {
   return (
     <BrowserRouter>
@@ -25,12 +16,6 @@ function App() {
           <main className="flex-1 min-w-0 w-full">
               <Routes>
                   <Route path="/" element={<Dashboard />} />
-                  {/* Conference
-                  <Route
-                    path="/conference"
-                    element={<ConferencePage />}
-                  /> */}
-            
                   <Route
                     path="/conference"
                     element={

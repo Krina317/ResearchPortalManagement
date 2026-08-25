@@ -5,16 +5,12 @@ export default function NumberRangeFilter({
     onFromChange,
     onToChange
 }) {
-
     return (
         <div>
-
             <label className="block text-sm font-medium text-gray-700 mb-2">
                 {label}
             </label>
-
             <div className="grid grid-cols-2 gap-3">
-
                 <input
                     type="number"
                     step="any"
@@ -34,7 +30,6 @@ export default function NumberRangeFilter({
                         outline-none
                     "
                 />
-
                 <input
                     type="number"
                     step="any"
@@ -54,9 +49,7 @@ export default function NumberRangeFilter({
                         outline-none
                     "
                 />
-
             </div>
-
         </div>
     );
 }
