@@ -5,7 +5,6 @@ import {
     Loader2
 } from "lucide-react";
 
-
 export default function PublicationTable({
     config,
     records,
@@ -19,80 +18,157 @@ export default function PublicationTable({
 }) {
     /*
     |--------------------------------------------------------------------------
-    | Column picker now lists Author1..Author10 individually (so they can be
-    | shown/hidden one at a time). When "Merge" is on, collapse whichever of
-    | those are currently visible down into a single merged "Authors" column
-    | instead. When "Unmerge" is on, leave them as separate columns.
+    | AUTHOR COLUMNS
+    |--------------------------------------------------------------------------
+    | The backend sends authors like:
+    |
+    | authors: [
+    |   { displayName: "ANUJA NAIR", authorPosition: 1 },
+    |   { displayName: "PAL PATEL", authorPosition: 2 }
+    | ]
+    |
+    | We create Author 1, Author 2, ... directly from that data.
+    |
+    | No authorPosition metadata is required from /columns.
     |--------------------------------------------------------------------------
     */
-    function getDisplayColumns() {
-        if (!mergeAuthors) {
-            return columns;
-        }
-        const firstAuthorIndex = columns.findIndex(c => c.authorPosition);
-        if (firstAuthorIndex === -1) {
-            return columns;
-        }
-        const mergedColumn = {
-            key: "authors",
-            label: "Authors",
-            field: "authors",
-            sortable: false
-        };
-        // Insertion point within the author-column-free list: count how
-        // many non-author columns come before the first author column in
-        // the original order.
-        const insertAt = columns
-            .slice(0, firstAuthorIndex)
-            .filter(c => !c.authorPosition).length;
-        const withoutAuthorColumns = columns.filter(c => !c.authorPosition);
-        return [
-            ...withoutAuthorColumns.slice(0, insertAt),
-            mergedColumn,
-            ...withoutAuthorColumns.slice(insertAt)
-        ];
+
+    function getAuthorPositions() {
+        const positions = new Set();
+
+        records.forEach(record => {
+            if (!Array.isArray(record.authors)) return;
+
+            record.authors.forEach(author => {
+                if (author?.authorPosition != null) {
+                    positions.add(Number(author.authorPosition));
+                }
+            });
+        });
+
+        return [...positions].sort((a, b) => a - b);
     }
-    const displayColumns = getDisplayColumns();
-    function getCellValue(record, column) {
+
+    function getDisplayColumns() {
+        const authorPositions = getAuthorPositions();
+
         /*
         |--------------------------------------------------------------------------
-        | Individual Author1..Author10 column (unmerged view)
+        | MERGED
         |--------------------------------------------------------------------------
         */
-        if (column.authorPosition) {
+
+        if (mergeAuthors) {
+            return [
+                ...columns.filter(column => column.key !== "authors"),
+                {
+                    key: "authors",
+                    label: "Authors",
+                    field: "authors",
+                    sortable: false,
+                    isAuthorColumn: true
+                }
+            ];
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | UNMERGED
+        |--------------------------------------------------------------------------
+        */
+
+        const authorColumns = authorPositions.map(position => ({
+            key: `author-${position}`,
+            label: `Author ${position}`,
+            field: `author-${position}`,
+            sortable: false,
+            isAuthorColumn: true,
+            authorPosition: position
+        }));
+
+        return [
+            ...columns.filter(column => column.key !== "authors"),
+            ...authorColumns
+        ];
+    }
+
+    const displayColumns = getDisplayColumns();
+
+    /*
+    |--------------------------------------------------------------------------
+    | CELL VALUE
+    |--------------------------------------------------------------------------
+    */
+
+    function getCellValue(record, column) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Individual author
+        |--------------------------------------------------------------------------
+        */
+
+        if (column.authorPosition != null) {
             if (!Array.isArray(record.authors)) {
                 return "—";
             }
+
             const author = record.authors.find(
-                a => a.authorPosition === column.authorPosition
+                a => Number(a.authorPosition) === Number(column.authorPosition)
             );
+
             return author?.displayName ?? "—";
         }
+
         /*
         |--------------------------------------------------------------------------
-        | Merged authors column ("Author1, Author2, ...")
+        | Merged authors
         |--------------------------------------------------------------------------
         */
+
         if (column.key === "authors") {
+
+            /*
+             * Journal backend sends:
+             *
+             * mergedAuthors: "ANUJA NAIR, PAL PATEL, ..."
+             */
+
+            if (record.mergedAuthors) {
+                return record.mergedAuthors;
+            }
+
+            /*
+             * publicationApi.js currently normalizes Journal's
+             * mergedAuthors -> authorsMerged.
+             */
+
             if (record.authorsMerged) {
                 return record.authorsMerged;
             }
+
+            /*
+             * Fallback: construct it from authors[]
+             */
+
             if (Array.isArray(record.authors)) {
                 return record.authors
-                    .map(author =>
-                        author.displayName ?? author.name ?? ""
-                    )
+                    .map(author => author?.displayName ?? author?.name ?? "")
                     .filter(Boolean)
                     .join(", ");
             }
+
             return "—";
         }
+
         /*
         |--------------------------------------------------------------------------
-        | Normal values
+        | Normal publication fields
         |--------------------------------------------------------------------------
         */
+
         const value = record[column.field];
+
         if (
             value === null ||
             value === undefined ||
@@ -100,11 +176,13 @@ export default function PublicationTable({
         ) {
             return "—";
         }
+
         /*
         |--------------------------------------------------------------------------
-        | Arrays / objects
+        | Arrays
         |--------------------------------------------------------------------------
         */
+
         if (Array.isArray(value)) {
             return value
                 .map(item =>
@@ -118,6 +196,13 @@ export default function PublicationTable({
                 )
                 .join(", ");
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Objects
+        |--------------------------------------------------------------------------
+        */
+
         if (typeof value === "object") {
             return (
                 value.displayName ??
@@ -125,12 +210,21 @@ export default function PublicationTable({
                 JSON.stringify(value)
             );
         }
+
         return String(value);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SORT ICON
+    |--------------------------------------------------------------------------
+    */
+
     function getSortIcon(column) {
         if (!column.sortable) {
             return null;
         }
+
         if (sortBy !== column.field) {
             return (
                 <ArrowUpDown
@@ -139,6 +233,7 @@ export default function PublicationTable({
                 />
             );
         }
+
         if (sortDir === "ASC") {
             return (
                 <ArrowUp
@@ -147,6 +242,7 @@ export default function PublicationTable({
                 />
             );
         }
+
         return (
             <ArrowDown
                 size={14}
@@ -154,11 +250,13 @@ export default function PublicationTable({
             />
         );
     }
+
     /*
     |--------------------------------------------------------------------------
-    | Loading
+    | LOADING
     |--------------------------------------------------------------------------
     */
+
     if (loading) {
         return (
             <div className="bg-white rounded-xl border border-gray-200">
@@ -167,6 +265,7 @@ export default function PublicationTable({
                         size={30}
                         className="animate-spin text-emerald-600"
                     />
+
                     <p className="mt-3 text-sm text-gray-500">
                         Loading {config.title.toLowerCase()}...
                     </p>
@@ -174,31 +273,45 @@ export default function PublicationTable({
             </div>
         );
     }
+
     /*
     |--------------------------------------------------------------------------
-    | Table
+    | TABLE
     |--------------------------------------------------------------------------
     */
+
     return (
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+
             {/* Table header information */}
+
             <div className="px-5 py-4 border-b flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+
                 <div>
                     <h2 className="font-semibold text-gray-800">
                         {config.title}
                     </h2>
+
                     <p className="text-sm text-gray-500 mt-1">
                         {totalElements} record
                         {totalElements === 1 ? "" : "s"}
                     </p>
                 </div>
+
             </div>
+
             {/* Responsive table wrapper */}
+
             <div className="w-full overflow-x-auto">
+
                 <table className="w-full min-w-max border-collapse">
+
                     <thead className="bg-gray-50">
+
                         <tr>
+
                             {displayColumns.map(column => (
+
                                 <th
                                     key={column.key}
                                     className="
@@ -213,6 +326,7 @@ export default function PublicationTable({
                                         whitespace-nowrap
                                     "
                                 >
+
                                     {column.sortable ? (
                                         <button
                                             onClick={() =>
@@ -229,18 +343,27 @@ export default function PublicationTable({
                                             <span>
                                                 {column.label}
                                             </span>
+
                                             {getSortIcon(column)}
                                         </button>
                                     ) : (
                                         column.label
                                     )}
+
                                 </th>
+
                             ))}
+
                         </tr>
+
                     </thead>
+
                     <tbody>
+
                         {records.length === 0 ? (
+
                             <tr>
+
                                 <td
                                     colSpan={displayColumns.length}
                                     className="
@@ -252,9 +375,13 @@ export default function PublicationTable({
                                 >
                                     No records found.
                                 </td>
+
                             </tr>
+
                         ) : (
+
                             records.map((record, rowIndex) => (
+
                                 <tr
                                     key={
                                         record.id ??
@@ -319,7 +446,5 @@ export default function PublicationTable({
             </div>
 
         </div>
-
     );
-
 }

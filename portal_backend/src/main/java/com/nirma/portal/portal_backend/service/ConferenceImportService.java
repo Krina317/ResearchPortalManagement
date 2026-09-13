@@ -1,7 +1,5 @@
 package com.nirma.portal.portal_backend.service;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -129,8 +127,6 @@ public class ConferenceImportService {
         return headerIndex;
     }
 
-    // Each row is now isolated: a bad row is recorded as an error and skipped,
-    // it no longer aborts the entire import.
     private void processRows(Elements rows, Map<String, Integer> headerIndex, List<ExcelColumnMap> mappings,
                               Set<String> allowedDeptCodes, ConferenceImportResult result) {
         for (int r = 1; r < rows.size(); r++) {
@@ -169,7 +165,9 @@ public class ConferenceImportService {
                         "Missing required value for column '" + mapping.getExcelColName() + "'");
             }
 
-            setFieldByReflection(paper, mapping.getFieldName(), mapping.getDataType(), rawValue);
+            if (!rawValue.isEmpty()) {
+                applyFieldValue(paper, mapping.getFieldName(), rawValue);
+            }
         }
 
         String deptCode = paper.getDeptCode() == null ? "" : paper.getDeptCode().trim().toUpperCase();
@@ -189,48 +187,35 @@ public class ConferenceImportService {
         result.recordSaved();
     }
 
-    private void setFieldByReflection(Object target, String fieldName, String dataType, String rawValue) {
-        if (rawValue.isEmpty()) {
-            return;
-        }
-
-        Object convertedValue = convertValue(dataType, rawValue, fieldName);
-
-        try {
-            Field field = target.getClass().getDeclaredField(fieldName);
-            String setterName = "set" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-            Method setter = target.getClass().getMethod(setterName, field.getType());
-            setter.invoke(target, convertedValue);
-        } catch (NoSuchFieldException | NoSuchMethodException e) {
-            throw new IllegalStateException(
+    /**
+     * Explicit field-by-field assignment — replaces the old reflection-based
+     * setter. Date fields go through parseDateWithFallback (handles both
+     * formatted strings and Excel serial numbers).
+     */
+    private void applyFieldValue(ConferencePaper paper, String fieldName, String rawValue) {
+        switch (fieldName) {
+            case "sourceId" -> paper.setSourceId(parseLong(rawValue, fieldName));
+            case "conferenceName" -> paper.setConferenceName(rawValue);
+            case "conferenceType" -> paper.setConferenceType(rawValue);
+            case "paperTitle" -> paper.setPaperTitle(rawValue);
+            case "fromDate" -> paper.setFromDate(parseDateWithFallback(rawValue));
+            case "toDate" -> paper.setToDate(parseDateWithFallback(rawValue));
+            case "instituteName" -> paper.setInstituteName(rawValue);
+            case "deptCode" -> paper.setDeptCode(rawValue);
+            default -> throw new IllegalStateException(
                     "ExcelColumnMap references field '" + fieldName +
-                    "' which does not exist on " + target.getClass().getSimpleName() +
-                    ". Check the fieldName value in the ExcelColumnMap table.", e);
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException("Failed to set field '" + fieldName + "'", e);
+                    "' which does not exist on ConferencePaper. Check the fieldName value in the ExcelColumnMap table.");
         }
     }
 
-    private Object convertValue(String dataType, String rawValue, String fieldName) {
-        String type = dataType == null ? "STRING" : dataType.toUpperCase();
+    private Long parseLong(String rawValue, String fieldName) {
         try {
-            return switch (type) {
-                case "LONG" -> Long.parseLong(rawValue);
-                case "INTEGER" -> Integer.parseInt(rawValue);
-                case "DATE" -> parseDateWithFallback(rawValue);
-                default -> rawValue;
-            };
+            return Long.parseLong(rawValue);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(
-                    "Invalid " + type + " value '" + rawValue + "' for field '" + fieldName + "'");
+            throw new IllegalArgumentException("Invalid LONG value '" + rawValue + "' for field '" + fieldName + "'");
         }
     }
 
-    // Handles BOTH cases you ran into: normal date-strings ("10/07/2025") tried against
-    // DATE_FORMATS, and Excel's numeric "serial date" (a plain integer like "45840", which
-    // is how a genuine binary .xlsx sometimes represents a date if a cell wasn't formatted
-    // as text). If the raw value is purely digits, it's treated as a serial day-count from
-    // 1899-12-30 (Excel's date epoch, off-by-one quirk included) instead of a formatted string.
     private LocalDate parseDateWithFallback(String value) {
         if (value.matches("\\d+")) {
             long serial = Long.parseLong(value);

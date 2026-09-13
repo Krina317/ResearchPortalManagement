@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +23,9 @@ import com.nirma.portal.portal_backend.entity.PublicationType;
 import com.nirma.portal.portal_backend.exception.JournalPaperNotFoundException;
 import com.nirma.portal.portal_backend.mapper.AuthorRecordMapper;
 import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
+import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
 import com.nirma.portal.portal_backend.repository.JournalPaperRepository;
-import com.nirma.portal.portal_backend.specification.AuthorRecordSpecifications;
-import com.nirma.portal.portal_backend.specification.JournalPaperSpecifications;
-import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
-
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,37 +33,38 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JournalQueryService {
 
+    private static final List<String> MONTHS = List.of(
+            "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+            "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER");
+
     private final JournalPaperRepository journalPaperRepository;
     private final AuthorRecordRepository authorRecordRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
     private final AuthorRecordMapper authorRecordMapper;
-    private final DepartmentListRepository departmentListRepository; 
-    
-
+    private final DepartmentListRepository departmentListRepository;
 
     @Transactional(readOnly = true)
     public Page<JournalListItemDTO> search(JournalSearchCriteria criteria, Pageable pageable) {
-        Specification<JournalPaper> spec = JournalPaperSpecifications.build(criteria);
 
+        List<Long> authorIds = null;
         boolean hasAuthorFilter = notBlank(criteria.getAuthorName())
                 || (criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty());
-
         if (hasAuthorFilter) {
-            List<Long> matchingPaperIds = authorRecordRepository
-                    .findAll(AuthorRecordSpecifications.build(
-                            PublicationType.JOURNAL, criteria.getAuthorName(), criteria.getAuthorPositions()))
-                    .stream()
-                    .map(AuthorRecord::getPublicationId)
-                    .distinct()
-                    .toList();
-
-            if (matchingPaperIds.isEmpty()) {
-                return Page.empty(pageable);
-            }
-            spec = spec.and(JournalPaperSpecifications.idIn(matchingPaperIds));
+            boolean hasPositions = criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty();
+            authorIds = authorRecordRepository.findMatchingPublicationIds(
+                    PublicationType.JOURNAL.name(),
+                    blankToNull(criteria.getAuthorName()),
+                    hasPositions,
+                    hasPositions ? criteria.getAuthorPositions() : List.of()
+            );
         }
 
-        Page<JournalPaper> page = journalPaperRepository.findAll(spec, pageable);
+        Integer fromTotal = resolveFromTotal(criteria);
+        Integer toTotal = resolveToTotal(criteria);
+
+        Page<JournalPaper> page = journalPaperRepository.search(
+                criteria, fromTotal, toTotal, criteria.getIndexIn(), authorIds, pageable
+        );
 
         List<Long> pageIds = page.getContent().stream().map(JournalPaper::getId).toList();
         Map<Long, List<AuthorRecord>> authorsByPaperId = fetchAuthorsFor(pageIds);
@@ -99,6 +96,54 @@ public class JournalQueryService {
         return journalPaperRepository.count();
     }
 
+    // -- year/month resolution --
+    // Priority when multiple are supplied: explicit fromYear/fromMonth (or
+    // toYear/toMonth) wins; otherwise fall back to whichever of
+    // academicYear/financialYear/calendarYear was set. These three are
+    // expected to be mutually exclusive in the UI, not combined.
+
+    private Integer resolveFromTotal(JournalSearchCriteria c) {
+        if (c.getFromYear() != null) {
+            int month = c.getFromMonth() != null ? monthToNum(c.getFromMonth()) : 1;
+            return c.getFromYear() * 12 + month;
+        }
+        if (c.getAcademicYear() != null) {
+            return c.getAcademicYear() * 12 + 7; // July
+        }
+        if (c.getFinancialYear() != null) {
+            return c.getFinancialYear() * 12 + 4; // April
+        }
+        if (c.getCalendarYear() != null) {
+            return c.getCalendarYear() * 12 + 1; // January
+        }
+        return null;
+    }
+
+    private Integer resolveToTotal(JournalSearchCriteria c) {
+        if (c.getToYear() != null) {
+            int month = c.getToMonth() != null ? monthToNum(c.getToMonth()) : 12;
+            return c.getToYear() * 12 + month;
+        }
+        if (c.getAcademicYear() != null) {
+            return (c.getAcademicYear() + 1) * 12 + 6; // June next year
+        }
+        if (c.getFinancialYear() != null) {
+            return (c.getFinancialYear() + 1) * 12 + 3; // March next year
+        }
+        if (c.getCalendarYear() != null) {
+            return c.getCalendarYear() * 12 + 12; // December
+        }
+        return null;
+    }
+
+    private int monthToNum(String month) {
+        int idx = MONTHS.indexOf(month.trim().toUpperCase());
+        if (idx < 0) {
+            throw new IllegalArgumentException("Unrecognized month: " + month);
+        }
+        return idx + 1;
+    }
+
     // -- helpers --
 
     private Map<Long, List<AuthorRecord>> fetchAuthorsFor(List<Long> paperIds) {
@@ -128,13 +173,17 @@ public class JournalQueryService {
                 paper.getYearOfPublication(), paper.getMonthOfPublication(), paper.getIndexIn(),
                 paper.getIssnNo(), paper.getVolumeNo(), paper.getIssueNo(), paper.getPageNo(),
                 paper.getWebsiteJournalLink(), paper.getArticleLink(), paper.getDoiNumber(),
-                paper.getInstituteName(), paper.getDeptCode(),
+                paper.getInstituteName(), paper.getDeptName(),
                 authorDtos, merged, paper.getDownloadFileLink()
         );
     }
 
     private boolean notBlank(String s) {
         return s != null && !s.isBlank();
+    }
+
+    private String blankToNull(String s) {
+        return notBlank(s) ? s : null;
     }
 
     @Transactional(readOnly = true)
@@ -163,5 +212,4 @@ public class JournalQueryService {
 
         return new JournalFilterOptionsDTO(journalTypes, institutes, departments);
     }
-    
 }

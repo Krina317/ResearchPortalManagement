@@ -1,5 +1,6 @@
 package com.nirma.portal.portal_backend.service;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +27,6 @@ import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
 import com.nirma.portal.portal_backend.repository.ConferencePaperRepository;
 import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
-import com.nirma.portal.portal_backend.specification.AuthorRecordSpecifications;
-import com.nirma.portal.portal_backend.specification.ConferencePaperSpecifications;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,33 +38,46 @@ public class ConferenceQueryService {
     private final AuthorRecordRepository authorRecordRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
     private final AuthorRecordMapper authorRecordMapper;
-    private final DepartmentListRepository departmentListRepository; 
+    private final DepartmentListRepository departmentListRepository;
 
     @Transactional(readOnly = true)
     public Page<ConferenceListItemDTO> search(ConferenceSearchCriteria criteria, Pageable pageable) {
-        Specification<ConferencePaper> spec = ConferencePaperSpecifications.build(criteria);
 
+        List<Long> authorIds = null;
         boolean hasAuthorFilter = notBlank(criteria.getAuthorName())
                 || (criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty());
-
         if (hasAuthorFilter) {
-            List<Long> matchingPaperIds = authorRecordRepository
-                    .findAll(AuthorRecordSpecifications.build(
-                            PublicationType.CONFERENCE, criteria.getAuthorName(), criteria.getAuthorPositions()))
-                    .stream()
-                    .map(AuthorRecord::getPublicationId)
-                    .distinct()
-                    .toList();
-
-            if (matchingPaperIds.isEmpty()) {
-                return Page.empty(pageable);
-            }
-            spec = spec.and(ConferencePaperSpecifications.idIn(matchingPaperIds));
+            boolean hasPositions = criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty();
+            authorIds = authorRecordRepository.findMatchingPublicationIds(
+                    PublicationType.CONFERENCE.name(),
+                    blankToNull(criteria.getAuthorName()),
+                    hasPositions,
+                    hasPositions ? criteria.getAuthorPositions() : List.of()
+            );
         }
 
-        Page<ConferencePaper> page = conferencePaperRepository.findAll(spec, pageable);
+        LocalDate fromDate = criteria.getFromDate();
+        LocalDate toDate = criteria.getToDate();
+        if (fromDate == null && toDate == null) {
+            if (criteria.getAcademicYear() != null) {
+                int y = criteria.getAcademicYear();
+                fromDate = LocalDate.of(y, 7, 1);
+                toDate = LocalDate.of(y + 1, 6, 30);
+            } else if (criteria.getFinancialYear() != null) {
+                int y = criteria.getFinancialYear();
+                fromDate = LocalDate.of(y, 4, 1);
+                toDate = LocalDate.of(y + 1, 3, 31);
+            } else if (criteria.getCalendarYear() != null) {
+                int y = criteria.getCalendarYear();
+                fromDate = LocalDate.of(y, 1, 1);
+                toDate = LocalDate.of(y, 12, 31);
+            }
+        }
 
-        // Batch-fetch authors for every paper on this page in ONE query (avoids N+1).
+        Page<ConferencePaper> page = conferencePaperRepository.search(
+                criteria, fromDate, toDate, authorIds, pageable
+        );
+
         List<Long> pageIds = page.getContent().stream().map(ConferencePaper::getId).toList();
         Map<Long, List<AuthorRecord>> authorsByPaperId = fetchAuthorsFor(pageIds);
 
@@ -91,10 +102,12 @@ public class ConferenceQueryService {
         columns.add(new ColumnMetaDTO("authors", "Authors"));
         return columns;
     }
+
     @Transactional(readOnly = true)
     public long getTotalCount() {
         return conferencePaperRepository.count();
     }
+
     // -- helpers --
 
     private Map<Long, List<AuthorRecord>> fetchAuthorsFor(List<Long> paperIds) {
@@ -128,7 +141,11 @@ public class ConferenceQueryService {
     private boolean notBlank(String s) {
         return s != null && !s.isBlank();
     }
-    
+
+    private String blankToNull(String s) {
+        return notBlank(s) ? s : null;
+    }
+
     @Transactional(readOnly = true)
     public ConferenceFilterOptionsDTO getFilterOptions() {
         List<String> conferenceTypes = conferencePaperRepository.findAll()
@@ -146,7 +163,8 @@ public class ConferenceQueryService {
                 .distinct()
                 .sorted()
                 .toList();
-		List<String> departments = departmentListRepository
+
+        List<String> departments = departmentListRepository
                 .findByPublicationTypeAndActiveTrue(PublicationType.CONFERENCE)
                 .stream()
                 .map(DepartmentList::getDeptCode)
@@ -154,7 +172,4 @@ public class ConferenceQueryService {
 
         return new ConferenceFilterOptionsDTO(conferenceTypes, institutes, departments);
     }
-    
-    
-    
 }

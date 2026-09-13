@@ -1,7 +1,5 @@
 package com.nirma.portal.portal_backend.service;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -60,15 +58,13 @@ public class JournalImportService {
             throw new IllegalArgumentException("Sheet has no header row.");
         }
 
-        // ---- STEP 1 SETUP: column mapping ----
+        //col mappings
         List<ExcelColumnMap> mappings = excelColumnMapRepository
                 .findByPublicationTypeAndEnabledTrue(PublicationType.JOURNAL);
 
         Map<String, Integer> headerIndex = validateHeader(rows.get(0), mappings);
 
-        // ---- STEP 2 SETUP: department filtering ----
-        // deptCode -> deptName lookup, built from DB rows, used below to resolve
-        // the raw "Department Name" cell text (full name) into a short deptCode.
+        //dept filtering 
         List<DepartmentList> departments = departmentListRepository
                 .findByPublicationTypeAndActiveTrue(PublicationType.JOURNAL);
 
@@ -133,73 +129,60 @@ public class JournalImportService {
 
     // Each row is isolated: a bad row is recorded as an error and skipped,
     // it does not abort the entire import.
-    private void processRows(Elements rows, Map<String, Integer> headerIndex, List<ExcelColumnMap> mappings,
-                              Set<String> allowedDeptCodes, Map<String, String> deptNameToCode,
-                              JournalImportResult result) {
-        for (int r = 1; r < rows.size(); r++) {
-            Element rowElement = rows.get(r);
-            Elements cells = rowElement.select("td");
-            if (cells.isEmpty() || isRowEmpty(cells)) {
-                continue;
-            }
-            try {
-                processRow(rowElement, cells, headerIndex, mappings, allowedDeptCodes, deptNameToCode, result);
-            } catch (Exception e) {
-                result.recordSkippedError("Row " + (r + 1) + ": " + e.getMessage());
-            }
+    private void processRows(Elements rows, Map<String, Integer> headerIndex, List<ExcelColumnMap> mappings,Set<String> allowedDeptNames, JournalImportResult result) {
+		for (int r = 1; r < rows.size(); r++) {
+			Element rowElement = rows.get(r);
+			Elements cells = rowElement.select("td");
+			if (cells.isEmpty() || isRowEmpty(cells)) {
+				continue;}
+			try {
+				processRow(rowElement, cells, headerIndex, mappings, allowedDeptNames, result);
+			} catch (Exception e) {
+				result.recordSkippedError("Row " + (r + 1) + ": " + e.getMessage());
+			}
+		}
+	}
+		
+	private void processRow(Element rowElement, Elements cells, Map<String, Integer> headerIndex,List<ExcelColumnMap> mappings, Set<String> allowedDeptNames,JournalImportResult result) {
+		JournalPaper paper = new JournalPaper();
+		
+		for (ExcelColumnMap mapping : mappings) {
+			if (!JOURNAL_PAPER_ENTITY.equals(mapping.getEntityName())) {
+				continue;
+		}
+	
+		String rawValue = extractRawValue(rowElement, cells, headerIndex, mapping);
+		
+		if (rawValue.isEmpty() && mapping.getDefaultValue() != null) {
+			rawValue = mapping.getDefaultValue();
+		}
+		
+		if (rawValue.isEmpty() && Boolean.TRUE.equals(mapping.getRequired())) {
+			throw new IllegalArgumentException(
+			      "Missing required value for column '" + mapping.getExcelColName() + "'");
+		}
+	
+		if (!rawValue.isEmpty()) {
+            applyFieldValue(paper, mapping.getFieldName(), rawValue);
         }
-    }
-
-    private void processRow(Element rowElement, Elements cells, Map<String, Integer> headerIndex,
-                             List<ExcelColumnMap> mappings, Set<String> allowedDeptCodes,
-                             Map<String, String> deptNameToCode, JournalImportResult result) {
-        JournalPaper paper = new JournalPaper();
-
-        // ---- STEP 1: apply the excel -> entity column mapping ----
-        for (ExcelColumnMap mapping : mappings) {
-            if (!JOURNAL_PAPER_ENTITY.equals(mapping.getEntityName())) {
-                continue;
-            }
-
-            String rawValue = extractRawValue(rowElement, cells, headerIndex, mapping);
-
-            if (rawValue.isEmpty() && mapping.getDefaultValue() != null) {
-                rawValue = mapping.getDefaultValue();
-            }
-
-            if (rawValue.isEmpty() && Boolean.TRUE.equals(mapping.getRequired())) {
-                throw new IllegalArgumentException(
-                        "Missing required value for column '" + mapping.getExcelColName() + "'");
-            }
-
-            // "deptCode" field gets special handling: the raw Excel value here is
-            // a full department name ("CHEMICAL ENG.DEPT.(UG)"), not a short code, so we
-            // resolve it against deptNameToCode instead of setting it verbatim.
-            setFieldByReflection(paper, mapping.getFieldName(), mapping.getDataType(), rawValue);
-        }
-
-        // ---- STEP 2: filter by allowed department ----
-        String deptName = paper.getDeptName() == null ? "" : paper.getDeptName().trim().toUpperCase();
-        if (!allowedDeptNames.contains(deptName)) {
-            result.recordSkippedDepartment(paper.getPaperTitle(), deptName);
-            return;
-        }
-
-        // ---- STEP 3: dedupe by paperTitle ----
-        // Same approach as Conference. Confirmed with prof that within the
-        // filtered departments, paper titles are reliably unique, so exact-title
-        // matching is sufficient here.
-        if (journalPaperRepository.existsByPaperTitle(paper.getPaperTitle())) {
-            result.recordSkippedDuplicate(paper.getPaperTitle());
-            return;
-        }
-
-        List<String> authorNames = extractAuthorNames(cells, headerIndex);
-
-        journalRowPersister.saveRow(paper, authorNames);
-        result.recordSaved();
-    }
-
+	}
+		
+		String deptName = paper.getDeptName() == null ? "" : paper.getDeptName().trim().toUpperCase();
+		if (!allowedDeptNames.contains(deptName)) {
+			result.recordSkippedDepartment(paper.getPaperTitle(), deptName);
+			return;
+		}
+		
+		if (journalPaperRepository.existsByPaperTitle(paper.getPaperTitle())) {
+			result.recordSkippedDuplicate(paper.getPaperTitle());
+			return;
+		}
+		
+		List<String> authorNames = extractAuthorNames(cells, headerIndex);
+		
+		journalRowPersister.saveRow(paper, authorNames);
+		result.recordSaved();
+	}
     /**
      * Reads the raw cell text for a mapped column, except for the download-link
      * field, which is special-cased: its cell content is just "Click Here" text,
@@ -208,6 +191,35 @@ public class JournalImportService {
      * the row's hyperlink directly by its id pattern, which ASP.NET assigns
      * uniquely per row (HyperLink1_0, HyperLink1_1, ...).
      */
+	
+	private void applyFieldValue(JournalPaper paper, String fieldName, String rawValue) {
+        switch (fieldName) {
+            case "fileName" -> paper.setFileName(rawValue);
+            case "sourceId" -> paper.setSourceId(parseLong(rawValue, fieldName));
+            case "paperTitle" -> paper.setPaperTitle(rawValue);
+            case "journalName" -> paper.setJournalName(rawValue);
+            case "journalType" -> paper.setJournalType(rawValue);
+            case "impactFactorClarivate" -> paper.setImpactFactorClarivate(rawValue);
+            case "impactFactorJournal" -> paper.setImpactFactorJournal(rawValue);
+            case "yearOfPublication" -> paper.setYearOfPublication(parseInt(rawValue, fieldName));
+            case "monthOfPublication" -> paper.setMonthOfPublication(rawValue);
+            case "indexIn" -> paper.setIndexIn(rawValue);
+            case "issnNo" -> paper.setIssnNo(rawValue);
+            case "volumeNo" -> paper.setVolumeNo(rawValue);
+            case "issueNo" -> paper.setIssueNo(rawValue);
+            case "pageNo" -> paper.setPageNo(rawValue);
+            case "websiteJournalLink" -> paper.setWebsiteJournalLink(rawValue);
+            case "articleLink" -> paper.setArticleLink(rawValue);
+            case "doiNumber" -> paper.setDoiNumber(rawValue);
+            case "instituteName" -> paper.setInstituteName(rawValue);
+            case "deptName" -> paper.setDeptName(rawValue);
+            case "downloadFileLink" -> paper.setDownloadFileLink(rawValue);
+            default -> throw new IllegalStateException(
+                    "ExcelColumnMap references field '" + fieldName +
+                    "' which does not exist on JournalPaper. Check the fieldName value in the ExcelColumnMap table.");
+        }
+    }
+	
     private String extractRawValue(Element rowElement, Elements cells, Map<String, Integer> headerIndex,
                                     ExcelColumnMap mapping) {
         if (DOWNLOAD_LINK_FIELD.equals(mapping.getFieldName())) {
@@ -221,41 +233,22 @@ public class JournalImportService {
                 : "";
     }
 
-    private void setFieldByReflection(Object target, String fieldName, String dataType, String rawValue) {
-        if (rawValue.isEmpty()) {
-            return;
-        }
-
-        Object convertedValue = convertValue(dataType, rawValue, fieldName);
-
+    private Long parseLong(String rawValue, String fieldName) {
         try {
-            Field field = target.getClass().getDeclaredField(fieldName);
-            String setterName = "set" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-            Method setter = target.getClass().getMethod(setterName, field.getType());
-            setter.invoke(target, convertedValue);
-        } catch (NoSuchFieldException | NoSuchMethodException e) {
-            throw new IllegalStateException(
-                    "ExcelColumnMap references field '" + fieldName +
-                    "' which does not exist on " + target.getClass().getSimpleName() +
-                    ". Check the fieldName value in the ExcelColumnMap table.", e);
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException("Failed to set field '" + fieldName + "'", e);
-        }
-    }
-
-    private Object convertValue(String dataType, String rawValue, String fieldName) {
-        String type = dataType == null ? "STRING" : dataType.toUpperCase();
-        try {
-            return switch (type) {
-                case "LONG" -> Long.parseLong(rawValue);
-                case "INTEGER" -> Integer.parseInt(rawValue);
-                default -> rawValue;
-            };
+            return Long.parseLong(rawValue);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(
-                    "Invalid " + type + " value '" + rawValue + "' for field '" + fieldName + "'");
+            throw new IllegalArgumentException("Invalid LONG value '" + rawValue + "' for field '" + fieldName + "'");
         }
     }
+
+    private Integer parseInt(String rawValue, String fieldName) {
+        try {
+            return Integer.parseInt(rawValue);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid INTEGER value '" + rawValue + "' for field '" + fieldName + "'");
+        }
+    }
+    
 
     private List<String> extractAuthorNames(Elements cells, Map<String, Integer> headerIndex) {
         List<String> authors = new ArrayList<>();
