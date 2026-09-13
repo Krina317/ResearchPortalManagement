@@ -1,0 +1,43 @@
+package com.nirma.portal.portal_backend.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class NuFundedProjectRequestDTO {
+
+	@NotBlank(message = "Project title is required")
+	private String projectTitle;
+	
+	@NotBlank(message = "Principal investigator is required")
+	private String principalInvestigator;
+	
+	@NotBlank(message = "Co-principal investigator list is required")
+	private String coPrincipalInvestigatorList;
+	
+	@NotNull(message = "Amount is required")
+	private Long amount;
+	
+	@NotBlank(message = "Project category is required")
+	private String projectCategory;
+	
+	@NotNull(message = "Duration is required")
+	private Long duration;
+	
+	private String outcomeOfResearchProject;
+	private String publishedPaperDetails;
+	
+	@NotBlank(message = "Joint publication proof is required")
+	private String jointPublicationProof;
+	
+	private String ugStudentDetailList;
+	
+	
+}

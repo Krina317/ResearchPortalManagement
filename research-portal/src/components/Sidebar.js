@@ -8,14 +8,14 @@ import {
   Menu,
   X,
   ChevronLeft,
-  ChevronRight,
+  ChevronRight
 } from "lucide-react";
 
 const navItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
   { path: "/conference", label: "Conference", icon: Newspaper },
   { path: "/journal", label: "Journal", icon: BookOpen },
-  { path: "/book-chapters", label: "Book Chapters", icon: BookMarked },
+  { path: "/book-chapters", label: "Book Chapters", icon: BookMarked }
 ];
 
 export default function Sidebar() {
