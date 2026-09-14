@@ -106,6 +106,36 @@ const JOURNAL_CONFIG = {
             field: "journalType"
         },
         {
+            id: "indexIn",
+            label: "Index In",
+            type: "multiDropdown",
+            field: "indexIn"
+        },
+        {
+            id: "issnNo",
+            label: "ISSN No",
+            type: "text",
+            field: "issnNo"
+        },
+        {
+            id: "volumeNo",
+            label: "Volume No",
+            type: "text",
+            field: "volumeNo"
+        },
+        {
+            id: "issueNo",
+            label: "Issue No",
+            type: "text",
+            field: "issueNo"
+        },
+        {
+            id: "pageNo",
+            label: "Page No",
+            type: "text",
+            field: "pageNo"
+        },
+        {
             id: "impactFactorClarivate",
             label: "Impact Factor (Clarivate Analytics)",
             type: "numberRange",
@@ -146,6 +176,8 @@ const JOURNAL_CONFIG = {
             label: "Calendar Year",
             type: "year"
         }
+        
+        
     ]
 
 };

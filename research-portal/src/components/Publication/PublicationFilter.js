@@ -8,6 +8,7 @@ import DateFilter from "./filters/DateFilter";
 import MonthRangeFilter from "./filters/MonthRangeFilter";
 import NumberRangeFilter from "./filters/NumberRangeFilter";
 import { getDateOptions } from "../../utils/dateOptions";
+import MultiSelectFilter from "./filters/MultiSelectFilter";
 
 export default function PublicationFilter({
     config,
@@ -253,6 +254,72 @@ export default function PublicationFilter({
                                 />
                             )}
                             {/* ========================= */}
+                            {/* INDEX IN */}
+                            {/* ========================= */}
+                            {hasFilter("indexIn") && (
+                                <MultiSelectFilter
+                                    label="Index In"
+                                    value={filters.indexIn ?? []}
+                                    options={options.indexIn ?? []}
+                                    onChange={(value) =>
+                                        updateField("indexIn", value)
+                                    }
+                                />
+                            )}
+
+                            {/* ========================= */}
+                            {/* ISSN NO */}
+                            {/* ========================= */}
+                            {hasFilter("issnNo") && (
+                                <TextFilter
+                                    label="ISSN No"
+                                    value={filters.issnNo ?? ""}
+                                    onChange={(value) =>
+                                        updateField("issnNo", value)
+                                    }
+                                />
+                            )}
+
+                            {/* ========================= */}
+                            {/* VOLUME NO */}
+                            {/* ========================= */}
+                            {hasFilter("volumeNo") && (
+                                <TextFilter
+                                    label="Volume No"
+                                    value={filters.volumeNo ?? ""}
+                                    onChange={(value) =>
+                                        updateField("volumeNo", value)
+                                    }
+                                />
+                            )}
+
+                            {/* ========================= */}
+                            {/* ISSUE NO */}
+                            {/* ========================= */}
+                            {hasFilter("issueNo") && (
+                                <TextFilter
+                                    label="Issue No"
+                                    value={filters.issueNo ?? ""}
+                                    onChange={(value) =>
+                                        updateField("issueNo", value)
+                                    }
+                                />
+                            )}
+
+                            {/* ========================= */}
+                            {/* PAGE NO */}
+                            {/* ========================= */}
+                            {hasFilter("pageNo") && (
+                                <TextFilter
+                                    label="Page No"
+                                    value={filters.pageNo ?? ""}
+                                    onChange={(value) =>
+                                        updateField("pageNo", value)
+                                    }
+                                />
+                            )}
+
+                            {/* ========================= */}
                             {/* PUBLICATION TYPE */}
                             {/* ========================= */}
                             {hasFilter("publicationType") && (
@@ -456,8 +523,11 @@ export default function PublicationFilter({
                                 toMonth={
                                     filters.toMonth ?? ""
                                 }
-                                year={
-                                    filters.year ?? ""
+                                fromYear={
+                                    filters.fromYear ?? ""
+                                }
+                                toYear={
+                                    filters.toYear ?? ""
                                 }
                                 monthOptions={
                                     monthOptions

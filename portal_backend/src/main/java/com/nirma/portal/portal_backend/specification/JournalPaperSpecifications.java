@@ -1,6 +1,7 @@
 package com.nirma.portal.portal_backend.specification;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Expression;
@@ -58,11 +59,23 @@ public class JournalPaperSpecifications {
             spec = spec.and((root, q, cb) -> cb.like(cb.upper(root.get("doiNumber")), p));
         }
         if (c.getIndexIn() != null && !c.getIndexIn().isEmpty()) {
-            for (String idx : c.getIndexIn()) {
-                if (notBlank(idx)) {
-                    String p = "%" + idx.trim().toUpperCase() + "%";
-                    spec = spec.and((root, q, cb) -> cb.like(cb.upper(root.get("indexIn")), p));
-                }
+            List<String> indexes = c.getIndexIn().stream()
+                    .filter(JournalPaperSpecifications::notBlank)
+                    .map(String::trim)
+                    .map(String::toUpperCase)
+                    .toList();
+
+            if (!indexes.isEmpty()) {
+                spec = spec.and((root, q, cb) -> {
+                    var predicates = indexes.stream()
+                            .map(idx -> cb.like(
+                                    cb.upper(root.get("indexIn")),
+                                    "%" + idx + "%"
+                            ))
+                            .toArray(jakarta.persistence.criteria.Predicate[]::new);
+
+                    return cb.or(predicates);
+                });
             }
         }
         if (c.getFromYear() != null || c.getToYear() != null) {

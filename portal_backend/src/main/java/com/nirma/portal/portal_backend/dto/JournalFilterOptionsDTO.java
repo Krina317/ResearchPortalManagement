@@ -14,4 +14,5 @@ public class JournalFilterOptionsDTO {
     private List<String> journalTypes;
     private List<String> institutes;
     private List<String> departments;
+    private List<String> indexIn;
 }

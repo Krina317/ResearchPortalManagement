@@ -137,10 +137,30 @@ public class JournalQueryService {
     }
 
     private int monthToNum(String month) {
-        int idx = MONTHS.indexOf(month.trim().toUpperCase());
+        if (month == null || month.isBlank()) {
+            throw new IllegalArgumentException("Month cannot be blank");
+        }
+
+        String value = month.trim();
+
+        // Accept numeric month values: "1" to "12"
+        try {
+            int numericMonth = Integer.parseInt(value);
+
+            if (numericMonth >= 1 && numericMonth <= 12) {
+                return numericMonth;
+            }
+        } catch (NumberFormatException ignored) {
+            // Not numeric, so continue with month-name handling
+        }
+
+        // Accept month names: January, February, etc.
+        int idx = MONTHS.indexOf(value.toUpperCase());
+
         if (idx < 0) {
             throw new IllegalArgumentException("Unrecognized month: " + month);
         }
+
         return idx + 1;
     }
 
@@ -210,6 +230,23 @@ public class JournalQueryService {
                 .map(DepartmentList::getDeptName)
                 .toList();
 
-        return new JournalFilterOptionsDTO(journalTypes, institutes, departments);
+        List<String> indexIn = journalPaperRepository.findAll()
+                .stream()
+                .map(JournalPaper::getIndexIn)
+                .filter(Objects::nonNull)
+                .flatMap(value -> java.util.Arrays.stream(value.split(",")))
+                .map(String::trim)
+                .filter(value -> !value.isBlank())
+                .distinct()
+                .sorted()
+                .toList();
+
+        return new JournalFilterOptionsDTO(
+                journalTypes,
+                institutes,
+                departments,
+                indexIn
+        );
     }
+    
 }

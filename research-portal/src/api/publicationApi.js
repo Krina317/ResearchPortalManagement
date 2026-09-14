@@ -87,14 +87,37 @@ function buildJournalParams(filters = {}, opts = {}) {
     add(params, "journalName", filters.journalName);
     add(params, "journalType", filters.journalType);
 
+    (filters.indexIn ?? []).forEach(index => {
+        if (index) params.append("indexIn", index);
+    });
+
+    add(params, "issnNo", filters.issnNo);
+    add(params, "volumeNo", filters.volumeNo);
+    add(params, "issueNo", filters.issueNo);
+    add(params, "pageNo", filters.pageNo);
+
+    add(params, "minImpactFactorClarivate", filters.impactFactorClarivateFrom);
+    add(params, "maxImpactFactorClarivate", filters.impactFactorClarivateTo);
+
+    add(params, "minImpactFactorJournal", filters.impactFactorJournalFrom);
+    add(params, "maxImpactFactorJournal", filters.impactFactorJournalTo);
+
+    
+
     if (filters.fromMonth) {
         add(params, "fromMonth", filters.fromMonth);
-        add(params, "fromYear", filters.year);
+    }
+
+    if (filters.fromYear) {
+        add(params, "fromYear", filters.fromYear);
     }
 
     if (filters.toMonth) {
         add(params, "toMonth", filters.toMonth);
-        add(params, "toYear", filters.year);
+    }
+
+    if (filters.toYear) {
+        add(params, "toYear", filters.toYear);
     }
 
     addCommonParams(params, filters, opts);
