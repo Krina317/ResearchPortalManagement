@@ -11,4 +11,4 @@ public interface ExternalFundedProjectMapper {
     ExternalFundedProjectResponseDTO toResponseDTO(ExternalFundedProject entity);
     ExternalFundedProject toEntity(ExternalFundedProjectRequestDTO dto);
     List<ExternalFundedProjectResponseDTO> toResponseDTOList(List<ExternalFundedProject> entities);
-}
+} 

@@ -15,8 +15,9 @@ public class NuFundedProjectResponseDTO {
 	private String principalInvestigator;
 	private String coPrincipalInvestigatorList;
 	private Long amount;
-	private String projectCategory;
+	private String projectCategory; 
 	private Long duration;
+	private String academicYear;
 	private String outcomeOfResearchProject;
 	private String publishedPaperDetails;
 	private String jointPublicationProof;

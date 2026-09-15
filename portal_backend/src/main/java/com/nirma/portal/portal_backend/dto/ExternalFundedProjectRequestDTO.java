@@ -20,7 +20,7 @@ public class ExternalFundedProjectRequestDTO {
 	
 	@NotBlank(message = "Co-principal investigator list is required")
 	private String coPrincipalInvestigatorList;
-	
+	 
 	@NotBlank(message = "Funding agency name is required")
 	private String fundingAgencyName;
 	

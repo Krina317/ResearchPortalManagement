@@ -31,6 +31,9 @@ public class NuFundedProjectRequestDTO {
 	@NotNull(message = "Duration is required")
 	private Long duration;
 	
+	@NotBlank(message = "Academic year is required")
+	private String academicYear;
+	
 	private String outcomeOfResearchProject;
 	private String publishedPaperDetails;
 	

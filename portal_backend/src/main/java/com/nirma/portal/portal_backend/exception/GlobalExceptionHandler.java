@@ -9,52 +9,95 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	
-	@ExceptionHandler(AuthorRecordNotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleAuthorRecordNotFound(AuthorRecordNotFoundException ex) {
+
+    @ExceptionHandler(AuthorRecordNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAuthorRecordNotFound(
+            AuthorRecordNotFoundException ex) {
+
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 ex.getMessage(),
                 LocalDateTime.now()
         );
+
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
-	
-	@ExceptionHandler(ConferencePaperNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleConferencePaperNotFound(ConferencePaperNotFoundException ex) {
+    } 
+ 
+    @ExceptionHandler(ConferencePaperNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleConferencePaperNotFound(
+            ConferencePaperNotFoundException ex) {
+
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 ex.getMessage(),
                 LocalDateTime.now()
         );
+
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-	@ExceptionHandler(DepartmentNotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleDepartmentNotFound(DepartmentNotFoundException ex){
-		ErrorResponse error = new ErrorResponse(
-				HttpStatus.NOT_FOUND.value(),
-				ex.getMessage(),
-				LocalDateTime.now()
-				);
-		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
-	}
-	 @ExceptionHandler(ExcelColumnMapNotFoundException.class)
-	    public ResponseEntity<ErrorResponse> handleExcelColumnMapNotFound(ExcelColumnMapNotFoundException ex) {
-	        ErrorResponse error = new ErrorResponse(
-	                HttpStatus.NOT_FOUND.value(),
-	                ex.getMessage(),
-	                LocalDateTime.now()
-	        );
-	        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-	    }
-	 @ExceptionHandler(DuplicateConferencePaperException.class)
-	    public ResponseEntity<ErrorResponse> handleDuplicateConferencePaper(DuplicateConferencePaperException ex) {
-	        ErrorResponse error = new ErrorResponse(
-	                HttpStatus.CONFLICT.value(),
-	                ex.getMessage(),
-	                LocalDateTime.now()
-	        );
-	        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
-	    }
+    @ExceptionHandler(DepartmentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleDepartmentNotFound(
+            DepartmentNotFoundException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ExcelColumnMapNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleExcelColumnMapNotFound(
+            ExcelColumnMapNotFoundException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateConferencePaperException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateConferencePaper(
+            DuplicateConferencePaperException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(NuFundedProjectNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNuFundedProjectNotFound(
+            NuFundedProjectNotFoundException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateNuFundedProjectException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateNuFundedProject(
+            DuplicateNuFundedProjectException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
 }

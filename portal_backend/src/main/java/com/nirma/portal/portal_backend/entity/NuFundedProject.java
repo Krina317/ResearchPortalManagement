@@ -36,6 +36,9 @@ public class NuFundedProject {
 	@Column(nullable = false)
 	private Long duration;
 	
+    @Column(nullable = false)
+    private String academicYear;
+	
 	private String outcomeOfResearchProject;
 	
 	private String publishedPaperDetails; 

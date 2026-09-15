@@ -1,593 +1,561 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const initialForm = {
-  projectTitle: "",
-  principalInvestigator: "",
-  coPrincipalInvestigatorList: "",
-  amount: "",
-  projectCategory: "",
-  duration: "",
+const ACADEMIC_YEARS = [
+  "2020-2021",
+  "2021-2022",
+  "2022-2023",
+  "2023-2024",
+  "2024-2025",
+  "2025-2026",
+  "2026-2027",
+];
 
-  outcomeOfResearchProject: "",
+const OUTCOME_OPTIONS = [
+  "Journal Paper Published",
+  "Conference Paper Published",
+  "None",
+  "Any activity performed based on research project",
+];
 
-  paperTitle: "",
-  publicationType: "",
-  publicationStatus: "",
-  doiLink: "",
-  jointPublication: "",
-
-  jointPublicationProof: "",
-
-  ugStudentDetailList: "",
-};
-
-function Field({
-  label,
-  name,
-  value,
-  onChange,
-  required = false,
-  type = "text",
-  placeholder = "",
-  rows,
-}) {
-  return (
-    <div style={styles.field}>
-      <label style={styles.label}>
-        {label}
-        {required && <span style={styles.required}> *</span>}
-      </label>
-
-      {rows ? (
-        <textarea
-          name={name}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          rows={rows}
-          style={styles.textarea}
-        />
-      ) : (
-        <input
-          type={type}
-          name={name}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          style={styles.input}
-        />
-      )}
-    </div>
-  );
-}
-
-function SelectField({
-  label,
-  name,
-  value,
-  onChange,
-  required = false,
-  options,
-}) {
-  return (
-    <div style={styles.field}>
-      <label style={styles.label}>
-        {label}
-        {required && <span style={styles.required}> *</span>}
-      </label>
-
-      <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        style={styles.input}
-      >
-        <option value="">Select</option>
-
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
-export default function AddProject({
+function AddProject({
   onSave,
   onClose,
-  initialValues = {},
+  projectToEdit = null,
 }) {
-  const [form, setForm] = useState({
-    ...initialForm,
-    ...initialValues,
-  });
+  const isEditMode = Boolean(projectToEdit);
 
-  const [errors, setErrors] = useState({});
+  const emptyForm = {
+    projectTitle: "",
+    principalInvestigator: "",
+    coPrincipalInvestigatorList: "",
+    amount: "",
+    projectCategory: "",
+    duration: "",
+    academicYear: "",
+    outcomeOfResearchProject: "",
+    publishedPaperDetails: "",
+    jointPublicationProof: "",
+    ugStudentDetailList: "",
+  };
+
+  const [formData, setFormData] =
+    useState(emptyForm);
+
+  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (projectToEdit) {
+      setFormData({
+        projectTitle:
+          projectToEdit.projectTitle ?? "",
+
+        principalInvestigator:
+          projectToEdit.principalInvestigator ?? "",
+
+        coPrincipalInvestigatorList:
+          projectToEdit.coPrincipalInvestigatorList ?? "",
+
+        amount:
+          projectToEdit.amount ?? "",
+
+        projectCategory:
+          projectToEdit.projectCategory ?? "",
+
+        duration:
+          projectToEdit.duration ?? "",
+
+        academicYear:
+          projectToEdit.academicYear ?? "",
+
+        outcomeOfResearchProject:
+          projectToEdit.outcomeOfResearchProject ?? "",
+
+        publishedPaperDetails:
+          projectToEdit.publishedPaperDetails ?? "",
+
+        jointPublicationProof:
+          projectToEdit.jointPublicationProof ?? "",
+
+        ugStudentDetailList:
+          projectToEdit.ugStudentDetailList ?? "",
+      });
+    } else {
+      setFormData(emptyForm);
+    }
+
+    setError("");
+  }, [projectToEdit]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setForm((prev) => ({
-      ...prev,
+    setFormData((previous) => ({
+      ...previous,
       [name]: value,
     }));
-
-    setErrors((prev) => ({
-      ...prev,
-      [name]: "",
-    }));
   };
 
-  const validate = () => {
-    const newErrors = {};
-
-    if (!form.projectTitle.trim()) {
-      newErrors.projectTitle = "Project title is required";
-    }
-
-    if (!form.principalInvestigator.trim()) {
-      newErrors.principalInvestigator =
-        "Principal investigator is required";
-    }
-
-    if (!form.coPrincipalInvestigatorList.trim()) {
-      newErrors.coPrincipalInvestigatorList =
-        "Co-principal investigator list is required";
-    }
-
-    if (
-      form.amount === "" ||
-      form.amount === null ||
-      Number(form.amount) < 0
-    ) {
-      newErrors.amount = "Valid amount is required";
-    }
-
-    if (!form.projectCategory) {
-      newErrors.projectCategory = "Project category is required";
-    }
-
-    if (
-      form.duration === "" ||
-      form.duration === null ||
-      Number(form.duration) < 0
-    ) {
-      newErrors.duration = "Valid duration is required";
-    }
-
-    if (!form.jointPublicationProof.trim()) {
-      newErrors.jointPublicationProof =
-        "Joint publication proof is required";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const buildPublishedPaperDetails = () => {
-    /*
-      Backend has ONE field:
-
-      publishedPaperDetails
-
-      The UI has separate fields for easier entry.
-      We combine them before passing the data upward.
-    */
-
-    const hasPublicationDetails =
-      form.paperTitle.trim() ||
-      form.publicationType ||
-      form.publicationStatus ||
-      form.doiLink.trim() ||
-      form.jointPublication;
-
-    if (!hasPublicationDetails) {
-      return "";
-    }
-
-    return [
-      `Title: ${form.paperTitle.trim()}`,
-      `Publication Type: ${form.publicationType}`,
-      `Publication Status: ${form.publicationStatus}`,
-      `DOI Link: ${form.doiLink.trim()}`,
-      `Joint Publication Yes/No: ${form.jointPublication}`,
-    ].join("\n");
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setError("");
 
-    if (!validate()) {
+    if (
+      !formData.projectTitle.trim() ||
+      !formData.principalInvestigator.trim() ||
+      !formData.coPrincipalInvestigatorList.trim() ||
+      !formData.amount ||
+      !formData.projectCategory ||
+      !formData.duration ||
+      !formData.academicYear ||
+      !formData.jointPublicationProof.trim()
+    ) {
+      setError("Please fill all required fields.");
       return;
     }
 
     const requestData = {
-      projectTitle: form.projectTitle.trim(),
+      projectTitle:
+        formData.projectTitle.trim(),
 
       principalInvestigator:
-        form.principalInvestigator.trim(),
+        formData.principalInvestigator.trim(),
 
       coPrincipalInvestigatorList:
-        form.coPrincipalInvestigatorList.trim(),
+        formData.coPrincipalInvestigatorList.trim(),
 
-      amount: Number(form.amount),
+      amount: Number(formData.amount),
 
-      projectCategory: form.projectCategory,
+      projectCategory:
+        formData.projectCategory,
 
-      duration: Number(form.duration),
+      duration: Number(formData.duration),
+
+      academicYear:
+        formData.academicYear,
 
       outcomeOfResearchProject:
-        form.outcomeOfResearchProject.trim() || null,
+        formData.outcomeOfResearchProject,
 
       publishedPaperDetails:
-        buildPublishedPaperDetails() || null,
+        formData.publishedPaperDetails,
 
       jointPublicationProof:
-        form.jointPublicationProof.trim(),
+        formData.jointPublicationProof.trim(),
 
       ugStudentDetailList:
-        form.ugStudentDetailList.trim() || null,
+        formData.ugStudentDetailList,
     };
 
-    /*
-      No Axios here.
+    try {
+      setSaving(true);
 
-      Parent component receives the final request object
-      and can call projectApi.js.
-    */
-    if (onSave) {
-      onSave(requestData);
+      await onSave(requestData);
+
+      if (!isEditMode) {
+        setFormData(emptyForm);
+      }
+    } catch (err) {
+      setError(
+        err.message ||
+          "Failed to save project."
+      );
+    } finally {
+      setSaving(false);
     }
   };
 
-  return (
-    <div style={styles.overlay}>
-      <div style={styles.modal}>
-        {/* Header */}
-        <div style={styles.header}>
-          <div>
-            <h2 style={styles.title}>Add NU Funded Project</h2>
-            <p style={styles.subtitle}>
-              Enter the project details below
-            </p>
-          </div>
+  const inputStyle = {
+    width: "100%",
+    padding: "10px 12px",
+    border: "1px solid #d1d5db",
+    borderRadius: "7px",
+    fontSize: "14px",
+    boxSizing: "border-box",
+  };
 
-          {onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              style={styles.closeButton}
-            >
-              ×
-            </button>
-          )}
+  const labelStyle = {
+    display: "block",
+    marginBottom: "6px",
+    fontSize: "14px",
+    fontWeight: "600",
+    color: "#374151",
+  };
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        backgroundColor: "rgba(0,0,0,0.45)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+        zIndex: 1000,
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "#fff",
+          width: "100%",
+          maxWidth: "850px",
+          maxHeight: "90vh",
+          overflowY: "auto",
+          borderRadius: "12px",
+          boxShadow:
+            "0 20px 50px rgba(0,0,0,0.2)",
+        }}
+      >
+        <div
+          style={{
+            padding: "20px 24px",
+            borderBottom:
+              "1px solid #e5e7eb",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            position: "sticky",
+            top: 0,
+            backgroundColor: "#fff",
+            zIndex: 2,
+          }}
+        >
+          <h2
+            style={{
+              margin: 0,
+              fontSize: "20px",
+              color: "#1f2937",
+            }}
+          >
+            {isEditMode
+              ? "Edit NU Funded Project"
+              : "Add New NU Funded Project"}
+          </h2>
+
+          <button
+            type="button"
+            onClick={onClose}
+            style={{
+              border: "none",
+              background: "none",
+              fontSize: "24px",
+              cursor: "pointer",
+              color: "#6b7280",
+            }}
+          >
+            ×
+          </button>
         </div>
 
         <form onSubmit={handleSubmit}>
-          {/* --------------------------------------------- */}
-          {/* PROJECT INFORMATION */}
-          {/* --------------------------------------------- */}
+          <div
+            style={{
+              padding: "24px",
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: "18px",
+            }}
+          >
+            <div
+              style={{
+                gridColumn: "1 / -1",
+              }}
+            >
+              <label style={labelStyle}>
+                Project Title *
+              </label>
 
-          <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>
-              Project Information
-            </h3>
-
-            <div style={styles.grid}>
-              <div style={styles.fullWidth}>
-                <Field
-                  label="Project Title"
-                  name="projectTitle"
-                  value={form.projectTitle}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter project title"
-                />
-
-                {errors.projectTitle && (
-                  <p style={styles.error}>
-                    {errors.projectTitle}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <Field
-                  label="Principal Investigator"
-                  name="principalInvestigator"
-                  value={form.principalInvestigator}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter PI name"
-                />
-
-                {errors.principalInvestigator && (
-                  <p style={styles.error}>
-                    {errors.principalInvestigator}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <Field
-                  label="Co-Principal Investigator"
-                  name="coPrincipalInvestigatorList"
-                  value={form.coPrincipalInvestigatorList}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter Co-PI name(s)"
-                />
-
-                {errors.coPrincipalInvestigatorList && (
-                  <p style={styles.error}>
-                    {errors.coPrincipalInvestigatorList}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <Field
-                  label="Amount"
-                  name="amount"
-                  value={form.amount}
-                  onChange={handleChange}
-                  required
-                  type="number"
-                  placeholder="Enter amount"
-                />
-
-                {errors.amount && (
-                  <p style={styles.error}>{errors.amount}</p>
-                )}
-              </div>
-
-              <div>
-                <SelectField
-                  label="Project Category"
-                  name="projectCategory"
-                  value={form.projectCategory}
-                  onChange={handleChange}
-                  required
-                  options={[
-                    {
-                      value: "NU-Minor",
-                      label: "NU-Minor",
-                    },
-                    {
-                      value: "NU-Major",
-                      label: "NU-Major",
-                    },
-                  ]}
-                />
-
-                {errors.projectCategory && (
-                  <p style={styles.error}>
-                    {errors.projectCategory}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <Field
-                  label="Duration in Years"
-                  name="duration"
-                  value={form.duration}
-                  onChange={handleChange}
-                  required
-                  type="number"
-                  placeholder="Enter duration"
-                />
-
-                {errors.duration && (
-                  <p style={styles.error}>
-                    {errors.duration}
-                  </p>
-                )}
-              </div>
+              <input
+                name="projectTitle"
+                value={formData.projectTitle}
+                onChange={handleChange}
+                placeholder="Enter project title"
+                style={inputStyle}
+              />
             </div>
-          </div>
 
-          {/* --------------------------------------------- */}
-          {/* OUTCOME */}
-          {/* --------------------------------------------- */}
+            <div>
+              <label style={labelStyle}>
+                Principal Investigator *
+              </label>
 
-          <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>
-              Outcome of the Project
-            </h3>
-
-            <Field
-              label="Outcome of the Project"
-              name="outcomeOfResearchProject"
-              value={form.outcomeOfResearchProject}
-              onChange={handleChange}
-              placeholder="Enter the outcome of the research project"
-              rows={4}
-            />
-          </div>
-
-          {/* --------------------------------------------- */}
-          {/* PUBLICATION DETAILS */}
-          {/* --------------------------------------------- */}
-
-          <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>
-              Publication Details
-            </h3>
-
-            <p style={styles.sectionDescription}>
-              Optional — fill these fields if a paper has been
-              published based on the research project.
-            </p>
-
-            <div style={styles.grid}>
-              <div style={styles.fullWidth}>
-                <Field
-                  label="Title"
-                  name="paperTitle"
-                  value={form.paperTitle}
-                  onChange={handleChange}
-                  placeholder="Enter paper title"
-                />
-              </div>
-
-              <div>
-                <SelectField
-                  label="Publication Type"
-                  name="publicationType"
-                  value={form.publicationType}
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "Journal",
-                      label: "Journal",
-                    },
-                    {
-                      value: "Conference",
-                      label: "Conference",
-                    },
-                  ]}
-                />
-              </div>
-
-              <div>
-                <SelectField
-                  label="Publication Status"
-                  name="publicationStatus"
-                  value={form.publicationStatus}
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "Published",
-                      label: "Published",
-                    },
-                    {
-                      value: "Accepted",
-                      label: "Accepted",
-                    },
-                    {
-                      value: "Under Review",
-                      label: "Under Review",
-                    },
-                    {
-                      value: "Submitted",
-                      label: "Submitted",
-                    },
-                  ]}
-                />
-              </div>
-
-              <div>
-                <Field
-                  label="DOI Link"
-                  name="doiLink"
-                  value={form.doiLink}
-                  onChange={handleChange}
-                  placeholder="https://doi.org/..."
-                />
-              </div>
-
-              <div>
-                <SelectField
-                  label="Joint Publication"
-                  name="jointPublication"
-                  value={form.jointPublication}
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "Yes",
-                      label: "Yes",
-                    },
-                    {
-                      value: "No",
-                      label: "No",
-                    },
-                  ]}
-                />
-              </div>
+              <input
+                name="principalInvestigator"
+                value={
+                  formData.principalInvestigator
+                }
+                onChange={handleChange}
+                placeholder="Enter PI name"
+                style={inputStyle}
+              />
             </div>
-          </div>
 
-          {/* --------------------------------------------- */}
-          {/* JOINT PUBLICATION PROOF */}
-          {/* --------------------------------------------- */}
+            <div>
+              <label style={labelStyle}>
+                Co-Principal Investigator(s) *
+              </label>
 
-          <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>
-              Joint Publication Proof
-            </h3>
+              <input
+                name="coPrincipalInvestigatorList"
+                value={
+                  formData.coPrincipalInvestigatorList
+                }
+                onChange={handleChange}
+                placeholder="Enter Co-PI names"
+                style={inputStyle}
+              />
+            </div>
 
-            <p style={styles.sectionDescription}>
-              Enter the link to the folder containing the joint
-              publication proof.
-            </p>
+            <div>
+              <label style={labelStyle}>
+                Amount *
+              </label>
 
-            <Field
-              label="Joint Publication Proof"
-              name="jointPublicationProof"
-              value={form.jointPublicationProof}
-              onChange={handleChange}
-              required
-              placeholder="Enter proof folder link"
-            />
+              <input
+                type="number"
+                name="amount"
+                value={formData.amount}
+                onChange={handleChange}
+                placeholder="Enter amount"
+                min="0"
+                style={inputStyle}
+              />
+            </div>
 
-            {errors.jointPublicationProof && (
-              <p style={styles.error}>
-                {errors.jointPublicationProof}
-              </p>
-            )}
+            <div>
+              <label style={labelStyle}>
+                Project Category *
+              </label>
 
-            <p style={styles.helperText}>
-              Folder name: CSE_JOINT PUBLICATIONS_PROOFS
-            </p>
-          </div>
-
-          {/* --------------------------------------------- */}
-          {/* UG STUDENTS */}
-          {/* --------------------------------------------- */}
-
-          <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>
-              UG Student Involved in Project
-            </h3>
-
-            <p style={styles.sectionDescription}>
-              Optional — enter Roll No, Name and Student Role.
-            </p>
-
-            <Field
-              label="UG Student Details"
-              name="ugStudentDetailList"
-              value={form.ugStudentDetailList}
-              onChange={handleChange}
-              placeholder="Example: 22BCE001, Rahul Shah, Research Assistant"
-              rows={4}
-            />
-          </div>
-
-          {/* --------------------------------------------- */}
-          {/* ACTIONS */}
-          {/* --------------------------------------------- */}
-
-          <div style={styles.actions}>
-            {onClose && (
-              <button
-                type="button"
-                onClick={onClose}
-                style={styles.cancelButton}
+              <select
+                name="projectCategory"
+                value={formData.projectCategory}
+                onChange={handleChange}
+                style={inputStyle}
               >
-                Cancel
-              </button>
+                <option value="">
+                  Select Category
+                </option>
+
+                <option value="NU-Minor">
+                  NU-Minor
+                </option>
+
+                <option value="NU-Major">
+                  NU-Major
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label style={labelStyle}>
+                Duration (Years) *
+              </label>
+
+              <input
+                type="number"
+                name="duration"
+                value={formData.duration}
+                onChange={handleChange}
+                placeholder="Enter duration"
+                min="1"
+                style={inputStyle}
+              />
+            </div>
+
+            <div>
+              <label style={labelStyle}>
+                Academic Year *
+              </label>
+
+              <select
+                name="academicYear"
+                value={formData.academicYear}
+                onChange={handleChange}
+                style={inputStyle}
+              >
+                <option value="">
+                  Select Academic Year
+                </option>
+
+                {ACADEMIC_YEARS.map((year) => (
+                  <option
+                    key={year}
+                    value={year}
+                  >
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label style={labelStyle}>
+                Outcome of the Project
+              </label>
+
+              <select
+                name="outcomeOfResearchProject"
+                value={
+                  formData.outcomeOfResearchProject
+                }
+                onChange={handleChange}
+                style={inputStyle}
+              >
+                <option value="">
+                  Select Outcome
+                </option>
+
+                {OUTCOME_OPTIONS.map(
+                  (outcome) => (
+                    <option
+                      key={outcome}
+                      value={outcome}
+                    >
+                      {outcome}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+
+            <div
+              style={{
+                gridColumn: "1 / -1",
+              }}
+            >
+              <label style={labelStyle}>
+                Published Paper Details
+              </label>
+
+              <textarea
+                name="publishedPaperDetails"
+                value={
+                  formData.publishedPaperDetails
+                }
+                onChange={handleChange}
+                placeholder="Enter published paper details"
+                rows={4}
+                style={{
+                  ...inputStyle,
+                  resize: "vertical",
+                }}
+              />
+            </div>
+
+            <div
+              style={{
+                gridColumn: "1 / -1",
+              }}
+            >
+              <label style={labelStyle}>
+                Joint Publication Proof *
+              </label>
+
+              <input
+                name="jointPublicationProof"
+                value={
+                  formData.jointPublicationProof
+                }
+                onChange={handleChange}
+                placeholder="Enter proof link/reference"
+                style={inputStyle}
+              />
+            </div>
+
+            <div
+              style={{
+                gridColumn: "1 / -1",
+              }}
+            >
+              <label style={labelStyle}>
+                UG Student Details
+              </label>
+
+              <textarea
+                name="ugStudentDetailList"
+                value={
+                  formData.ugStudentDetailList
+                }
+                onChange={handleChange}
+                placeholder="Enter UG student details"
+                rows={3}
+                style={{
+                  ...inputStyle,
+                  resize: "vertical",
+                }}
+              />
+            </div>
+
+            {error && (
+              <div
+                style={{
+                  gridColumn: "1 / -1",
+                  padding: "12px",
+                  backgroundColor: "#fef2f2",
+                  border: "1px solid #fecaca",
+                  borderRadius: "7px",
+                  color: "#b91c1c",
+                  fontSize: "14px",
+                }}
+              >
+                {error}
+              </div>
             )}
+          </div>
+
+          <div
+            style={{
+              padding: "16px 24px",
+              borderTop:
+                "1px solid #e5e7eb",
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "10px",
+              position: "sticky",
+              bottom: 0,
+              backgroundColor: "#fff",
+            }}
+          >
+            <button
+              type="button"
+              onClick={onClose}
+              style={{
+                padding: "10px 18px",
+                borderRadius: "7px",
+                border:
+                  "1px solid #d1d5db",
+                backgroundColor: "#fff",
+                cursor: "pointer",
+              }}
+            >
+              Cancel
+            </button>
 
             <button
               type="submit"
-              style={styles.saveButton}
+              disabled={saving}
+              style={{
+                padding: "10px 18px",
+                borderRadius: "7px",
+                border: "none",
+                backgroundColor: "#059669",
+                color: "#fff",
+                cursor: saving
+                  ? "not-allowed"
+                  : "pointer",
+                opacity: saving ? 0.7 : 1,
+              }}
             >
-              Add Project
+              {saving
+                ? isEditMode
+                  ? "Updating..."
+                  : "Saving..."
+                : isEditMode
+                ? "Update Project"
+                : "Save Project"}
             </button>
           </div>
         </form>
@@ -596,160 +564,4 @@ export default function AddProject({
   );
 }
 
-const styles = {
-  overlay: {
-    position: "fixed",
-    inset: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.45)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 1000,
-    padding: "24px",
-  },
-
-  modal: {
-    width: "100%",
-    maxWidth: "900px",
-    maxHeight: "92vh",
-    overflowY: "auto",
-    backgroundColor: "#ffffff",
-    borderRadius: "12px",
-    padding: "28px",
-    boxSizing: "border-box",
-  },
-
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: "24px",
-  },
-
-  title: {
-    margin: 0,
-    fontSize: "24px",
-    fontWeight: 700,
-  },
-
-  subtitle: {
-    margin: "6px 0 0",
-    color: "#6b7280",
-    fontSize: "14px",
-  },
-
-  closeButton: {
-    border: "none",
-    background: "transparent",
-    fontSize: "28px",
-    cursor: "pointer",
-    color: "#6b7280",
-    lineHeight: 1,
-  },
-
-  section: {
-    border: "1px solid #e5e7eb",
-    borderRadius: "10px",
-    padding: "20px",
-    marginBottom: "18px",
-  },
-
-  sectionTitle: {
-    margin: "0 0 6px",
-    fontSize: "17px",
-    fontWeight: 650,
-  },
-
-  sectionDescription: {
-    margin: "0 0 18px",
-    color: "#6b7280",
-    fontSize: "13px",
-  },
-
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "18px",
-  },
-
-  fullWidth: {
-    gridColumn: "1 / -1",
-  },
-
-  field: {
-    width: "100%",
-  },
-
-  label: {
-    display: "block",
-    marginBottom: "7px",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-  },
-
-  required: {
-    color: "#dc2626",
-  },
-
-  input: {
-    width: "100%",
-    boxSizing: "border-box",
-    padding: "10px 12px",
-    border: "1px solid #d1d5db",
-    borderRadius: "7px",
-    fontSize: "14px",
-    outline: "none",
-    backgroundColor: "#ffffff",
-  },
-
-  textarea: {
-    width: "100%",
-    boxSizing: "border-box",
-    padding: "10px 12px",
-    border: "1px solid #d1d5db",
-    borderRadius: "7px",
-    fontSize: "14px",
-    resize: "vertical",
-    fontFamily: "inherit",
-  },
-
-  error: {
-    margin: "5px 0 0",
-    color: "#dc2626",
-    fontSize: "12px",
-  },
-
-  helperText: {
-    margin: "7px 0 0",
-    color: "#6b7280",
-    fontSize: "12px",
-  },
-
-  actions: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: "10px",
-    marginTop: "24px",
-  },
-
-  cancelButton: {
-    padding: "10px 18px",
-    border: "1px solid #d1d5db",
-    borderRadius: "7px",
-    backgroundColor: "#ffffff",
-    cursor: "pointer",
-    fontSize: "14px",
-  },
-
-  saveButton: {
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "7px",
-    backgroundColor: "#111827",
-    color: "#ffffff",
-    cursor: "pointer",
-    fontSize: "14px",
-    fontWeight: 600,
-  },
-};
+export default AddProject;

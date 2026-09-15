@@ -1,528 +1,352 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 
-function getValue(value) {
-  if (
-    value === null ||
-    value === undefined ||
-    String(value).trim() === ""
-  ) {
-    return "—";
-  }
-
-  return value;
-}
-
-function parsePublicationDetails(details) {
-  if (!details) {
-    return {
-      title: "",
-      publicationType: "",
-      publicationStatus: "",
-      doiLink: "",
-      jointPublication: "",
-    };
-  }
-
-  const text = String(details);
-
-  const getField = (label) => {
-    const regex = new RegExp(
-      `${label}:\\s*(.*?)(?=\\n[A-Za-z ]+:|$)`,
-      "i"
-    );
-
-    const match = text.match(regex);
-
-    return match ? match[1].trim() : "";
-  };
-
-  return {
-    title: getField("Title"),
-    publicationType: getField("Publication Type"),
-    publicationStatus: getField("Publication Status"),
-    doiLink: getField("DOI Link"),
-    jointPublication: getField(
-      "Joint Publication Yes/No"
-    ),
-  };
-}
-
-function PublicationDetails({ details }) {
-  const publication = parsePublicationDetails(details);
-
-  const hasDetails =
-    publication.title ||
-    publication.publicationType ||
-    publication.publicationStatus ||
-    publication.doiLink ||
-    publication.jointPublication;
-
-  if (!hasDetails) {
-    return <span style={styles.empty}>—</span>;
-  }
-
-  return (
-    <div style={styles.publicationDetails}>
-      <div>
-        <strong>Title:</strong>{" "}
-        {getValue(publication.title)}
-      </div>
-
-      <div>
-        <strong>Publication Type:</strong>{" "}
-        {getValue(publication.publicationType)}
-      </div>
-
-      <div>
-        <strong>Publication Status:</strong>{" "}
-        {getValue(publication.publicationStatus)}
-      </div>
-
-      <div>
-        <strong>DOI Link:</strong>{" "}
-        {publication.doiLink ? (
-          <a
-            href={publication.doiLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.link}
-          >
-            {publication.doiLink}
-          </a>
-        ) : (
-          "—"
-        )}
-      </div>
-
-      <div>
-        <strong>Joint Publication:</strong>{" "}
-        {getValue(publication.jointPublication)}
-      </div>
-    </div>
-  );
-}
-
-function SortIcon({ active, direction }) {
-  if (!active) {
-    return (
-      <span style={styles.sortIcon}>
-        ↕
-      </span>
-    );
-  }
-
-  return (
-    <span style={styles.sortIcon}>
-      {direction === "asc" ? "↑" : "↓"}
-    </span>
-  );
-}
-
-export default function ProjectTable({
+function ProjectTable({
   projects = [],
+  sortBy = "id",
+  direction = "asc",
+  onSort,
+  onEdit,
+  onDelete,
 }) {
-  const [sortConfig, setSortConfig] = useState({
-    key: null,
-    direction: "asc",
-  });
-
-  const sortedProjects = useMemo(() => {
-    const data = [...projects];
-
-    if (!sortConfig.key) {
-      return data;
+  const getValue = (value) => {
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return "—";
     }
 
-    data.sort((a, b) => {
-      let valueA;
-      let valueB;
-
-      if (sortConfig.key === "sr") {
-        valueA = Number(a.id ?? 0);
-        valueB = Number(b.id ?? 0);
-      }
-
-      if (sortConfig.key === "amount") {
-        valueA = Number(a.amount ?? 0);
-        valueB = Number(b.amount ?? 0);
-      }
-
-      if (valueA < valueB) {
-        return sortConfig.direction === "asc"
-          ? -1
-          : 1;
-      }
-
-      if (valueA > valueB) {
-        return sortConfig.direction === "asc"
-          ? 1
-          : -1;
-      }
-
-      return 0;
-    });
-
-    return data;
-  }, [projects, sortConfig]);
-
-  const handleSort = (key) => {
-    setSortConfig((previous) => {
-      if (previous.key === key) {
-        return {
-          key,
-          direction:
-            previous.direction === "asc"
-              ? "desc"
-              : "asc",
-        };
-      }
-
-      return {
-        key,
-        direction: "asc",
-      };
-    });
+    return value;
   };
 
-  if (!projects || projects.length === 0) {
-    return (
-      <div style={styles.emptyState}>
-        <div style={styles.emptyTitle}>
-          No NU funded projects found
-        </div>
+  const formatAmount = (amount) => {
+    if (
+      amount === null ||
+      amount === undefined ||
+      amount === ""
+    ) {
+      return "—";
+    }
 
-        <div style={styles.emptyText}>
-          Add a project to see it here.
-        </div>
-      </div>
-    );
-  }
+    return `₹${Number(amount).toLocaleString(
+      "en-IN"
+    )}`;
+  };
+
+  const getSortSymbol = (field) => {
+    if (sortBy !== field) {
+      return "↕";
+    }
+
+    return direction === "asc" ? "↑" : "↓";
+  };
 
   return (
-    <div style={styles.tableWrapper}>
-      <table style={styles.table}>
-        <thead>
-          <tr>
-            <th
-              style={{
-                ...styles.th,
-                ...styles.sortableHeader,
-              }}
-              onClick={() => handleSort("sr")}
-            >
-              <div style={styles.headerContent}>
-                <span>Sr. No.</span>
-
-                <SortIcon
-                  active={sortConfig.key === "sr"}
-                  direction={sortConfig.direction}
-                />
-              </div>
-            </th>
-
-            <th style={styles.th}>
-              PI
-            </th>
-
-            <th style={styles.th}>
-              Co-PI
-            </th>
-
-            <th style={styles.th}>
-              Project Title
-            </th>
-
-            <th
-              style={{
-                ...styles.th,
-                ...styles.sortableHeader,
-              }}
-              onClick={() => handleSort("amount")}
-            >
-              <div style={styles.headerContent}>
-                <span>Amount</span>
-
-                <SortIcon
-                  active={sortConfig.key === "amount"}
-                  direction={sortConfig.direction}
-                />
-              </div>
-            </th>
-
-            <th style={styles.th}>
-              NU-Minor / NU-Major
-            </th>
-
-            <th style={styles.th}>
-              Duration in Year
-            </th>
-
-            <th style={styles.th}>
-              Outcome of the Project
-            </th>
-
-            <th style={styles.th}>
-              Publication Details
-            </th>
-
-            <th style={styles.th}>
-              Joint Publication Proof
-            </th>
-
-            <th style={styles.th}>
-              UG Student Details
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {sortedProjects.map((project, index) => (
+    <div
+      style={{
+        backgroundColor: "#fff",
+        border: "1px solid #e5e7eb",
+        borderRadius: "10px",
+        overflow: "hidden",
+      }}
+    >
+      <div style={{ overflowX: "auto" }}>
+        <table
+          style={{
+            width: "100%",
+            minWidth: "1750px",
+            borderCollapse: "collapse",
+            textAlign: "left",
+          }}
+        >
+          <thead>
             <tr
-              key={project.id ?? index}
-              style={styles.tr}
+              style={{
+                backgroundColor: "#f9fafb",
+              }}
             >
-              {/* Sr No */}
-              <td style={styles.td}>
-                {index + 1}
-              </td>
+              <th style={styles.th}>
+                Sr. No.
+              </th>
 
-              {/* PI */}
-              <td style={styles.td}>
-                {getValue(
-                  project.principalInvestigator
-                )}
-              </td>
+              <th style={styles.th}>
+                PI
+              </th>
 
-              {/* Co PI */}
-              <td style={styles.td}>
-                {getValue(
-                  project.coPrincipalInvestigatorList
-                )}
-              </td>
+              <th style={styles.th}>
+                Co-PI
+              </th>
 
-              {/* Project Title */}
-              <td
+              <th style={styles.th}>
+                Project Title
+              </th>
+
+              <th
                 style={{
-                  ...styles.td,
-                  ...styles.titleCell,
+                  ...styles.th,
+                  cursor: "pointer",
                 }}
+                onClick={() => onSort("amount")}
               >
-                {getValue(project.projectTitle)}
-              </td>
+                Amount {getSortSymbol("amount")}
+              </th>
 
-              {/* Amount */}
-              <td style={styles.td}>
-                {project.amount !== null &&
-                project.amount !== undefined &&
-                project.amount !== "" ? (
-                  <>
-                    ₹{" "}
-                    {Number(
-                      project.amount
-                    ).toLocaleString("en-IN")}
-                  </>
-                ) : (
-                  "—"
-                )}
-              </td>
+              <th style={styles.th}>
+                NU-Minor / NU-Major
+              </th>
 
-              {/* Category */}
-              <td style={styles.td}>
-                {getValue(
-                  project.projectCategory
-                )}
-              </td>
+              <th style={styles.th}>
+                Academic Year
+              </th>
 
-              {/* Duration */}
-              <td style={styles.td}>
-                {project.duration !== null &&
-                project.duration !== undefined &&
-                project.duration !== ""
-                  ? `${project.duration} ${
-                      Number(project.duration) === 1
-                        ? "Year"
-                        : "Years"
-                    }`
-                  : "—"}
-              </td>
+              <th style={styles.th}>
+                Duration in Year
+              </th>
 
-              {/* Outcome */}
-              <td
-                style={{
-                  ...styles.td,
-                  ...styles.longTextCell,
-                }}
-              >
-                {getValue(
-                  project.outcomeOfResearchProject
-                )}
-              </td>
+              <th style={styles.th}>
+                Outcome of the Project
+              </th>
 
-              {/* Publication */}
-              <td
-                style={{
-                  ...styles.td,
-                  ...styles.publicationCell,
-                }}
-              >
-                <PublicationDetails
-                  details={
-                    project.publishedPaperDetails
-                  }
-                />
-              </td>
+              <th style={styles.th}>
+                Publication Details
+              </th>
 
-              {/* Proof */}
-              <td style={styles.td}>
-                {project.jointPublicationProof ? (
-                  <a
-                    href={
-                      project.jointPublicationProof
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={styles.proofLink}
-                  >
-                    View Proof
-                  </a>
-                ) : (
-                  "—"
-                )}
-              </td>
+              <th style={styles.th}>
+                Joint Publication Proof
+              </th>
 
-              {/* UG Students */}
-              <td
-                style={{
-                  ...styles.td,
-                  ...styles.longTextCell,
-                }}
-              >
-                {getValue(
-                  project.ugStudentDetailList
-                )}
-              </td>
+              <th style={styles.th}>
+                UG Student Details
+              </th>
+
+              <th style={styles.th}>
+                Actions
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {projects.length === 0 ? (
+              <tr>
+                <td
+                  colSpan="13"
+                  style={{
+                    padding: "40px",
+                    textAlign: "center",
+                    color: "#6b7280",
+                  }}
+                >
+                  No projects found.
+                </td>
+              </tr>
+            ) : (
+              projects.map((project, index) => (
+                <tr
+                  key={project.id ?? index}
+                  style={{
+                    borderTop:
+                      "1px solid #f3f4f6",
+                  }}
+                >
+                  <td style={styles.td}>
+                    {project.id}
+                  </td>
+
+                  <td style={styles.td}>
+                    {getValue(
+                      project.principalInvestigator
+                    )}
+                  </td>
+
+                  <td style={styles.td}>
+                    {getValue(
+                      project.coPrincipalInvestigatorList
+                    )}
+                  </td>
+
+                  <td
+                    style={{
+                      ...styles.td,
+                      fontWeight: "600",
+                      color: "#111827",
+                      maxWidth: "320px",
+                    }}
+                  >
+                    {getValue(
+                      project.projectTitle
+                    )}
+                  </td>
+
+                  <td style={styles.td}>
+                    {formatAmount(project.amount)}
+                  </td>
+
+                  <td style={styles.td}>
+                    {getValue(
+                      project.projectCategory
+                    )}
+                  </td>
+
+                  <td
+                    style={{
+                      ...styles.td,
+                      fontWeight: "600",
+                    }}
+                  >
+                    {getValue(
+                      project.academicYear
+                    )}
+                  </td>
+
+                  <td style={styles.td}>
+                    {project.duration !== null &&
+                    project.duration !== undefined &&
+                    project.duration !== ""
+                      ? `${project.duration} ${
+                          Number(project.duration) ===
+                          1
+                            ? "Year"
+                            : "Years"
+                        }`
+                      : "—"}
+                  </td>
+
+                  <td
+                    style={{
+                      ...styles.td,
+                      maxWidth: "300px",
+                    }}
+                  >
+                    {getValue(
+                      project.outcomeOfResearchProject
+                    )}
+                  </td>
+
+                  <td
+                    style={{
+                      ...styles.td,
+                      maxWidth: "300px",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  >
+                    {getValue(
+                      project.publishedPaperDetails
+                    )}
+                  </td>
+
+                  <td style={styles.td}>
+                    {project.jointPublicationProof ? (
+                      <a
+                        href={
+                          project.jointPublicationProof
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          color: "#059669",
+                          fontWeight: "600",
+                          textDecoration: "none",
+                        }}
+                      >
+                        View Proof
+                      </a>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
+
+                  <td
+                    style={{
+                      ...styles.td,
+                      maxWidth: "250px",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  >
+                    {getValue(
+                      project.ugStudentDetailList
+                    )}
+                  </td>
+
+                  {/* ACTIONS FOR THIS ROW ONLY */}
+                  <td
+                    style={{
+                      ...styles.td,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "8px",
+                        alignItems: "center",
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onEdit(project)
+                        }
+                        style={{
+                          padding: "7px 12px",
+                          border: "1px solid #2563eb",
+                          borderRadius: "6px",
+                          backgroundColor: "#fff",
+                          color: "#2563eb",
+                          cursor: "pointer",
+                          fontSize: "13px",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onDelete(project)
+                        }
+                        style={{
+                          padding: "7px 12px",
+                          border: "1px solid #dc2626",
+                          borderRadius: "6px",
+                          backgroundColor: "#fff",
+                          color: "#dc2626",
+                          cursor: "pointer",
+                          fontSize: "13px",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
 
 const styles = {
-  tableWrapper: {
-    width: "100%",
-    overflowX: "auto",
-    border: "1px solid #e5e7eb",
-    borderRadius: "10px",
-    backgroundColor: "#ffffff",
-  },
-
-  table: {
-    width: "100%",
-    minWidth: "1500px",
-    borderCollapse: "collapse",
-    fontSize: "13px",
-  },
-
   th: {
     padding: "13px 14px",
-    backgroundColor: "#f9fafb",
-    borderBottom: "1px solid #e5e7eb",
-    textAlign: "left",
-    fontWeight: 650,
-    color: "#374151",
+    fontSize: "12px",
+    fontWeight: "700",
+    color: "#4b5563",
     whiteSpace: "nowrap",
-    verticalAlign: "top",
-  },
-
-  sortableHeader: {
-    cursor: "pointer",
-    userSelect: "none",
-  },
-
-  headerContent: {
-    display: "flex",
-    alignItems: "center",
-    gap: "7px",
-  },
-
-  sortIcon: {
-    color: "#6b7280",
-    fontSize: "14px",
+    borderBottom: "1px solid #e5e7eb",
   },
 
   td: {
     padding: "13px 14px",
-    borderBottom: "1px solid #f0f0f0",
+    fontSize: "14px",
     color: "#374151",
     verticalAlign: "top",
-    lineHeight: 1.5,
-  },
-
-  tr: {
-    backgroundColor: "#ffffff",
-  },
-
-  titleCell: {
-    fontWeight: 600,
-    minWidth: "220px",
-  },
-
-  longTextCell: {
-    minWidth: "220px",
-    maxWidth: "320px",
-    whiteSpace: "pre-wrap",
-    wordBreak: "break-word",
-  },
-
-  publicationCell: {
-    minWidth: "340px",
-    maxWidth: "400px",
-  },
-
-  publicationDetails: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "5px",
-    whiteSpace: "normal",
-    lineHeight: 1.45,
-  },
-
-  link: {
-    color: "#2563eb",
-    textDecoration: "none",
-    wordBreak: "break-all",
-  },
-
-  proofLink: {
-    color: "#2563eb",
-    textDecoration: "none",
-    fontWeight: 600,
-    whiteSpace: "nowrap",
-  },
-
-  empty: {
-    color: "#9ca3af",
-  },
-
-  emptyState: {
-    padding: "50px 20px",
-    textAlign: "center",
-    border: "1px solid #e5e7eb",
-    borderRadius: "10px",
-    backgroundColor: "#ffffff",
-  },
-
-  emptyTitle: {
-    fontSize: "16px",
-    fontWeight: 600,
-    color: "#374151",
-  },
-
-  emptyText: {
-    marginTop: "6px",
-    fontSize: "13px",
-    color: "#9ca3af",
   },
 };
+
+export default ProjectTable;

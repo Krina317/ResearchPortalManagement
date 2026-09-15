@@ -47,7 +47,7 @@ public class ExternalFundedProject {
 	@Column(nullable = false)
 	private String statusOfTheProject;
 	
-	
+	 
 	
 
 }

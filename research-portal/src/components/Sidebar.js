@@ -8,14 +8,16 @@ import {
   Menu,
   X,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  HandCoins
 } from "lucide-react";
 
 const navItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
   { path: "/conference", label: "Conference", icon: Newspaper },
   { path: "/journal", label: "Journal", icon: BookOpen },
-  { path: "/book-chapters", label: "Book Chapters", icon: BookMarked }
+  { path: "/book-chapters", label: "Book Chapters", icon: BookMarked },
+  { path: "/projects/nu", label: "NU Projects", icon: HandCoins }
 ];
 
 export default function Sidebar() {

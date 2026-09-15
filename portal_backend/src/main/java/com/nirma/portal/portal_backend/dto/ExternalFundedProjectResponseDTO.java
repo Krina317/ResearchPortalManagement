@@ -21,4 +21,4 @@ public class ExternalFundedProjectResponseDTO {
     private String publishedPaperDetails;
     private String jointPublicationProof;
     private String statusOfTheProject;
-}
+} 
