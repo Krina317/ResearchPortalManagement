@@ -29,6 +29,10 @@ import com.nirma.portal.portal_backend.repository.JournalPaperRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JournalQueryService {
@@ -45,11 +49,12 @@ public class JournalQueryService {
 
     @Transactional(readOnly = true)
     public Page<JournalListItemDTO> search(JournalSearchCriteria criteria, Pageable pageable) {
-
+    	log.trace("Entered search() for journal papers");
         List<Long> authorIds = null;
         boolean hasAuthorFilter = notBlank(criteria.getAuthorName())
                 || (criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty());
         if (hasAuthorFilter) {
+        	log.debug("Applying author filter for journal paper search");
             boolean hasPositions = criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty();
             authorIds = authorRecordRepository.findMatchingPublicationIds(
                     PublicationType.JOURNAL.name(),
@@ -61,10 +66,15 @@ public class JournalQueryService {
 
         Integer fromTotal = resolveFromTotal(criteria);
         Integer toTotal = resolveToTotal(criteria);
+        log.debug("Journal paper search date range resolved: fromTotal={}, toTotal={}",
+                fromTotal, toTotal);
 
         Page<JournalPaper> page = journalPaperRepository.search(
                 criteria, fromTotal, toTotal, criteria.getIndexIn(), authorIds, pageable
         );
+        
+        log.debug("Journal paper search returned {} records out of {} total",
+                page.getNumberOfElements(), page.getTotalElements());
 
         List<Long> pageIds = page.getContent().stream().map(JournalPaper::getId).toList();
         Map<Long, List<AuthorRecord>> authorsByPaperId = fetchAuthorsFor(pageIds);
@@ -74,13 +84,16 @@ public class JournalQueryService {
 
     @Transactional(readOnly = true)
     public JournalListItemDTO getById(Long id) {
+    	log.trace("Entered getById() for journal paper {}", id);
         JournalPaper paper = journalPaperRepository.findById(id)
                 .orElseThrow(() -> new JournalPaperNotFoundException("Journal paper " + id + " not found"));
+        log.debug("Found journal paper {}", id);
         return toListItem(paper, fetchAuthorsFor(List.of(id)));
     }
 
     @Transactional(readOnly = true)
     public List<ColumnMetaDTO> getColumns() {
+    	log.trace("Entered getColumns() for journal papers");
         List<ColumnMetaDTO> columns = excelColumnMapRepository
                 .findByPublicationTypeAndEnabledTrue(PublicationType.JOURNAL)
                 .stream()
@@ -88,12 +101,19 @@ public class JournalQueryService {
                 .map(m -> new ColumnMetaDTO(m.getFieldName(), m.getExcelColName()))
                 .collect(Collectors.toList());
         columns.add(new ColumnMetaDTO("authors", "Authors"));
+        log.debug("Loaded {} journal paper columns", columns.size());
         return columns;
     }
 
     @Transactional(readOnly = true)
     public long getTotalCount() {
-        return journalPaperRepository.count();
+    	log.trace("Entered getTotalCount() for journal papers");
+
+	    long count = journalPaperRepository.count();
+
+	    log.debug("Total journal paper count: {}", count);
+
+	    return count;
     }
 
     // -- year/month resolution --
@@ -208,6 +228,7 @@ public class JournalQueryService {
 
     @Transactional(readOnly = true)
     public JournalFilterOptionsDTO getFilterOptions() {
+    	log.trace("Entered getFilterOptions() for journal papers");
         List<String> journalTypes = journalPaperRepository.findAll()
                 .stream()
                 .map(JournalPaper::getJournalType)
@@ -240,7 +261,12 @@ public class JournalQueryService {
                 .distinct()
                 .sorted()
                 .toList();
-
+        log.debug(
+                "Loaded journal filter options: {} journal types, {} institutes, {} departments, {} indexes",
+                journalTypes.size(),
+                institutes.size(),
+                departments.size(),
+                indexIn.size());
         return new JournalFilterOptionsDTO(
                 journalTypes,
                 institutes,

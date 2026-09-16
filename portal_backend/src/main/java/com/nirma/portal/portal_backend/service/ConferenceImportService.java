@@ -26,7 +26,10 @@ import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ConferenceImportService {
@@ -48,11 +51,16 @@ public class ConferenceImportService {
     private static final int MAX_AUTHOR_COLUMNS = 10;
 
     public ConferenceImportResult importConference(MultipartFile file) {
+    	 log.trace("Entered importConference()");
+
+    	 log.info("Starting conference paper import for file: {}",
+    	            file != null ? file.getOriginalFilename() : "null");
         validateFile(file);
 
         Document doc = parseHtml(file);
         Element table = doc.selectFirst("table");
         if (table == null) {
+        	log.warn("Conference import failed: no table found in uploaded file");
             throw new IllegalArgumentException("No table found in uploaded file.");
         }
 
@@ -74,16 +82,19 @@ public class ConferenceImportService {
 
         ConferenceImportResult result = new ConferenceImportResult();
         processRows(rows, headerIndex, mappings, allowedDeptCodes, result);
+        log.info("Conference paper import completed for file: {}", file.getOriginalFilename());
         return result;
     }
 
     private void validateFile(MultipartFile file) {
         if (file == null || file.isEmpty()) {
+        	log.warn("Conference import rejected: uploaded file is null or empty");
             throw new IllegalArgumentException("Uploaded file is empty.");
         }
         String fileName = file.getOriginalFilename();
         if (fileName == null ||
             !(fileName.endsWith(".xls") || fileName.endsWith(".xlsx"))) {
+        	log.warn("Conference import rejected: unsupported file type for file '{}'", fileName);
             throw new IllegalArgumentException(
                     "Only Excel (.xls or .xlsx) files are allowed.");
         }
@@ -93,6 +104,8 @@ public class ConferenceImportService {
         try {
             return Jsoup.parse(file.getInputStream(), "UTF-8", "");
         } catch (Exception e) {
+        	 log.error("Failed to read uploaded conference file '{}'",
+                     file.getOriginalFilename(), e);
             throw new IllegalArgumentException("Could not read the uploaded file.", e);
         }
     }
@@ -120,6 +133,7 @@ public class ConferenceImportService {
                 .toList();
 
         if (!missing.isEmpty()) {
+        	log.warn("Conference import rejected: missing required columns: {}", missing);
             throw new IllegalArgumentException(
                     "Missing required column(s) in uploaded file: " + String.join(", ", missing));
         }
@@ -137,6 +151,8 @@ public class ConferenceImportService {
             try {
                 processRow(cells, headerIndex, mappings, allowedDeptCodes, result);
             } catch (Exception e) {
+            	log.warn("Skipping conference import row {}: {}",
+                        r + 1, e.getMessage());
                 result.recordSkippedError("Row " + (r + 1) + ": " + e.getMessage());
             }
         }
@@ -172,11 +188,15 @@ public class ConferenceImportService {
 
         String deptCode = paper.getDeptCode() == null ? "" : paper.getDeptCode().trim().toUpperCase();
         if (!allowedDeptCodes.contains(deptCode)) {
+        	 log.warn("Skipping conference paper '{}' due to invalid department code '{}'",
+        	            paper.getPaperTitle(), deptCode);
             result.recordSkippedDepartment(paper.getPaperTitle(), deptCode);
             return;
         }
 
         if (conferencePaperRepository.existsByPaperTitle(paper.getPaperTitle())) {
+        	log.warn("Skipping duplicate conference paper: '{}'",
+        	            paper.getPaperTitle());
             result.recordSkippedDuplicate(paper.getPaperTitle());
             return;
         }
@@ -185,6 +205,8 @@ public class ConferenceImportService {
 
         conferenceRowPersister.saveRow(paper, authorNames);
         result.recordSaved();
+        log.debug("Successfully imported conference paper '{}'",
+                paper.getPaperTitle());
     }
 
     /**

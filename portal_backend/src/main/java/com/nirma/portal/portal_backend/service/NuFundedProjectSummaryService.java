@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class NuFundedProjectSummaryService {
 
@@ -32,33 +35,52 @@ public class NuFundedProjectSummaryService {
      */
     public List<NuFundedProjectSummaryDTO> getAllYearlySummaries() {
 
-        List<NuFundedProject> allProjects =
-                repository.findAll();
+        log.trace("Entered getAllYearlySummaries()");
 
-        List<String> academicYears =
-                allProjects.stream()
-                        .map(NuFundedProject::getAcademicYear)
-                        .filter(year -> year != null && !year.isBlank())
-                        .distinct()
-                        .sorted(Comparator.comparingInt(
-                                this::extractStartingYear
-                        ))
-                        .toList();
+        try {
+            List<NuFundedProject> allProjects =
+                    repository.findAll();
 
-        List<NuFundedProjectSummaryDTO> summaries =
-                new ArrayList<>();
+            log.debug("Retrieved {} NU funded projects for yearly summary calculation",
+                    allProjects.size());
 
-        for (String academicYear : academicYears) {
+            List<String> academicYears =
+                    allProjects.stream()
+                            .map(NuFundedProject::getAcademicYear)
+                            .filter(year -> year != null && !year.isBlank())
+                            .distinct()
+                            .sorted(Comparator.comparingInt(
+                                    this::extractStartingYear
+                            ))
+                            .toList();
 
-            summaries.add(
-                    calculateYearlySummary(
-                            allProjects,
-                            academicYear
-                    )
-            );
+            log.debug("Found {} academic years for summary calculation",
+                    academicYears.size());
+
+            List<NuFundedProjectSummaryDTO> summaries =
+                    new ArrayList<>();
+
+            for (String academicYear : academicYears) {
+
+                summaries.add(
+                        calculateYearlySummary(
+                                allProjects,
+                                academicYear
+                        )
+                );
+            }
+
+            log.info("Successfully generated yearly summaries for {} academic years",
+                    summaries.size());
+
+            return summaries;
+
+        } catch (Exception e) {
+            log.error("Failed to generate NU funded project yearly summaries",
+                    e);
+
+            throw e;
         }
-
-        return summaries;
     }
 
     private NuFundedProjectSummaryDTO calculateYearlySummary(
@@ -112,22 +134,42 @@ public class NuFundedProjectSummaryService {
     getProjectsSanctionedInYear(
             String academicYear) {
 
-        List<NuFundedProject> projects =
-                repository.findAll()
-                        .stream()
-                        .filter(project ->
-                                academicYear.equals(
-                                        project.getAcademicYear()
-                                )
-                        )
-                        .sorted(
-                                Comparator.comparing(
-                                        NuFundedProject::getId
-                                )
-                        )
-                        .toList();
+        log.trace("Entered getProjectsSanctionedInYear() for academic year '{}'",
+                academicYear);
 
-        return mapper.toResponseDTOList(projects);
+        try {
+            List<NuFundedProject> projects =
+                    repository.findAll()
+                            .stream()
+                            .filter(project ->
+                                    academicYear.equals(
+                                            project.getAcademicYear()
+                                    )
+                            )
+                            .sorted(
+                                    Comparator.comparing(
+                                            NuFundedProject::getId
+                                    )
+                            )
+                            .toList();
+
+            log.debug(
+                    "Found {} NU funded projects sanctioned in academic year '{}'",
+                    projects.size(),
+                    academicYear
+            );
+
+            return mapper.toResponseDTOList(projects);
+
+        } catch (Exception e) {
+            log.error(
+                    "Failed to retrieve NU funded projects sanctioned in academic year '{}'",
+                    academicYear,
+                    e
+            );
+
+            throw e;
+        }
     }
 
     private boolean isProjectRunningInAcademicYear(

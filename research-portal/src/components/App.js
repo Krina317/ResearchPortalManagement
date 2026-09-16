@@ -14,6 +14,7 @@ import PublicationPage from "./Publication/PublicationPage";
 
 import ProjectsPage from "./Projects/ProjectsPage";
 import ProjectSummaryPage from "./Projects/ProjectSummaryPage";
+import FacultyMetricsPage from "./FacultyMetrics/FacultyMetricsPage";
 
 function App() {
   return (
@@ -29,6 +30,11 @@ function App() {
               <Route
                 path="/"
                 element={<Dashboard />}
+              />
+
+              <Route
+                path="/faculty-metrics"
+                element={<FacultyMetricsPage />}
               />
 
               <Route

@@ -12,7 +12,10 @@ import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
 import com.nirma.portal.portal_backend.repository.ConferencePaperRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ConferenceRowPersister {
@@ -22,18 +25,32 @@ public class ConferenceRowPersister {
 
     @Transactional
     public void saveRow(ConferencePaper paper, List<String> authorNames) {
-        conferencePaperRepository.save(paper);
+    	log.trace("Entered saveRow() for conference paper '{}'",
+    	            paper.getPaperTitle());
 
-        int position = 1;
-        for (String name : authorNames) {
-            AuthorRecord author = new AuthorRecord();
-            author.setDisplayName(name);
-            author.setNormalizedName(normalizeName(name));
-            author.setPublicationId(paper.getId());
-            author.setPublicationType(PublicationType.CONFERENCE);
-            author.setAuthorPosition(position++);
-            authorRecordRepository.save(author);
-        }
+    	log.debug("Saving conference paper '{}' with {} authors",
+    	            paper.getPaperTitle(), authorNames.size());
+    	
+    	try {
+    		conferencePaperRepository.save(paper);
+
+    		int position = 1;
+    		for (String name : authorNames) {
+    			AuthorRecord author = new AuthorRecord();
+    			author.setDisplayName(name);
+    			author.setNormalizedName(normalizeName(name));
+    			author.setPublicationId(paper.getId());
+    			author.setPublicationType(PublicationType.CONFERENCE);
+    			author.setAuthorPosition(position++);
+    			authorRecordRepository.save(author);
+    		}
+    		 log.info("Successfully persisted conference paper '{}' with {} authors",
+    	                paper.getPaperTitle(), authorNames.size());
+    	} catch(Exception e) {
+    		log.error("Failed to persist conference paper '{}'",
+                    paper.getPaperTitle(), e);
+    		throw e;
+    	}
     }
 
     private String normalizeName(String name) {

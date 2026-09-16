@@ -12,13 +12,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+
 import java.util.List;
 
+@Slf4j
 @Service
 public class NuFundedProjectService {
 
     private final NuFundedProjectRepository repository;
     private final NuFundedProjectMapper mapper;
+
 
     public NuFundedProjectService(
             NuFundedProjectRepository repository,
@@ -34,22 +40,37 @@ public class NuFundedProjectService {
 
     public NuFundedProjectResponseDTO createProject(
             NuFundedProjectRequestDTO dto) {
+    	log.trace("Entered createProject() for project '{}'",
+                 dto.getProjectTitle());
+
+        log.debug("Checking whether project '{}' already exists",
+                 dto.getProjectTitle());
+
 
         if (repository.existsByProjectTitle(
                 dto.getProjectTitle())) {
+        	log.warn("Duplicate NU funded project title '{}'",
+                     dto.getProjectTitle());
 
             throw new DuplicateNuFundedProjectException(
                     "Project with this title already exists"
             );
         }
 
-        NuFundedProject project =
-                mapper.toEntity(dto);
+        NuFundedProject project = mapper.toEntity(dto);
+        
+        try {
+        	 NuFundedProject savedProject = repository.save(project);
+        	 log.info("Succesfully created NU funded project '{}'");
+        	 return mapper.toResponseDTO(savedProject);
+        }
+        catch(Exception e) {
+        	log.error("Failed to create NU funded project '{}'",
+                    dto.getProjectTitle(), e);
 
-        NuFundedProject savedProject =
-                repository.save(project);
+            throw e;
+        }
 
-        return mapper.toResponseDTO(savedProject);
     }
 
     // ---------------------------------------------------------
@@ -57,10 +78,23 @@ public class NuFundedProjectService {
     // ---------------------------------------------------------
 
     public List<NuFundedProjectResponseDTO> getAllProjects() {
+    	log.trace("Entered getAllProjects()");
+        try {
+            List<NuFundedProjectResponseDTO> projects =
+                    mapper.toResponseDTOList(
+                            repository.findAll()
+                    );
 
-        return mapper.toResponseDTOList(
-                repository.findAll()
-        );
+            log.debug("Retrieved {} NU funded projects",
+                    projects.size());
+
+            return projects;
+
+        } catch (Exception e) {
+            log.error("Failed to retrieve all NU funded projects", e);
+
+            throw e;
+        }
     }
 
     // ---------------------------------------------------------
@@ -69,15 +103,20 @@ public class NuFundedProjectService {
 
     public NuFundedProjectResponseDTO getProjectById(
             Long id) {
-
+    	log.trace("Entered getProjectById() for id {}", id);
         NuFundedProject project =
                 repository.findById(id)
-                        .orElseThrow(() ->
-                                new NuFundedProjectNotFoundException(
-                                        "Project not found with id: " + id
-                                )
-                        );
+                        .orElseThrow(() -> {
+                            log.warn("NU funded project with id {} not found",
+                                    id);
 
+                            return new NuFundedProjectNotFoundException(
+                                    "Project not found with id: " + id
+                            );
+                        });
+        log.debug("Found NU funded project '{}' for id {}",
+                project.getProjectTitle(), id);
+        
         return mapper.toResponseDTO(project);
     }
 
@@ -111,6 +150,21 @@ public class NuFundedProjectService {
                         outcome,
                         pageable
                 );
+        log.trace("Entered getProjectsWithFilters()");
+        log.debug(
+                "Applying project filters: pi='{}', coPi='{}', minAmount={}, maxAmount={}, " +
+                "category='{}', minDuration={}, maxDuration={}, academicYear='{}', outcome='{}'",
+                pi,
+                coPi,
+                minAmount,
+                maxAmount,
+                projectCategory,
+                minDuration,
+                maxDuration,
+                academicYear,
+                outcome
+        );
+        
 
         return projects.map(
                 mapper::toResponseDTO
@@ -124,15 +178,17 @@ public class NuFundedProjectService {
     public NuFundedProjectResponseDTO updateProject(
             Long id,
             NuFundedProjectRequestDTO dto) {
-
+    	log.trace("Entered updateProject() for id {}", id);
         NuFundedProject existingProject =
                 repository.findById(id)
-                        .orElseThrow(() ->
-                                new NuFundedProjectNotFoundException(
-                                        "Project not found with id: " + id
-                                )
-                        );
+                        .orElseThrow(() -> {
+                            log.warn("Cannot update NU funded project: id {} not found",
+                                    id);
 
+                            return new NuFundedProjectNotFoundException(
+                                    "Project not found with id: " + id
+                            );
+                        });
         // Check duplicate project title
         // only if the title is actually being changed
         if (!existingProject
@@ -140,6 +196,11 @@ public class NuFundedProjectService {
                 .equals(dto.getProjectTitle())
                 && repository.existsByProjectTitle(
                         dto.getProjectTitle())) {
+        	 log.warn(
+                     "Cannot update NU funded project id {}: duplicate project title '{}'",
+                     id,
+                     dto.getProjectTitle()
+             );
 
             throw new DuplicateNuFundedProjectException(
                     "Project with this title already exists"
@@ -191,10 +252,24 @@ public class NuFundedProjectService {
                 dto.getUgStudentDetailList()
         );
 
-        NuFundedProject updatedProject =
-                repository.save(existingProject);
+        try {
+            NuFundedProject updatedProject =
+                    repository.save(existingProject);
 
-        return mapper.toResponseDTO(updatedProject);
+            log.info(
+                    "Successfully updated NU funded project id {} with title '{}'",
+                    id,
+                    updatedProject.getProjectTitle()
+            );
+
+            return mapper.toResponseDTO(updatedProject);
+
+        } catch (Exception e) {
+            log.error("Failed to update NU funded project id {}",
+                    id, e);
+
+            throw e;
+        }
     }
 
     // ---------------------------------------------------------
@@ -202,14 +277,28 @@ public class NuFundedProjectService {
     // ---------------------------------------------------------
 
     public void deleteProject(Long id) {
+    	log.trace("Entered deleteProject() for id {}", id);
 
         if (!repository.existsById(id)) {
-
+            log.warn("Cannot delete NU funded project: id {} not found",
+                    id);
+            
             throw new NuFundedProjectNotFoundException(
                     "Project not found with id: " + id
             );
         }
 
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+
+            log.info("Successfully deleted NU funded project with id {}",
+                    id);
+
+        } catch (Exception e) {
+            log.error("Failed to delete NU funded project with id {}",
+                    id, e);
+
+            throw e;
+        }
     }
 }

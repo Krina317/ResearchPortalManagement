@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/nu-funded-projects")
 public class NuFundedProjectController {
@@ -38,9 +41,15 @@ public class NuFundedProjectController {
     public ResponseEntity<NuFundedProjectResponseDTO> createProject(
             @Valid @RequestBody NuFundedProjectRequestDTO dto) {
 
+        log.trace("Entered createProject()");
+
+        NuFundedProjectResponseDTO result = service.createProject(dto);
+
+        log.info("NU funded project created successfully");
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(service.createProject(dto));
+                .body(result);
     }
 
     // ---------------------------------------------------------
@@ -50,9 +59,14 @@ public class NuFundedProjectController {
     @GetMapping
     public ResponseEntity<List<NuFundedProjectResponseDTO>> getAllProjects() {
 
-        return ResponseEntity.ok(
-                service.getAllProjects()
-        );
+        log.trace("Entered getAllProjects()");
+
+        List<NuFundedProjectResponseDTO> projects =
+                service.getAllProjects();
+
+        log.debug("Retrieved {} NU funded projects", projects.size());
+
+        return ResponseEntity.ok(projects);
     }
 
     // ---------------------------------------------------------
@@ -63,9 +77,14 @@ public class NuFundedProjectController {
     public ResponseEntity<NuFundedProjectResponseDTO> getProjectById(
             @PathVariable Long id) {
 
-        return ResponseEntity.ok(
-                service.getProjectById(id)
-        );
+        log.trace("Entered getProjectById() for project {}", id);
+
+        NuFundedProjectResponseDTO project =
+                service.getProjectById(id);
+
+        log.debug("Successfully retrieved NU funded project {}", id);
+
+        return ResponseEntity.ok(project);
     }
 
     // ---------------------------------------------------------
@@ -101,9 +120,21 @@ public class NuFundedProjectController {
 
             @RequestParam(defaultValue = "asc") String direction) {
 
+        log.trace("Entered getProjectsWithFilters()");
+
+        log.debug(
+                "Filtering NU funded projects: page={}, size={}, sortBy={}, direction={}",
+                page, size, sortBy, direction
+        );
+
         // Only Sr. No. (id) and Amount can be sorted
         if (!sortBy.equals("id")
                 && !sortBy.equals("amount")) {
+
+            log.warn(
+                    "Invalid NU funded project sort field '{}', defaulting to 'id'",
+                    sortBy
+            );
 
             sortBy = "id";
         }
@@ -119,7 +150,7 @@ public class NuFundedProjectController {
                 Sort.by(sortDirection, sortBy)
         );
 
-        return ResponseEntity.ok(
+        Page<NuFundedProjectResponseDTO> result =
                 service.getProjectsWithFilters(
                         pi,
                         coPi,
@@ -131,8 +162,15 @@ public class NuFundedProjectController {
                         academicYear,
                         outcome,
                         pageable
-                )
+                );
+
+        log.info(
+                "NU funded project filter completed: returned {} records out of {}",
+                result.getNumberOfElements(),
+                result.getTotalElements()
         );
+
+        return ResponseEntity.ok(result);
     }
 
     // ---------------------------------------------------------
@@ -144,9 +182,14 @@ public class NuFundedProjectController {
             @PathVariable Long id,
             @Valid @RequestBody NuFundedProjectRequestDTO dto) {
 
-        return ResponseEntity.ok(
-                service.updateProject(id, dto)
-        );
+        log.trace("Entered updateProject() for project {}", id);
+
+        NuFundedProjectResponseDTO result =
+                service.updateProject(id, dto);
+
+        log.info("NU funded project {} updated successfully", id);
+
+        return ResponseEntity.ok(result);
     }
 
     // ---------------------------------------------------------
@@ -157,7 +200,11 @@ public class NuFundedProjectController {
     public ResponseEntity<Void> deleteProject(
             @PathVariable Long id) {
 
+        log.trace("Entered deleteProject() for project {}", id);
+
         service.deleteProject(id);
+
+        log.info("NU funded project {} deleted successfully", id);
 
         return ResponseEntity.noContent().build();
     }

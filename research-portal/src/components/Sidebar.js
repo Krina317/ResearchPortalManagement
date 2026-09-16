@@ -9,11 +9,13 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  HandCoins
+  HandCoins,
+  Users
 } from "lucide-react";
 
 const navItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
+  { path: "/faculty-metrics", label: "Faculty Metrics", icon: Users },
   { path: "/conference", label: "Conference", icon: Newspaper },
   { path: "/journal", label: "Journal", icon: BookOpen },
   { path: "/book-chapters", label: "Book Chapters", icon: BookMarked },

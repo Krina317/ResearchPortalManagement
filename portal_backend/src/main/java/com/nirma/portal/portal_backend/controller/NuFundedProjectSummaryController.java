@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/nu-funded-projects/summary")
 public class NuFundedProjectSummaryController {
@@ -29,9 +32,17 @@ public class NuFundedProjectSummaryController {
     public ResponseEntity<List<NuFundedProjectSummaryDTO>>
     getAllYearlySummaries() {
 
-        return ResponseEntity.ok(
-                summaryService.getAllYearlySummaries()
+        log.trace("Entered getAllYearlySummaries()");
+
+        List<NuFundedProjectSummaryDTO> summaries =
+                summaryService.getAllYearlySummaries();
+
+        log.info(
+                "Retrieved NU funded project summaries for {} academic years",
+                summaries.size()
         );
+
+        return ResponseEntity.ok(summaries);
     }
 
     /*
@@ -43,10 +54,22 @@ public class NuFundedProjectSummaryController {
     getProjectsSanctionedInYear(
             @PathVariable String academicYear) {
 
-        return ResponseEntity.ok(
+        log.trace(
+                "Entered getProjectsSanctionedInYear() for academic year '{}'",
+                academicYear
+        );
+
+        List<NuFundedProjectResponseDTO> projects =
                 summaryService.getProjectsSanctionedInYear(
                         academicYear
-                )
+                );
+
+        log.info(
+                "Retrieved {} NU funded projects sanctioned in academic year '{}'",
+                projects.size(),
+                academicYear
         );
+
+        return ResponseEntity.ok(projects);
     }
 }

@@ -9,7 +9,9 @@ import com.nirma.portal.portal_backend.service.ConferenceImportResult;
 import com.nirma.portal.portal_backend.service.ConferenceImportService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/conference")
 @RequiredArgsConstructor
@@ -19,11 +21,28 @@ public class ConferenceImportController {
 
     @PostMapping(value = "/import", consumes = "multipart/form-data")
     public ResponseEntity<?> importConference(@RequestParam("file") MultipartFile file) {
+
+        log.trace("Entered importConference()");
+
         try {
-            ConferenceImportResult result = conferenceImportService.importConference(file);
+            log.info("Starting conference publication import for file '{}'",
+                    file != null ? file.getOriginalFilename() : "null");
+
+            ConferenceImportResult result =
+                    conferenceImportService.importConference(file);
+
+            log.info("Conference publication import completed successfully for file '{}'",
+                    file != null ? file.getOriginalFilename() : "null");
+
             return ResponseEntity.ok(result);
+
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
+            log.warn("Conference publication import rejected: {}", e.getMessage());
+
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
         }
     }
 }

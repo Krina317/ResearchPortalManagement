@@ -25,6 +25,10 @@ import com.nirma.portal.portal_backend.repository.JournalPaperRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JournalImportService {
@@ -45,19 +49,28 @@ public class JournalImportService {
     private static final String DOWNLOAD_LINK_FIELD = "downloadFileLink";
 
     public JournalImportResult importJournal(MultipartFile file) {
+    	log.trace("Entered importJournal()");
         validateFile(file);
+        log.info("Starting journal publication import for file '{}'",
+                file.getOriginalFilename());
 
         Document doc = parseHtml(file);
         Element table = doc.selectFirst("table");
         if (table == null) {
+        	log.warn("No table found in journal import file '{}'",
+                     file.getOriginalFilename());
             throw new IllegalArgumentException("No table found in uploaded file.");
         }
 
         Elements rows = table.select("tr");
         if (rows.isEmpty()) {
+        	log.warn("Journal import file '{}' contains no rows",
+                    file.getOriginalFilename());
             throw new IllegalArgumentException("Sheet has no header row.");
         }
-
+        log.debug("Journal import file '{}' contains {} rows",
+                file.getOriginalFilename(), rows.size());
+        
         //col mappings
         List<ExcelColumnMap> mappings = excelColumnMapRepository
                 .findByPublicationTypeAndEnabledTrue(PublicationType.JOURNAL);
@@ -74,16 +87,20 @@ public class JournalImportService {
 
         JournalImportResult result = new JournalImportResult();
         processRows(rows, headerIndex, mappings, allowedDeptNames, result);
+        log.info("Completed journal publication import for file '{}'",
+                file.getOriginalFilename());
         return result;
     }
 
     private void validateFile(MultipartFile file) {
         if (file == null || file.isEmpty()) {
+        	log.warn("Journal import attempted with an empty file");
             throw new IllegalArgumentException("Uploaded file is empty.");
         }
         String fileName = file.getOriginalFilename();
         if (fileName == null ||
             !(fileName.endsWith(".xls") || fileName.endsWith(".xlsx"))) {
+        	log.warn("Journal import rejected unsupported file '{}'", fileName);
             throw new IllegalArgumentException(
                     "Only Excel (.xls or .xlsx) files are allowed.");
         }
@@ -93,6 +110,8 @@ public class JournalImportService {
         try {
             return Jsoup.parse(file.getInputStream(), "UTF-8", "");
         } catch (Exception e) {
+        	log.error("Failed to read journal import file '{}'",
+                      file.getOriginalFilename(), e);
             throw new IllegalArgumentException("Could not read the uploaded file.", e);
         }
     }
@@ -120,6 +139,9 @@ public class JournalImportService {
                 .toList();
 
         if (!missing.isEmpty()) {
+        	log.warn("Journal import file is missing required columns: {}",
+        	            missing);
+
             throw new IllegalArgumentException(
                     "Missing required column(s) in uploaded file: " + String.join(", ", missing));
         }
@@ -138,6 +160,8 @@ public class JournalImportService {
 			try {
 				processRow(rowElement, cells, headerIndex, mappings, allowedDeptNames, result);
 			} catch (Exception e) {
+				log.warn("Skipping journal import row {}: {}",
+			            r + 1, e.getMessage());
 				result.recordSkippedError("Row " + (r + 1) + ": " + e.getMessage());
 			}
 		}
@@ -169,11 +193,15 @@ public class JournalImportService {
 		
 		String deptName = paper.getDeptName() == null ? "" : paper.getDeptName().trim().toUpperCase();
 		if (!allowedDeptNames.contains(deptName)) {
+			log.warn("Skipping journal paper '{}' due to invalid department '{}'",
+			            paper.getPaperTitle(), deptName);
 			result.recordSkippedDepartment(paper.getPaperTitle(), deptName);
 			return;
 		}
 		
 		if (journalPaperRepository.existsByPaperTitle(paper.getPaperTitle())) {
+			log.warn("Skipping duplicate journal paper '{}'",
+			            paper.getPaperTitle());
 			result.recordSkippedDuplicate(paper.getPaperTitle());
 			return;
 		}
@@ -182,6 +210,8 @@ public class JournalImportService {
 		
 		journalRowPersister.saveRow(paper, authorNames);
 		result.recordSaved();
+		log.debug("Successfully processed journal paper '{}' with {} authors",
+		        paper.getPaperTitle(), authorNames.size());
 	}
     /**
      * Reads the raw cell text for a mapped column, except for the download-link

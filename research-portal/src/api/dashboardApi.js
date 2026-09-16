@@ -1,21 +1,43 @@
 // dashboardApi.js
+
 const BASE_URL = "http://localhost:8080/api";
 
 export async function fetchDashboardSummary() {
 
-    const response = await fetch(`${BASE_URL}/dashboard/count`);
+    const [
+        conferenceResponse,
+        journalResponse,
+        nuProjectResponse
+    ] = await Promise.all([
+        fetch(`${BASE_URL}/dashboard/count/conference`),
+        fetch(`${BASE_URL}/dashboard/count/journal`),
+        fetch(`${BASE_URL}/dashboard/count/nu-funded-projects`)
+    ]);
 
-    if (!response.ok) {
+    if (
+        !conferenceResponse.ok ||
+        !journalResponse.ok ||
+        !nuProjectResponse.ok
+    ) {
         throw new Error("Unable to fetch dashboard.");
     }
 
-    const conferenceCount = await response.json();
+    const conferenceCount = await conferenceResponse.json();
+    const journalCount = await journalResponse.json();
+    const nuProjectCount = await nuProjectResponse.json();
 
     return {
         conferenceCount,
-        journalCount: 0,
+        journalCount,
         bookChapterCount: 0,
-        lastUploadDate: null
-    };
 
+        externalProjectCount: 0,
+        externalProjectAmount: 0,
+
+        nuProjectCount,
+        nuProjectAmount: 0,
+
+        consultancyCount: 0,
+        mouCount: 0
+    };
 }

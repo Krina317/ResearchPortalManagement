@@ -16,13 +16,17 @@ import com.nirma.portal.portal_backend.dto.JournalSearchCriteria;
 import com.nirma.portal.portal_backend.service.JournalQueryService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/journal")
 @RequiredArgsConstructor
 public class JournalQueryController {
 
-    private static final Set<String> ALLOWED_SORT_FIELDS = Set.of("id", "yearOfPublication");
+    private static final Set<String> ALLOWED_SORT_FIELDS =
+            Set.of("id", "yearOfPublication");
+
     private final JournalQueryService journalQueryService;
 
     @GetMapping
@@ -57,36 +61,112 @@ public class JournalQueryController {
             @RequestParam(defaultValue = "yearOfPublication") String sortBy,
             @RequestParam(defaultValue = "DESC") String sortDir
     ) {
-        String safeSortBy = ALLOWED_SORT_FIELDS.contains(sortBy) ? sortBy : "yearOfPublication";
+        log.trace("Entered journal search()");
+
+        String safeSortBy =
+                ALLOWED_SORT_FIELDS.contains(sortBy)
+                        ? sortBy
+                        : "yearOfPublication";
+
+        if (!safeSortBy.equals(sortBy)) {
+            log.warn(
+                    "Invalid journal sort field '{}', defaulting to '{}'",
+                    sortBy,
+                    safeSortBy
+            );
+        }
 
         JournalSearchCriteria criteria = new JournalSearchCriteria(
-                paperTitle, journalName, journalType, department, instituteName,
-                indexIn, issnNo, volumeNo, issueNo, pageNo, doiNumber,
+                paperTitle,
+                journalName,
+                journalType,
+                department,
+                instituteName,
+                indexIn,
+                issnNo,
+                volumeNo,
+                issueNo,
+                pageNo,
+                doiNumber,
                 articleLink,
-                minImpactFactorClarivate, maxImpactFactorClarivate,
-                minImpactFactorJournal, maxImpactFactorJournal,
-                authorName, authorPosition,
-                fromYear, fromMonth, toYear, toMonth,
-                academicYear, financialYear, calendarYear
+                minImpactFactorClarivate,
+                maxImpactFactorClarivate,
+                minImpactFactorJournal,
+                maxImpactFactorJournal,
+                authorName,
+                authorPosition,
+                fromYear,
+                fromMonth,
+                toYear,
+                toMonth,
+                academicYear,
+                financialYear,
+                calendarYear
         );
 
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDir), safeSortBy);
+        Sort sort = Sort.by(
+                Sort.Direction.fromString(sortDir),
+                safeSortBy
+        );
+
         Pageable pageable = PageRequest.of(page, size, sort);
-        return journalQueryService.search(criteria, pageable);
+
+        log.debug(
+                "Searching journal papers: page={}, size={}, sortBy={}, sortDir={}",
+                page,
+                size,
+                safeSortBy,
+                sortDir
+        );
+
+        Page<JournalListItemDTO> result =
+                journalQueryService.search(criteria, pageable);
+
+        log.info(
+                "Journal paper search completed: returned {} records out of {}",
+                result.getNumberOfElements(),
+                result.getTotalElements()
+        );
+
+        return result;
     }
 
     @GetMapping("/{id}")
     public JournalListItemDTO getById(@PathVariable Long id) {
-        return journalQueryService.getById(id);
+        log.trace("Entered getById() for journal paper {}", id);
+
+        JournalListItemDTO result =
+                journalQueryService.getById(id);
+
+        log.debug("Successfully retrieved journal paper {}", id);
+
+        return result;
     }
 
     @GetMapping("/columns")
     public List<ColumnMetaDTO> getColumns() {
-        return journalQueryService.getColumns();
+        log.trace("Entered getColumns()");
+
+        List<ColumnMetaDTO> columns =
+                journalQueryService.getColumns();
+
+        log.debug(
+                "Retrieved {} journal column definitions",
+                columns.size()
+        );
+
+        return columns;
     }
-    
+
     @GetMapping("/filter-options")
     public JournalFilterOptionsDTO getFilterOptions() {
-        return journalQueryService.getFilterOptions();
+        log.trace("Entered getFilterOptions()");
+
+        JournalFilterOptionsDTO options =
+                journalQueryService.getFilterOptions();
+
+        log.debug("Successfully retrieved journal filter options");
+
+        return options;
     }
 }

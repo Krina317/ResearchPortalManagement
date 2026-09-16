@@ -30,6 +30,10 @@ import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ConferenceQueryService {
@@ -42,11 +46,14 @@ public class ConferenceQueryService {
 
     @Transactional(readOnly = true)
     public Page<ConferenceListItemDTO> search(ConferenceSearchCriteria criteria, Pageable pageable) {
+    	log.trace("Entered search()");
+    	log.info("Searching conference papers");
 
         List<Long> authorIds = null;
         boolean hasAuthorFilter = notBlank(criteria.getAuthorName())
                 || (criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty());
         if (hasAuthorFilter) {
+            log.debug("Applying author filter for conference paper search");
             boolean hasPositions = criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty();
             authorIds = authorRecordRepository.findMatchingPublicationIds(
                     PublicationType.CONFERENCE.name(),
@@ -80,19 +87,30 @@ public class ConferenceQueryService {
 
         List<Long> pageIds = page.getContent().stream().map(ConferencePaper::getId).toList();
         Map<Long, List<AuthorRecord>> authorsByPaperId = fetchAuthorsFor(pageIds);
-
+        log.info(
+                "Conference paper search returned {} records out of {} total",
+                page.getNumberOfElements(),
+                page.getTotalElements()
+        );
         return page.map(paper -> toListItem(paper, authorsByPaperId));
     }
 
     @Transactional(readOnly = true)
     public ConferenceListItemDTO getById(Long id) {
+    	log.trace("Entered getById() with id {}", id);
+    	log.info("Fetching conference paper with id {}", id);
         ConferencePaper paper = conferencePaperRepository.findById(id)
-                .orElseThrow(() -> new ConferencePaperNotFoundException("Conference paper " + id + " not found"));
+                .orElseThrow(() -> {
+                	log.warn("Conference paper {} not found",id);
+                	return new ConferencePaperNotFoundException("Conference paper" + id + "not found");
+                });
         return toListItem(paper, fetchAuthorsFor(List.of(id)));
     }
 
     @Transactional(readOnly = true)
     public List<ColumnMetaDTO> getColumns() {
+    	log.trace("Entered getColumns()");
+    	log.info("Fetching conference paper columns");
         List<ColumnMetaDTO> columns = excelColumnMapRepository
                 .findByPublicationTypeAndEnabledTrue(PublicationType.CONFERENCE)
                 .stream()
@@ -105,6 +123,8 @@ public class ConferenceQueryService {
 
     @Transactional(readOnly = true)
     public long getTotalCount() {
+    	log.trace("Entered getTotalCount()");
+    	log.debug("Fetching total conference paper count");
         return conferencePaperRepository.count();
     }
 
@@ -148,6 +168,8 @@ public class ConferenceQueryService {
 
     @Transactional(readOnly = true)
     public ConferenceFilterOptionsDTO getFilterOptions() {
+    	log.trace("Entered getFilterOptions()");
+    	log.info("Fetching conference paper filter options");
         List<String> conferenceTypes = conferencePaperRepository.findAll()
                 .stream()
                 .map(ConferencePaper::getConferenceType)
