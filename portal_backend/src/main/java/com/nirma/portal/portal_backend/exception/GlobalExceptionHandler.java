@@ -111,5 +111,29 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleExternalFundedProjectNotFound(ExternalFundedProjectNotFoundException ex){
     	ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
     	return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    @ExceptionHandler(BookChapterNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleBookChapterNotFound(
+            BookChapterNotFoundException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateBookChapterException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateBookChapter(
+            DuplicateBookChapterException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 }

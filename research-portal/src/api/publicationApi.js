@@ -2,8 +2,8 @@ const BASE_URL = "http://localhost:8080/api";
 
 const ENDPOINTS = {
     conference: "conference",
-    journal: "journal"
-    // "book-chapters": not implemented on backend yet
+    journal: "journal",
+    "book-chapters": "book-chapters"
 };
 
 function yearStart(value) {
@@ -126,9 +126,45 @@ function buildJournalParams(filters = {}, opts = {}) {
 
 }
 
+
+function buildBookChapterParams(filters = {}, opts = {}) {
+
+    const params = new URLSearchParams();
+
+    add(params, "bookTitle", filters.bookTitle);
+    add(params, "bookChapterTitle", filters.bookChapterTitle);
+    add(params, "nameOfBookPublisher", filters.publisher);
+
+    add(params, "publicationType", filters.publicationType);
+    add(params, "publicationCity", filters.publicationCity);
+    add(params, "yearOfPublication", filters.yearOfPublication);
+    add(params, "isbnNo", filters.isbnNo);
+
+    if (filters.fromMonth) {
+        add(params, "fromMonth", filters.fromMonth);
+    }
+
+    if (filters.fromYear) {
+        add(params, "fromYear", filters.fromYear);
+    }
+
+    if (filters.toMonth) {
+        add(params, "toMonth", filters.toMonth);
+    }
+
+    if (filters.toYear) {
+        add(params, "toYear", filters.toYear);
+    }
+
+    addCommonParams(params, filters, opts);
+
+    return params;
+}
+
 const PARAM_BUILDERS = {
     conference: buildConferenceParams,
-    journal: buildJournalParams
+    journal: buildJournalParams,
+    "book-chapters": buildBookChapterParams
 };
 
 /*
@@ -262,6 +298,30 @@ export async function uploadJournalFile(file) {
             (typeof data === "string" && data) ||
             data?.message ||
             "Journal upload failed."
+        );
+    }
+
+    return data;
+
+}
+
+export async function uploadBookChapterFile(file) {
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch(`${BASE_URL}/book-chapters/import`, {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json().catch(() => null);
+
+    if (!response.ok) {
+        throw new Error(
+            (typeof data === "string" && data) ||
+            data?.message ||
+            "Book Chapter upload failed."
         );
     }
 

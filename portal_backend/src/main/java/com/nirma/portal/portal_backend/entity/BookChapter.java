@@ -44,6 +44,8 @@ public class BookChapter {
     private String yearOfPublication;
 
     private String isbnNo;
+    
+    private String fileName;
 
     private String publicationType;
 

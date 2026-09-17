@@ -213,6 +213,19 @@ export default function PublicationFilter({
                                 />
 
                             )}
+
+                            {/* ========================= */}
+                            {/* ISBN NO */}
+                            {/* ========================= */}
+                            {hasFilter("isbnNo") && (
+                                <TextFilter
+                                    label="ISBN No"
+                                    value={filters.isbnNo ?? ""}
+                                    onChange={(value) =>
+                                        updateField("isbnNo", value)
+                                    }
+                                />
+                            )}
                             {/* ========================= */}
                             {/* CONFERENCE TYPE */}
                             {/* ========================= */}

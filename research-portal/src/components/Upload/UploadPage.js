@@ -4,13 +4,13 @@ import UploadHeader from "./UploadHeader";
 import UploadBox from "./UploadBox";
 import UploadPreviewTable from "./UploadPreviewTable";
 import UploadSummaryCard from "./UploadSummaryCard";
-import UploadPagination from "./UploadPagination";
-import { uploadConferenceFile, uploadJournalFile } from "../../api/publicationApi";
+// import UploadPagination from "./UploadPagination";
+import { uploadConferenceFile, uploadJournalFile, uploadBookChapterFile } from "../../api/publicationApi";
 
 const UPLOAD_HANDLERS = {
     conference: uploadConferenceFile,
-    journal: uploadJournalFile
-    // "book-chapters": not implemented on backend yet
+    journal: uploadJournalFile,
+    "book-chapters": uploadBookChapterFile
 };
 
 function parseFileForPreview(file) {

@@ -30,6 +30,8 @@ public class BookChapterRequestDTO {
     private Integer year;
 
     private String yearOfPublication;
+    
+    private String fileName;
 
     private String isbnNo;
 

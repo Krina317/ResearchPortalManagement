@@ -28,8 +28,10 @@ public class BookChapterListItemDTO {
     private Integer year;
 
     private String yearOfPublication;
-
+    
     private String isbnNo;
+    
+    private String fileName;
 
     private String publicationType;
 

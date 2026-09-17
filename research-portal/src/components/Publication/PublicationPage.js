@@ -13,7 +13,7 @@ import PublicationFilter from "./PublicationFilter";
 import PublicationTable from "./PublicationTable";
 import PublicationPagination from "./PublicationPagination";
 
-const TYPES_WITH_BACKEND_METADATA = ["conference", "journal"];
+const TYPES_WITH_BACKEND_METADATA = ["conference", "journal","book-chapters"];
 
 const AUTHOR_COUNT = 10;
 

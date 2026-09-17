@@ -218,6 +218,12 @@ const BOOK_CHAPTER_CONFIG = {
             field: "instituteName"
         },
         {
+            id: "isbnNo",
+            label: "ISBN No",
+            type: "text",
+            field: "isbnNo"
+        },
+        {
             id: "author",
             label: "Author",
             type: "author"
