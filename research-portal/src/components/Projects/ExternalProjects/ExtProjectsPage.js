@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import ProjectPaging from "./ProjectPaging";
-import AddProject from "./AddProject";
+import ExtProjectPaging from "./ExtProjectPaging";
+import AddExtProject from "./AddExtProject";
 
 import {
   createProject,
   updateProject,
   deleteProject,
-} from "../../api/projectApi";
+} from "../../../api/extProjectApi";
 
-function ProjectsPage() {
+function ExtProjectsPage() {
   const navigate = useNavigate();
 
   const [showAddProject, setShowAddProject] =
@@ -69,13 +69,13 @@ function ProjectsPage() {
     } catch (err) {
       alert(
         err.message ||
-          "Failed to delete project."
+          "Failed to delete external funded project."
       );
     }
   };
 
   const handleOpenSummary = () => {
-    navigate("/projects/nu/summary");
+    navigate("/projects/external/summary");
   };
 
   const handleGenerateReport = () => {
@@ -94,7 +94,7 @@ function ProjectsPage() {
         boxSizing: "border-box",
       }}
     >
-      <ProjectPaging
+      <ExtProjectPaging
         onAddProject={handleOpenAddProject}
         onOpenSummary={handleOpenSummary}
         onGenerateReport={handleGenerateReport}
@@ -103,7 +103,7 @@ function ProjectsPage() {
       />
 
       {showAddProject && (
-        <AddProject
+        <AddExtProject
           onSave={handleSaveProject}
           onClose={handleCloseAddProject}
           projectToEdit={projectToEdit}
@@ -113,4 +113,4 @@ function ProjectsPage() {
   );
 }
 
-export default ProjectsPage;
+export default ExtProjectsPage;

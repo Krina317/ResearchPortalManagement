@@ -1,5 +1,7 @@
 package com.nirma.portal.portal_backend.dto;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,15 +26,22 @@ public class ExternalFundedProjectRequestDTO {
 	@NotBlank(message = "Funding agency name is required")
 	private String fundingAgencyName;
 	
-	@NotBlank(message = "Sanctioned amount is required")
-	private String amountTotalSanctioned;
+	@NotNull(message = "Sanctioned amount is required")
+	private Long amountTotalSanctioned;
 	
 	@NotNull(message = "Duration is required")
 	private Long duration;
 	
-	@NotBlank(message = "Outcome of project is required")
-	private String outcomeOfProject;
+	@NotBlank(message = "Academic year is required")
+	private String academicYear;
 	
+	@NotNull(message = "From date is required")
+	private LocalDate fromDate;
+	
+	@NotNull(message = "To date is required")
+	private LocalDate toDate;
+	
+	private String outcomeOfProject;
 	private String publishedPaperDetails;
 	
 	@NotBlank(message = "Joint publiation proof is required")

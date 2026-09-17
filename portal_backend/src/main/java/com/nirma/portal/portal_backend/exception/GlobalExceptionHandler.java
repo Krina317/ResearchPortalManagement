@@ -100,4 +100,16 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
+    
+    @ExceptionHandler(DuplicateExternalFundedProjectException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateExternalFundedProject(DuplicateExternalFundedProjectException ex){
+    	ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(),LocalDateTime.now());
+    	return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+    
+    @ExceptionHandler(ExternalFundedProjectNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleExternalFundedProjectNotFound(ExternalFundedProjectNotFoundException ex){
+    	ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
+    	return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }

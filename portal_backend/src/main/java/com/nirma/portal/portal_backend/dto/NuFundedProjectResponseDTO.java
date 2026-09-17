@@ -1,5 +1,6 @@
 package com.nirma.portal.portal_backend.dto;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,8 @@ public class NuFundedProjectResponseDTO {
 	private String projectCategory; 
 	private Long duration;
 	private String academicYear;
+//	private LocalDate fromDate;
+//	private LocalDate toDate;
 	private String outcomeOfResearchProject;
 	private String publishedPaperDetails;
 	private String jointPublicationProof;

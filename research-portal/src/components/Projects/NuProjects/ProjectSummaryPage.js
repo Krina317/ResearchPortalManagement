@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   fetchYearlySummaries,
   fetchProjectsSanctionedInYear,
-} from "../../api/projectApi";
+} from "../../../api/projectApi";
 
 function ProjectSummaryPage() {
   const navigate = useNavigate();

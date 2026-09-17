@@ -1,6 +1,8 @@
 package com.nirma.portal.portal_backend.entity;
 
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -38,6 +40,12 @@ public class NuFundedProject {
 	
     @Column(nullable = false)
     private String academicYear;
+    
+//    @Column(nullable = false)
+//	private LocalDate fromDate;
+//	
+//	@Column(nullable = false)
+//	private LocalDate toDate;
 	
 	private String outcomeOfResearchProject;
 	

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProjectFilters from "./ProjectFilters";
 import ProjectToolbar from "./ProjectToolbar";
 import ProjectTable from "./ProjectTable";
-import { fetchProjectsWithFilters } from "../../api/projectApi";
+import { fetchProjectsWithFilters } from "../../../api/projectApi";
 
 const DEFAULT_FILTERS = {
   piSearch: "",

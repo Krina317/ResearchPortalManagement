@@ -6,7 +6,7 @@ const PAGE_TITLES = [
   { prefix: "/conference", label: "Conference Papers" },
   { prefix: "/journal", label: "Journal Papers" },
   { prefix: "/book-chapters", label: "Book Chapters" },
-  { prefix: "/projects/external", label: "External Funded Projects" },
+  { prefix: "/projects/ext", label: "External Funded Projects" },
   { prefix: "/projects/nu", label: "NU Funded Projects" },
   { prefix: "/consultancy", label: "Consultancy" },
   { prefix: "/mou", label: "MoUs" },

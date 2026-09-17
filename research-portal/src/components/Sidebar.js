@@ -10,7 +10,8 @@ import {
   ChevronLeft,
   ChevronRight,
   HandCoins,
-  Users
+  Users,
+  Landmark
 } from "lucide-react";
 
 const navItems = [
@@ -19,7 +20,9 @@ const navItems = [
   { path: "/conference", label: "Conference", icon: Newspaper },
   { path: "/journal", label: "Journal", icon: BookOpen },
   { path: "/book-chapters", label: "Book Chapters", icon: BookMarked },
-  { path: "/projects/nu", label: "NU Projects", icon: HandCoins }
+  { path: "/projects/nu", label: "NU Projects", icon: HandCoins },
+  { path: "/projects/ext", label: "External Projects", icon: Landmark}
+
 ];
 
 export default function Sidebar() {

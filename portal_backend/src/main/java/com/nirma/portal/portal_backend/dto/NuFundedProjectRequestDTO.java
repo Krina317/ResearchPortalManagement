@@ -1,5 +1,7 @@
 package com.nirma.portal.portal_backend.dto;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -33,6 +35,13 @@ public class NuFundedProjectRequestDTO {
 	
 	@NotBlank(message = "Academic year is required")
 	private String academicYear;
+//	
+//	@NotNull(message = "From date is required")
+//	private LocalDate fromDate;
+//	
+//	@NotNull(message = "To date is required")
+//	private LocalDate toDate;
+//	
 	
 	private String outcomeOfResearchProject;
 	private String publishedPaperDetails;
