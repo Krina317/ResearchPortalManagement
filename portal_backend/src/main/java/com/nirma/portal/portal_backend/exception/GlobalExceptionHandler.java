@@ -111,6 +111,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleExternalFundedProjectNotFound(ExternalFundedProjectNotFoundException ex){
     	ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
     	return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
     @ExceptionHandler(BookChapterNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleBookChapterNotFound(
             BookChapterNotFoundException ex) {
