@@ -1,47 +1,49 @@
-// dashboardApi.js
-
 const BASE_URL = "http://localhost:8080/api";
 
+async function fetchCount(path) {
+    const response = await fetch(`${BASE_URL}${path}`);
+    if (!response.ok) {
+        throw new Error(`Failed: ${path} (${response.status})`);
+    }
+    return response.json();
+}
+
 export async function fetchDashboardSummary() {
+    const paths = [
+        "/dashboard/count/conference",
+        "/dashboard/count/journal",
+        "/dashboard/count/book-chapters",
+        "/dashboard/count/nu-funded-projects",
+        "/dashboard/count/ext-funded-projects",
+    ];
 
-    const [
-        conferenceResponse,
-        journalResponse,
-        nuProjectResponse,
-        extProjectResponse
-    ] = await Promise.all([
-        fetch(`${BASE_URL}/dashboard/count/conference`),
-        fetch(`${BASE_URL}/dashboard/count/journal`),
-        fetch(`${BASE_URL}/dashboard/count/nu-funded-projects`),
-        fetch(`${BASE_URL}/dashboard/count/ext-funded-projects`)
-    ]);
+    const results = await Promise.allSettled(paths.map(fetchCount));
 
-    if (
-        !conferenceResponse.ok ||
-        !journalResponse.ok ||
-        !nuProjectResponse.ok ||
-        !extProjectResponse.ok
-    ) {
+    results.forEach((r, i) => {
+        if (r.status === "rejected") {
+            console.error(`Dashboard endpoint failed: ${paths[i]}`, r.reason);
+        }
+    });
+
+    if (results.every((r) => r.status === "rejected")) {
         throw new Error("Unable to fetch dashboard.");
     }
 
-    const conferenceCount = await conferenceResponse.json();
-    const journalCount = await journalResponse.json();
-    const nuProjectCount = await nuProjectResponse.json();
-    const externalProjectCount = await extProjectResponse.json();
+    const val = (r) => (r.status === "fulfilled" ? r.value : 0);
+    const [conference, journal, bookChapter, nuProject, extProject] = results;
 
     return {
-        conferenceCount,
-        journalCount,
-        bookChapterCount: 0,
+        conferenceCount: val(conference),
+        journalCount: val(journal),
+        bookChapterCount: val(bookChapter),
 
-        externalProjectCount,
+        externalProjectCount: val(extProject),
         externalProjectAmount: 0,
 
-        nuProjectCount,
+        nuProjectCount: val(nuProject),
         nuProjectAmount: 0,
 
         consultancyCount: 0,
-        mouCount: 0
+        mouCount: 0,
     };
 }

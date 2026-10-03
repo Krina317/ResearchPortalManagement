@@ -1,31 +1,28 @@
 package com.nirma.portal.portal_backend.controller;
 
-import com.nirma.portal.portal_backend.dto.ExternalFundedProjectRequestDTO;
-import com.nirma.portal.portal_backend.dto.ExternalFundedProjectResponseDTO;
-import com.nirma.portal.portal_backend.service.ExternalFundedProjectService;
+import java.time.LocalDate;
+import java.util.List;
 
-import jakarta.validation.Valid;
-
-import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Page;
-import java.time.LocalDate;
 
-import java.util.List;
+import com.nirma.portal.portal_backend.dto.ExternalFundedProjectRequestDTO;
+import com.nirma.portal.portal_backend.dto.ExternalFundedProjectResponseDTO;
+import com.nirma.portal.portal_backend.service.ProjectService;
+
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/external-funded-projects")
 public class ExternalFundedProjectController {
 
-    private final ExternalFundedProjectService service;
+    private final ProjectService service;
 
-    public ExternalFundedProjectController(
-            ExternalFundedProjectService service) {
-
+    public ExternalFundedProjectController(ProjectService service) {
         this.service = service;
     }
 
@@ -48,7 +45,7 @@ public class ExternalFundedProjectController {
         );
 
         ExternalFundedProjectResponseDTO createdProject =
-                service.createProject(dto);
+                service.createExternalProject(dto);
 
         log.info(
                 "External funded project '{}' created successfully",
@@ -65,13 +62,12 @@ public class ExternalFundedProjectController {
     // ---------------------------------------------------------
 
     @GetMapping
-    public ResponseEntity<List<ExternalFundedProjectResponseDTO>>
-    getAllProjects() {
+    public ResponseEntity<List<ExternalFundedProjectResponseDTO>> getAllProjects() {
 
         log.trace("Entered getAllProjects() controller");
 
         List<ExternalFundedProjectResponseDTO> projects =
-                service.getAllProjects();
+                service.getAllExternalProjects();
 
         log.debug(
                 "Returning {} external funded projects",
@@ -80,115 +76,93 @@ public class ExternalFundedProjectController {
 
         return ResponseEntity.ok(projects);
     }
-    
-	 // ---------------------------------------------------------
-	 // FILTER + PAGINATION
-	 // ---------------------------------------------------------
-	
-	 @GetMapping("/filter")
-	 public ResponseEntity<Page<ExternalFundedProjectResponseDTO>>
-	 findProjectsWithFilters(
-	
-	         @RequestParam(required = false)
-	         String projectTitle,
-	
-	         @RequestParam(required = false)
-	         String pi,
-	
-	         @RequestParam(required = false)
-	         String coPi,
-	
-	         @RequestParam(required = false)
-	         String fundingAgencyName,
-	
-	         @RequestParam(required = false)
-	         Long minAmount,
-	
-	         @RequestParam(required = false)
-	         Long maxAmount,
-	
-	         @RequestParam(required = false)
-	         Long minDuration,
-	
-	         @RequestParam(required = false)
-	         Long maxDuration,
-	
-	         @RequestParam(required = false)
-	         String academicYear,
-	
-	         @RequestParam(required = false)
-	         String outcome,
-	
-	         @RequestParam(required = false)
-	         String status,
-	
-	         @RequestParam(required = false)
-	         LocalDate dateFrom,
-	
-	         @RequestParam(required = false)
-	         LocalDate dateTo,
-	
-	         @RequestParam(defaultValue = "0")
-	         int page,
-	
-	         @RequestParam(defaultValue = "10")
-	         int size,
-	
-	         @RequestParam(defaultValue = "id")
-	         String sortBy,
-	
-	         @RequestParam(defaultValue = "asc")
-	         String direction
-	 ) {
-	
-	     log.trace(
-	             "Entered findProjectsWithFilters() controller"
-	     );
-	
-	     log.debug(
-	             "Filtering external funded projects: page={}, size={}, sortBy={}, direction={}",
-	             page,
-	             size,
-	             sortBy,
-	             direction
-	     );
-	
-	     Page<ExternalFundedProjectResponseDTO> projects =
-	             service.findProjectsWithFilters(
-	                     projectTitle,
-	                     pi,
-	                     coPi,
-	                     fundingAgencyName,
-	                     minAmount,
-	                     maxAmount,
-	                     minDuration,
-	                     maxDuration,
-	                     academicYear,
-	                     outcome,
-	                     status,
-	                     dateFrom,
-	                     dateTo,
-	                     page,
-	                     size,
-	                     sortBy,
-	                     direction
-	             );
-	
-	     log.info(
-	             "External funded project filter returned {} projects",
-	             projects.getTotalElements()
-	     );
-	
-	     return ResponseEntity.ok(projects);
-	 }
+
+    // ---------------------------------------------------------
+    // FILTER + PAGINATION
+    // ---------------------------------------------------------
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<ExternalFundedProjectResponseDTO>> findProjectsWithFilters(
+
+            @RequestParam(required = false) String projectTitle,
+
+            @RequestParam(required = false) String pi,
+
+            @RequestParam(required = false) String coPi,
+
+            @RequestParam(required = false) String fundingAgencyName,
+
+            @RequestParam(required = false) Long minAmount,
+
+            @RequestParam(required = false) Long maxAmount,
+
+            @RequestParam(required = false) Long minDuration,
+
+            @RequestParam(required = false) Long maxDuration,
+
+            @RequestParam(required = false) String academicYear,
+
+            @RequestParam(required = false) String outcome,
+
+            @RequestParam(required = false) String status,
+
+            @RequestParam(required = false) LocalDate dateFrom,
+
+            @RequestParam(required = false) LocalDate dateTo,
+
+            @RequestParam(defaultValue = "0") int page,
+
+            @RequestParam(defaultValue = "10") int size,
+
+            @RequestParam(defaultValue = "id") String sortBy,
+
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        log.trace("Entered findProjectsWithFilters() controller");
+
+        log.debug(
+                "Filtering external funded projects: page={}, size={}, sortBy={}, direction={}",
+                page,
+                size,
+                sortBy,
+                direction
+        );
+
+        Page<ExternalFundedProjectResponseDTO> projects =
+                service.findExternalProjectsWithFilters(
+                        projectTitle,
+                        pi,
+                        coPi,
+                        fundingAgencyName,
+                        minAmount,
+                        maxAmount,
+                        minDuration,
+                        maxDuration,
+                        academicYear,
+                        outcome,
+                        status,
+                        dateFrom,
+                        dateTo,
+                        page,
+                        size,
+                        sortBy,
+                        direction
+                );
+
+        log.info(
+                "External funded project filter returned {} projects",
+                projects.getTotalElements()
+        );
+
+        return ResponseEntity.ok(projects);
+    }
 
     // ---------------------------------------------------------
     // GET PROJECT BY ID
     // ---------------------------------------------------------
 
     @GetMapping("/{id:\\d+}")
-    public ResponseEntity<ExternalFundedProjectResponseDTO>
-    getProjectById(
+    public ResponseEntity<ExternalFundedProjectResponseDTO> getProjectById(
             @PathVariable Long id) {
 
         log.trace(
@@ -197,7 +171,7 @@ public class ExternalFundedProjectController {
         );
 
         ExternalFundedProjectResponseDTO project =
-                service.getProjectById(id);
+                service.getExternalProjectById(id);
 
         log.debug(
                 "Returning external funded project id {}",
@@ -212,8 +186,7 @@ public class ExternalFundedProjectController {
     // ---------------------------------------------------------
 
     @PutMapping("/{id:\\d+}")
-    public ResponseEntity<ExternalFundedProjectResponseDTO>
-    updateProject(
+    public ResponseEntity<ExternalFundedProjectResponseDTO> updateProject(
             @PathVariable Long id,
             @Valid @RequestBody ExternalFundedProjectRequestDTO dto) {
 
@@ -228,7 +201,7 @@ public class ExternalFundedProjectController {
         );
 
         ExternalFundedProjectResponseDTO updatedProject =
-                service.updateProject(id, dto);
+                service.updateExternalProject(id, dto);
 
         log.info(
                 "External funded project id {} updated successfully",
@@ -256,7 +229,7 @@ public class ExternalFundedProjectController {
                 id
         );
 
-        service.deleteProject(id);
+        service.deleteExternalProject(id);
 
         log.info(
                 "External funded project id {} deleted successfully",

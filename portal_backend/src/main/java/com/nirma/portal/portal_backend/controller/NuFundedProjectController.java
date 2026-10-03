@@ -1,23 +1,20 @@
 package com.nirma.portal.portal_backend.controller;
 
-import com.nirma.portal.portal_backend.dto.NuFundedProjectRequestDTO;
-import com.nirma.portal.portal_backend.dto.NuFundedProjectResponseDTO;
-import com.nirma.portal.portal_backend.service.NuFundedProjectService;
-
-import jakarta.validation.Valid;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.nirma.portal.portal_backend.dto.NuFundedProjectRequestDTO;
+import com.nirma.portal.portal_backend.dto.NuFundedProjectResponseDTO;
+import com.nirma.portal.portal_backend.service.ProjectService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,11 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/nu-funded-projects")
 public class NuFundedProjectController {
 
-    private final NuFundedProjectService service;
+    private final ProjectService service;
 
-    public NuFundedProjectController(
-            NuFundedProjectService service) {
-
+    public NuFundedProjectController(ProjectService service) {
         this.service = service;
     }
 
@@ -43,7 +38,7 @@ public class NuFundedProjectController {
 
         log.trace("Entered createProject()");
 
-        NuFundedProjectResponseDTO result = service.createProject(dto);
+        NuFundedProjectResponseDTO result = service.createNuProject(dto);
 
         log.info("NU funded project created successfully");
 
@@ -61,8 +56,7 @@ public class NuFundedProjectController {
 
         log.trace("Entered getAllProjects()");
 
-        List<NuFundedProjectResponseDTO> projects =
-                service.getAllProjects();
+        List<NuFundedProjectResponseDTO> projects = service.getAllNuProjects();
 
         log.debug("Retrieved {} NU funded projects", projects.size());
 
@@ -79,8 +73,7 @@ public class NuFundedProjectController {
 
         log.trace("Entered getProjectById() for project {}", id);
 
-        NuFundedProjectResponseDTO project =
-                service.getProjectById(id);
+        NuFundedProjectResponseDTO project = service.getNuProjectById(id);
 
         log.debug("Successfully retrieved NU funded project {}", id);
 
@@ -151,7 +144,7 @@ public class NuFundedProjectController {
         );
 
         Page<NuFundedProjectResponseDTO> result =
-                service.getProjectsWithFilters(
+                service.getNuProjectsWithFilters(
                         pi,
                         coPi,
                         minAmount,
@@ -184,8 +177,7 @@ public class NuFundedProjectController {
 
         log.trace("Entered updateProject() for project {}", id);
 
-        NuFundedProjectResponseDTO result =
-                service.updateProject(id, dto);
+        NuFundedProjectResponseDTO result = service.updateNuProject(id, dto);
 
         log.info("NU funded project {} updated successfully", id);
 
@@ -202,7 +194,7 @@ public class NuFundedProjectController {
 
         log.trace("Entered deleteProject() for project {}", id);
 
-        service.deleteProject(id);
+        service.deleteNuProject(id);
 
         log.info("NU funded project {} deleted successfully", id);
 

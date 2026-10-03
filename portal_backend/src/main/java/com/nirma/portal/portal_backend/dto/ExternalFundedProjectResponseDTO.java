@@ -1,6 +1,7 @@
 package com.nirma.portal.portal_backend.dto;
 
 import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +17,13 @@ public class ExternalFundedProjectResponseDTO {
     private String principalInvestigator;
     private String coPrincipalInvestigatorList;
     private String fundingAgencyName;
-    private Long amountTotalSanctioned;
+    private Long amount;
     private Long duration;
     private String academicYear;
-	private LocalDate fromDate;
-	private LocalDate toDate;
+    private LocalDate fromDate;
+    private LocalDate toDate;
     private String outcomeOfProject;
     private String publishedPaperDetails;
     private String jointPublicationProof;
     private String statusOfTheProject;
-} 
+}

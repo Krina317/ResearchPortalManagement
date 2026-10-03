@@ -11,7 +11,7 @@ import UploadPage from "./Upload/UploadPage";
 import Dashboard from "./Dashboard";
 import TopBar from "./TopBar";
 import PublicationPage from "./Publication/PublicationPage";
-
+import Footer from "./Footer";
 import ProjectsPage from "./Projects/NuProjects/ProjectsPage";
 import ProjectSummaryPage from "./Projects/NuProjects/ProjectSummaryPage";
 import FacultyMetricsPage from "./FacultyMetrics/FacultyMetricsPage";
@@ -79,6 +79,7 @@ function App() {
               />
               
             </Routes>
+            <Footer />
           </main>
         </div>
       </div>

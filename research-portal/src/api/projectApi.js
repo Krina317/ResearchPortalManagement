@@ -1,162 +1,88 @@
-const BASE_URL = "http://localhost:8080/api/nu-funded-projects";
+// Use the same base URL your old api files used
+const API_BASE_URL = "http://localhost:8080/api";
 
-export const fetchProjects = async () => {
-  const response = await fetch(BASE_URL);
+const JSON_HEADERS = { "Content-Type": "application/json" };
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch NU funded projects");
-  }
+const buildQueryString = (params) => {
+  const query = new URLSearchParams();
 
-  return response.json();
-};
-
-export const fetchProjectById = async (id) => {
-  const response = await fetch(`${BASE_URL}/${id}`);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch project");
-  }
-
-  return response.json();
-};
-
-export const createProject = async (projectData) => {
-  const response = await fetch(BASE_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(projectData),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Failed to create project");
-  }
-
-  return response.json();
-};
-
-export const updateProject = async (id, projectData) => {
-  const response = await fetch(`${BASE_URL}/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(projectData),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Failed to update project");
-  }
-
-  return response.json();
-};
-
-export const deleteProject = async (id) => {
-  const response = await fetch(`${BASE_URL}/${id}`, {
-    method: "DELETE",
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Failed to delete project");
-  }
-};
-
-export const fetchProjectsWithFilters = async ({
-  pi,
-  coPi,
-  minAmount,
-  maxAmount,
-  projectCategory,
-  minDuration,
-  maxDuration,
-  academicYear,
-  outcome,
-  page = 0,
-  size = 10,
-  sortBy = "id",
-  direction = "asc",
-}) => {
-  const params = new URLSearchParams();
-
-  if (pi) params.append("pi", pi);
-  if (coPi) params.append("coPi", coPi);
-
-  if (minAmount !== "" && minAmount != null) {
-    params.append("minAmount", minAmount);
-  }
-
-  if (maxAmount !== "" && maxAmount != null) {
-    params.append("maxAmount", maxAmount);
-  }
-
-  if (projectCategory) {
-    params.append("projectCategory", projectCategory);
-  }
-
-  if (minDuration !== "" && minDuration != null) {
-    params.append("minDuration", minDuration);
-  }
-
-  if (maxDuration !== "" && maxDuration != null) {
-    params.append("maxDuration", maxDuration);
-  }
-
-  if (academicYear) {
-    params.append("academicYear", academicYear);
-  }
-
-  if (outcome) {
-    params.append("outcome", outcome);
-  }
-
-  params.append("page", page);
-  params.append("size", size);
-  params.append("sortBy", sortBy);
-  params.append("direction", direction);
-
-  const response = await fetch(
-    `${BASE_URL}/filter?${params.toString()}`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch filtered projects");
-  }
-
-  return response.json();
-};
-
-
-// ---------------- SUMMARY ----------------
-
-export const fetchYearlySummaries = async () => {
-    const response = await fetch(`${BASE_URL}/summary`);
-  
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        errorText || "Failed to fetch yearly summaries"
-      );
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== "" && value !== null && value !== undefined) {
+      query.append(key, value);
     }
-  
-    return response.json();
-  };
+  });
 
-export const fetchProjectsSanctionedInYear = async (academicYear) => {
-  const response = await fetch(
-    `${BASE_URL}/summary/${encodeURIComponent(
-      academicYear
-    )}/projects`
-  );
+  return query.toString();
+};
 
+const handleResponse = async (response, fallbackMessage) => {
   if (!response.ok) {
-    throw new Error(
-      "Failed to fetch projects sanctioned in academic year"
-    );
+    let message = fallbackMessage;
+
+    try {
+      const body = await response.json();
+      message = body.message || body.error || fallbackMessage;
+    } catch {
+      // response had no JSON body, keep the fallback message
+    }
+
+    throw new Error(message);
   }
 
-  return response.json();
+  return response.status === 204 ? null : response.json();
 };
+
+export const createProjectApi = (resource) => {
+  const baseUrl = `${API_BASE_URL}/${resource}`;
+
+  return {
+    fetchWithFilters: async ({ params = {}, page, size, sortBy, direction }) => {
+      const query = buildQueryString({
+        ...params,
+        page,
+        size,
+        sortBy,
+        direction,
+      });
+
+      const response = await fetch(`${baseUrl}/filter?${query}`);
+      return handleResponse(response, "Failed to load projects.");
+    },
+
+    getAll: async () => {
+      const response = await fetch(baseUrl);
+      return handleResponse(response, "Failed to load projects.");
+    },
+
+    getById: async (id) => {
+      const response = await fetch(`${baseUrl}/${id}`);
+      return handleResponse(response, "Failed to load project.");
+    },
+
+    create: async (data) => {
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: JSON_HEADERS,
+        body: JSON.stringify(data),
+      });
+      return handleResponse(response, "Failed to create project.");
+    },
+
+    update: async (id, data) => {
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: "PUT",
+        headers: JSON_HEADERS,
+        body: JSON.stringify(data),
+      });
+      return handleResponse(response, "Failed to update project.");
+    },
+
+    remove: async (id) => {
+      const response = await fetch(`${baseUrl}/${id}`, { method: "DELETE" });
+      return handleResponse(response, "Failed to delete project.");
+    },
+  };
+};
+
+export const nuProjectApi = createProjectApi("nu-funded-projects");
+export const extProjectApi = createProjectApi("external-funded-projects");

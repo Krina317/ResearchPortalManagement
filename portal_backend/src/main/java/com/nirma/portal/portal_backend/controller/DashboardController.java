@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nirma.portal.portal_backend.service.ConferenceQueryService;
 import com.nirma.portal.portal_backend.service.JournalQueryService;
-import com.nirma.portal.portal_backend.service.NuFundedProjectService;
+import com.nirma.portal.portal_backend.service.ProjectService;
+import com.nirma.portal.portal_backend.service.BookChapterQueryService;
+
+
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +22,9 @@ public class DashboardController {
 
     private final ConferenceQueryService conferenceQueryService;
     private final JournalQueryService journalQueryService;
-    private final NuFundedProjectService nuFundedProjectService;
+    private final ProjectService nuFundedProjectService;
+    private final ProjectService extFundedProjectService;
+    private final BookChapterQueryService bookChapterQueryService;
 
     @GetMapping("/count/conference")
     public long getTotalConferencePapers() {
@@ -50,10 +55,34 @@ public class DashboardController {
 
         log.trace("Entered getTotalNuFundedProjects()");
 
-        long count = nuFundedProjectService.getAllProjects().size();
+        long count = nuFundedProjectService.getAllNuProjects().size();
 
         log.debug("Total NU funded projects: {}", count);
 
         return count;
     }
+
+	@GetMapping("/count/ext-funded-projects")
+	public long getTotalExtFundedProjects() {
+	
+	    log.trace("Entered getTotalExtFundedProjects()");
+	
+	    long count = extFundedProjectService.getAllExternalProjects().size();
+	
+	    log.debug("Total external funded projects: {}", count);
+	
+	    return count;
+	}
+	
+	@GetMapping("/count/book-chapters")
+	public long getTotalBookChapters() {
+
+	    log.trace("Entered getTotalBookChapters()");
+
+	    long count = bookChapterQueryService.getTotalCount();
+
+	    log.debug("Total book chapters: {}", count);
+
+	    return count;
+	}
 }
