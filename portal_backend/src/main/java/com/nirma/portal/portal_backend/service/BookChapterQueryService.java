@@ -11,21 +11,26 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nirma.portal.portal_backend.dto.AuthorRecordResponseDTO;
+//import com.nirma.portal.portal_backend.dto.AuthorRecordResponseDTO;
 import com.nirma.portal.portal_backend.dto.BookChapterFilterOptionsDTO;
 import com.nirma.portal.portal_backend.dto.BookChapterListItemDTO;
 import com.nirma.portal.portal_backend.dto.BookChapterSearchCriteria;
 import com.nirma.portal.portal_backend.dto.ColumnMetaDTO;
-import com.nirma.portal.portal_backend.entity.AuthorRecord;
+//import com.nirma.portal.portal_backend.entity.AuthorRecord;
 import com.nirma.portal.portal_backend.entity.BookChapter;
 import com.nirma.portal.portal_backend.entity.DepartmentList;
 import com.nirma.portal.portal_backend.entity.PublicationType;
 import com.nirma.portal.portal_backend.exception.BookChapterNotFoundException;
-import com.nirma.portal.portal_backend.mapper.AuthorRecordMapper;
-import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
+//import com.nirma.portal.portal_backend.mapper.AuthorRecordMapper;
+//import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
 import com.nirma.portal.portal_backend.repository.BookChapterRepository;
 import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
+
+import com.nirma.portal.portal_backend.dto.PublicationAuthorResponseDTO;
+import com.nirma.portal.portal_backend.entity.PublicationAuthor;
+import com.nirma.portal.portal_backend.mapper.PublicationAuthorMapper;
+import com.nirma.portal.portal_backend.repository.PublicationAuthorRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,10 +39,12 @@ import lombok.RequiredArgsConstructor;
 public class BookChapterQueryService {
 
     private final BookChapterRepository bookChapterRepository;
-    private final AuthorRecordRepository authorRecordRepository;
+//    private final AuthorRecordRepository authorRecordRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
-    private final AuthorRecordMapper authorRecordMapper;
+//    private final AuthorRecordMapper authorRecordMapper;
     private final DepartmentListRepository departmentListRepository;
+    private final PublicationAuthorRepository publicationAuthorRepository;
+    private final PublicationAuthorMapper publicationAuthorMapper;
 
     @Transactional(readOnly = true)
     public Page<BookChapterListItemDTO> search(
@@ -57,7 +64,7 @@ public class BookChapterQueryService {
                     criteria.getAuthorPositions() != null
                     && !criteria.getAuthorPositions().isEmpty();
 
-            authorIds = authorRecordRepository.findMatchingPublicationIds(
+            authorIds = publicationAuthorRepository.findMatchingPublicationIds(
                     PublicationType.BOOK_CHAPTER.name(),
                     blankToNull(criteria.getAuthorName()),
                     hasPositions,
@@ -85,7 +92,7 @@ public class BookChapterQueryService {
                         .map(BookChapter::getId)
                         .toList();
 
-        Map<Long, List<AuthorRecord>> authorsByBookChapterId =
+        Map<Long, List<PublicationAuthor>> authorsByBookChapterId =
                 fetchAuthorsFor(pageIds);
 
         return page.map(
@@ -265,14 +272,14 @@ public class BookChapterQueryService {
     // Author handling
     // ---------------------------------------------------------
 
-    private Map<Long, List<AuthorRecord>> fetchAuthorsFor(
+    private Map<Long, List<PublicationAuthor>> fetchAuthorsFor(
             List<Long> bookChapterIds) {
 
         if (bookChapterIds.isEmpty()) {
             return Map.of();
         }
 
-        return authorRecordRepository
+        return publicationAuthorRepository
                 .findByPublicationIdInAndPublicationTypeOrderByAuthorPositionAsc(
                         bookChapterIds,
                         PublicationType.BOOK_CHAPTER
@@ -280,16 +287,16 @@ public class BookChapterQueryService {
                 .stream()
                 .collect(
                         Collectors.groupingBy(
-                                AuthorRecord::getPublicationId
+                        		PublicationAuthor::getPublicationId
                         )
                 );
     }
 
     private BookChapterListItemDTO toListItem(
             BookChapter bookChapter,
-            Map<Long, List<AuthorRecord>> authorsByBookChapterId) {
+            Map<Long, List<PublicationAuthor>> authorsByBookChapterId) {
 
-        List<AuthorRecord> authorEntities =
+        List<PublicationAuthor> authorEntities =
                 authorsByBookChapterId
                         .getOrDefault(
                                 bookChapter.getId(),
@@ -298,23 +305,23 @@ public class BookChapterQueryService {
                         .stream()
                         .sorted(
                                 Comparator.comparing(
-                                        AuthorRecord::getAuthorPosition
+                                		PublicationAuthor::getAuthorPosition
                                 )
                         )
                         .toList();
 
-        List<AuthorRecordResponseDTO> authorDtos =
-                authorRecordMapper.toResponseDTOList(
+        List<PublicationAuthorResponseDTO> authorDtos =
+        		publicationAuthorMapper.toResponseDTOList(
                         authorEntities
                 );
 
         String merged =
                 authorEntities
-                        .stream()
-                        .map(AuthorRecord::getDisplayName)
-                        .collect(
-                                Collectors.joining(", ")
-                        );
+                .stream()
+                .map(pa -> pa.getAuthor().getDisplayName())
+                .collect(
+                        Collectors.joining(", ")
+                );
 
         return new BookChapterListItemDTO(
                 bookChapter.getId(),

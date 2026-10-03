@@ -24,6 +24,7 @@ import com.nirma.portal.portal_backend.entity.PublicationType;
 import com.nirma.portal.portal_backend.repository.ConferencePaperRepository;
 import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
+import com.nirma.portal.portal_backend.matching.AuthorNameSplitter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class ConferenceImportService {
     private final DepartmentListRepository departmentListRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
     private final ConferenceRowPersister conferenceRowPersister;
+    private final FacultyMatchService facultyMatchService;
 
     private static final List<DateTimeFormatter> DATE_FORMATS = List.of(
             DateTimeFormatter.ofPattern("dd/MM/yyyy"),
@@ -79,6 +81,8 @@ public class ConferenceImportService {
                 .collect(Collectors.toCollection(HashSet::new));
 
         Map<String, Integer> headerIndex = validateHeader(rows.get(0), mappings);
+        
+        facultyMatchService.refresh();
 
         ConferenceImportResult result = new ConferenceImportResult();
         processRows(rows, headerIndex, mappings, allowedDeptCodes, result);
@@ -261,10 +265,7 @@ public class ConferenceImportService {
             if (colIndex == null || colIndex >= cells.size()) {
                 continue;
             }
-            String name = cells.get(colIndex).text().trim();
-            if (!name.isEmpty() && !name.equalsIgnoreCase("&nbsp;")) {
-                authors.add(name);
-            }
+            authors.addAll(AuthorNameSplitter.split(cells.get(colIndex).text()));
         }
         return authors;
     }

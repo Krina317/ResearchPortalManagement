@@ -12,21 +12,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nirma.portal.portal_backend.dto.AuthorRecordResponseDTO;
 import com.nirma.portal.portal_backend.dto.ColumnMetaDTO;
 import com.nirma.portal.portal_backend.dto.ConferenceFilterOptionsDTO;
 import com.nirma.portal.portal_backend.dto.ConferenceListItemDTO;
 import com.nirma.portal.portal_backend.dto.ConferenceSearchCriteria;
-import com.nirma.portal.portal_backend.entity.AuthorRecord;
 import com.nirma.portal.portal_backend.entity.ConferencePaper;
 import com.nirma.portal.portal_backend.entity.DepartmentList;
 import com.nirma.portal.portal_backend.entity.PublicationType;
 import com.nirma.portal.portal_backend.exception.ConferencePaperNotFoundException;
-import com.nirma.portal.portal_backend.mapper.AuthorRecordMapper;
-import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
 import com.nirma.portal.portal_backend.repository.ConferencePaperRepository;
 import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
+
+import com.nirma.portal.portal_backend.dto.PublicationAuthorResponseDTO;
+import com.nirma.portal.portal_backend.entity.PublicationAuthor;
+import com.nirma.portal.portal_backend.mapper.PublicationAuthorMapper;
+import com.nirma.portal.portal_backend.repository.PublicationAuthorRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,9 +40,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ConferenceQueryService {
 
     private final ConferencePaperRepository conferencePaperRepository;
-    private final AuthorRecordRepository authorRecordRepository;
+    private final PublicationAuthorRepository publicationAuthorRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
-    private final AuthorRecordMapper authorRecordMapper;
+    private final PublicationAuthorMapper publicationAuthorMapper;
     private final DepartmentListRepository departmentListRepository;
 
     @Transactional(readOnly = true)
@@ -55,7 +56,7 @@ public class ConferenceQueryService {
         if (hasAuthorFilter) {
             log.debug("Applying author filter for conference paper search");
             boolean hasPositions = criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty();
-            authorIds = authorRecordRepository.findMatchingPublicationIds(
+            authorIds = publicationAuthorRepository.findMatchingPublicationIds(
                     PublicationType.CONFERENCE.name(),
                     blankToNull(criteria.getAuthorName()),
                     hasPositions,
@@ -86,7 +87,7 @@ public class ConferenceQueryService {
         );
 
         List<Long> pageIds = page.getContent().stream().map(ConferencePaper::getId).toList();
-        Map<Long, List<AuthorRecord>> authorsByPaperId = fetchAuthorsFor(pageIds);
+        Map<Long, List<PublicationAuthor>> authorsByPaperId = fetchAuthorsFor(pageIds);
         log.info(
                 "Conference paper search returned {} records out of {} total",
                 page.getNumberOfElements(),
@@ -128,28 +129,29 @@ public class ConferenceQueryService {
         return conferencePaperRepository.count();
     }
 
-    // -- helpers --
-
-    private Map<Long, List<AuthorRecord>> fetchAuthorsFor(List<Long> paperIds) {
+    private Map<Long, List<PublicationAuthor>> fetchAuthorsFor(List<Long> paperIds) {
         if (paperIds.isEmpty()) {
             return Map.of();
         }
-        return authorRecordRepository
-                .findByPublicationIdInAndPublicationTypeOrderByAuthorPositionAsc(paperIds, PublicationType.CONFERENCE)
+        return publicationAuthorRepository
+                .findByPublicationIdInAndPublicationTypeOrderByAuthorPositionAsc(
+                        paperIds, PublicationType.CONFERENCE)
                 .stream()
-                .collect(Collectors.groupingBy(AuthorRecord::getPublicationId));
+                .collect(Collectors.groupingBy(PublicationAuthor::getPublicationId));
     }
 
-    private ConferenceListItemDTO toListItem(ConferencePaper paper, Map<Long, List<AuthorRecord>> authorsByPaperId) {
-        List<AuthorRecord> authorEntities = authorsByPaperId.getOrDefault(paper.getId(), List.of())
-                .stream()
-                .sorted(Comparator.comparing(AuthorRecord::getAuthorPosition))
-                .toList();
+    private ConferenceListItemDTO toListItem(ConferencePaper paper, Map<Long, List<PublicationAuthor>> authorsByPaperId) {
+    	List<PublicationAuthor> authorEntities = authorsByPaperId.getOrDefault(paper.getId(), List.of())
+    	        .stream()
+    	        .sorted(Comparator.comparing(PublicationAuthor::getAuthorPosition))
+    	        .toList();
 
-        List<AuthorRecordResponseDTO> authorDtos = authorRecordMapper.toResponseDTOList(authorEntities);
-        String merged = authorEntities.stream()
-                .map(AuthorRecord::getDisplayName)
-                .collect(Collectors.joining(", "));
+    	List<PublicationAuthorResponseDTO> authorDtos =
+    	        publicationAuthorMapper.toResponseDTOList(authorEntities);
+
+    	String merged = authorEntities.stream()
+    	        .map(pa -> pa.getAuthor().getDisplayName())
+    	        .collect(Collectors.joining(", "));
 
         return new ConferenceListItemDTO(
                 paper.getId(), paper.getSourceId(), paper.getConferenceName(), paper.getConferenceType(),

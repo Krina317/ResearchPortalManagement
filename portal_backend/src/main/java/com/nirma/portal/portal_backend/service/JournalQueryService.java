@@ -11,21 +11,26 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nirma.portal.portal_backend.dto.AuthorRecordResponseDTO;
+//import com.nirma.portal.portal_backend.dto.AuthorRecordResponseDTO;
 import com.nirma.portal.portal_backend.dto.ColumnMetaDTO;
 import com.nirma.portal.portal_backend.dto.JournalFilterOptionsDTO;
 import com.nirma.portal.portal_backend.dto.JournalListItemDTO;
 import com.nirma.portal.portal_backend.dto.JournalSearchCriteria;
-import com.nirma.portal.portal_backend.entity.AuthorRecord;
+//import com.nirma.portal.portal_backend.entity.AuthorRecord;
 import com.nirma.portal.portal_backend.entity.DepartmentList;
 import com.nirma.portal.portal_backend.entity.JournalPaper;
 import com.nirma.portal.portal_backend.entity.PublicationType;
 import com.nirma.portal.portal_backend.exception.JournalPaperNotFoundException;
-import com.nirma.portal.portal_backend.mapper.AuthorRecordMapper;
-import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
+//import com.nirma.portal.portal_backend.mapper.AuthorRecordMapper;
+//import com.nirma.portal.portal_backend.repository.AuthorRecordRepository;
 import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
 import com.nirma.portal.portal_backend.repository.JournalPaperRepository;
+
+import com.nirma.portal.portal_backend.dto.PublicationAuthorResponseDTO;
+import com.nirma.portal.portal_backend.entity.PublicationAuthor;
+import com.nirma.portal.portal_backend.mapper.PublicationAuthorMapper;
+import com.nirma.portal.portal_backend.repository.PublicationAuthorRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,10 +47,12 @@ public class JournalQueryService {
             "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER");
 
     private final JournalPaperRepository journalPaperRepository;
-    private final AuthorRecordRepository authorRecordRepository;
+//    private final AuthorRecordRepository authorRecordRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
-    private final AuthorRecordMapper authorRecordMapper;
+//    private final AuthorRecordMapper authorRecordMapper;
     private final DepartmentListRepository departmentListRepository;
+    private final PublicationAuthorRepository publicationAuthorRepository;
+    private final PublicationAuthorMapper publicationAuthorMapper;
 
     @Transactional(readOnly = true)
     public Page<JournalListItemDTO> search(JournalSearchCriteria criteria, Pageable pageable) {
@@ -56,7 +63,7 @@ public class JournalQueryService {
         if (hasAuthorFilter) {
         	log.debug("Applying author filter for journal paper search");
             boolean hasPositions = criteria.getAuthorPositions() != null && !criteria.getAuthorPositions().isEmpty();
-            authorIds = authorRecordRepository.findMatchingPublicationIds(
+            authorIds = publicationAuthorRepository.findMatchingPublicationIds(
                     PublicationType.JOURNAL.name(),
                     blankToNull(criteria.getAuthorName()),
                     hasPositions,
@@ -77,7 +84,7 @@ public class JournalQueryService {
                 page.getNumberOfElements(), page.getTotalElements());
 
         List<Long> pageIds = page.getContent().stream().map(JournalPaper::getId).toList();
-        Map<Long, List<AuthorRecord>> authorsByPaperId = fetchAuthorsFor(pageIds);
+        Map<Long, List<PublicationAuthor>> authorsByPaperId = fetchAuthorsFor(pageIds);
 
         return page.map(paper -> toListItem(paper, authorsByPaperId));
     }
@@ -186,26 +193,26 @@ public class JournalQueryService {
 
     // -- helpers --
 
-    private Map<Long, List<AuthorRecord>> fetchAuthorsFor(List<Long> paperIds) {
+    private Map<Long, List<PublicationAuthor>> fetchAuthorsFor(List<Long> paperIds) {
         if (paperIds.isEmpty()) {
             return Map.of();
         }
-        return authorRecordRepository
+        return publicationAuthorRepository
                 .findByPublicationIdInAndPublicationTypeOrderByAuthorPositionAsc(paperIds, PublicationType.JOURNAL)
                 .stream()
-                .collect(Collectors.groupingBy(AuthorRecord::getPublicationId));
+                .collect(Collectors.groupingBy(PublicationAuthor::getPublicationId));
     }
 
-    private JournalListItemDTO toListItem(JournalPaper paper, Map<Long, List<AuthorRecord>> authorsByPaperId) {
-        List<AuthorRecord> authorEntities = authorsByPaperId.getOrDefault(paper.getId(), List.of())
+    private JournalListItemDTO toListItem(JournalPaper paper, Map<Long, List<PublicationAuthor>> authorsByPaperId) {
+        List<PublicationAuthor> authorEntities = authorsByPaperId.getOrDefault(paper.getId(), List.of())
                 .stream()
-                .sorted(Comparator.comparing(AuthorRecord::getAuthorPosition))
+                .sorted(Comparator.comparing(PublicationAuthor::getAuthorPosition))
                 .toList();
 
-        List<AuthorRecordResponseDTO> authorDtos = authorRecordMapper.toResponseDTOList(authorEntities);
+        List<PublicationAuthorResponseDTO> authorDtos = publicationAuthorMapper.toResponseDTOList(authorEntities);
         String merged = authorEntities.stream()
-                .map(AuthorRecord::getDisplayName)
-                .collect(Collectors.joining(", "));
+        		.map(pa -> pa.getAuthor().getDisplayName())
+    	        .collect(Collectors.joining(", "));
 
         return new JournalListItemDTO(
                 paper.getId(), paper.getSourceId(), paper.getPaperTitle(), paper.getJournalName(),

@@ -20,4 +20,13 @@ public class FacultyList {
   
     @Column(nullable = false, unique = true)
     private String name;
+    
+    @Column(nullable = true)
+    private String gender;
+    
+    @Column(nullable = false)
+    private String designation;
+    
+    @Column(nullable = false)
+    private String dept;
 }

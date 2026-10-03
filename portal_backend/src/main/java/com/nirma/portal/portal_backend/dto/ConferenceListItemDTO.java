@@ -24,6 +24,6 @@ public class ConferenceListItemDTO {
     private String deptCode;
     
 
-    private List<AuthorRecordResponseDTO> authors;  // ordered by authorPosition
+    private List<PublicationAuthorResponseDTO> authors;  // ordered by authorPosition  // ordered by authorPosition
     private String authorsMerged;                   // "A, B, C" convenience field
 }

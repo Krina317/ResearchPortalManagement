@@ -179,6 +179,19 @@ const PARAM_BUILDERS = {
 function normalizeRecord(record, publicationType) {
 
     let result = record;
+    // Authors now arrive as { authorPosition, author: { authorId, displayName, authorType } }.
+    // Copy the author fields up one level so the table, export and merge/unmerge keep working.
+    if (Array.isArray(result.authors)) {
+        result = {
+            ...result,
+            authors: result.authors.map(a => ({
+                ...a,
+                displayName: a.displayName ?? a.author?.displayName,
+                authorType: a.authorType ?? a.author?.authorType,
+                authorId: a.authorId ?? a.author?.authorId
+            }))
+        };
+    }
 
     if (publicationType === "journal" && record.mergedAuthors !== undefined) {
         result = { ...result, authorsMerged: record.mergedAuthors };

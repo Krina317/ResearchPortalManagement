@@ -37,4 +37,7 @@ public class AuthorRecord {
 	
 	@Column(nullable = false)
 	private Integer authorPosition;
+	
+	@Column()
+	private String authorType;
 }

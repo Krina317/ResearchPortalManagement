@@ -22,6 +22,7 @@ import com.nirma.portal.portal_backend.entity.PublicationType;
 import com.nirma.portal.portal_backend.repository.BookChapterRepository;
 import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
+import com.nirma.portal.portal_backend.matching.AuthorNameSplitter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +34,7 @@ public class BookChapterImportService {
     private final DepartmentListRepository departmentListRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
     private final BookChapterRowPersister bookChapterRowPersister;
+    private final FacultyMatchService facultyMatchService;
 
     private static final String BOOK_CHAPTER_ENTITY = "BookChapter";
     private static final String AUTHOR_COLUMN_PREFIX = "Author";
@@ -81,6 +83,8 @@ public class BookChapterImportService {
                         .filter(name -> name != null && !name.isBlank())
                         .map(name -> name.trim().toUpperCase())
                         .collect(Collectors.toCollection(HashSet::new));
+        
+        facultyMatchService.refresh();
 
         BookChapterImportResult result =
                 new BookChapterImportResult();
@@ -489,16 +493,11 @@ public class BookChapterImportService {
                 continue;
             }
 
-            String name =
-                    cells.get(colIndex)
-                            .text()
-                            .trim();
-
-            if (!name.isEmpty() &&
-                    !name.equalsIgnoreCase("&nbsp;")) {
-
-                authors.add(name);
-            }
+            authors.addAll(
+                    AuthorNameSplitter.split(
+                            cells.get(colIndex).text()
+                    )
+            );
         }
 
         return authors;

@@ -41,7 +41,7 @@ public class BookChapterListItemDTO {
 
     private String deptName;
 
-    private List<AuthorRecordResponseDTO> authors;
+    private List<PublicationAuthorResponseDTO> authors;
 
     private String authorsMerged;
 }

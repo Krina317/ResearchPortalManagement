@@ -22,6 +22,7 @@ import com.nirma.portal.portal_backend.entity.PublicationType;
 import com.nirma.portal.portal_backend.repository.DepartmentListRepository;
 import com.nirma.portal.portal_backend.repository.ExcelColumnMapRepository;
 import com.nirma.portal.portal_backend.repository.JournalPaperRepository;
+import com.nirma.portal.portal_backend.matching.AuthorNameSplitter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,6 +38,7 @@ public class JournalImportService {
     private final DepartmentListRepository departmentListRepository;
     private final ExcelColumnMapRepository excelColumnMapRepository;
     private final JournalRowPersister journalRowPersister;
+    private final FacultyMatchService facultyMatchService;
 
     private static final String JOURNAL_PAPER_ENTITY = "JournalPaper";
     private static final String AUTHOR_COLUMN_PREFIX = "Author";
@@ -85,7 +87,11 @@ public class JournalImportService {
                 .map(d -> d.getDeptName().trim().toUpperCase())
                 .collect(Collectors.toCollection(HashSet::new));
 
+        facultyMatchService.refresh();
+
         JournalImportResult result = new JournalImportResult();
+
+        
         processRows(rows, headerIndex, mappings, allowedDeptNames, result);
         log.info("Completed journal publication import for file '{}'",
                 file.getOriginalFilename());
@@ -287,10 +293,7 @@ public class JournalImportService {
             if (colIndex == null || colIndex >= cells.size()) {
                 continue;
             }
-            String name = cells.get(colIndex).text().trim();
-            if (!name.isEmpty() && !name.equalsIgnoreCase("&nbsp;")) {
-                authors.add(name);
-            }
+            authors.addAll(AuthorNameSplitter.split(cells.get(colIndex).text()));
         }
         return authors;
     }

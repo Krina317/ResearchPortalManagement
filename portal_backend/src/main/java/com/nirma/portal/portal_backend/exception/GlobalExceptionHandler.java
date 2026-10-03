@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     } 
- 
+	
     @ExceptionHandler(ConferencePaperNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleConferencePaperNotFound(
             ConferencePaperNotFoundException ex) {

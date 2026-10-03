@@ -30,7 +30,7 @@ public class JournalListItemDTO {
     private String doiNumber;
     private String instituteName;
     private String deptName;
-    private List<AuthorRecordResponseDTO> authors;
+    private List<PublicationAuthorResponseDTO> authors;
     private String mergedAuthors;
     private String downloadFileLink;
 }
