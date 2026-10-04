@@ -17,29 +17,56 @@ const validateDateOrder = (data) =>
     ? "From date cannot be after to date"
     : "";
 
-// Financial year "2024-2025" -> 1 Apr 2024 to 31 Mar 2025
-// Calendar year "2024"       -> 1 Jan 2024 to 31 Dec 2024
-// If both are chosen, the overlap of the two ranges is used.
-const getDateRangeFromYears = (financialYear, calendarYear) => {
-  const ranges = [];
+// Turns the date filters into one range: dateFrom / dateTo.
+//   Financial year "2024-2025" -> 1 Apr 2024 to 31 Mar 2025
+//   Calendar year "2024"       -> 1 Jan 2024 to 31 Dec 2024
+// If several are chosen, the overlap of all of them is used
+// (latest start date, earliest end date).
+const getDateRange = ({ fromDate, toDate, financialYear, calendarYear }) => {
+  const starts = [];
+  const ends = [];
+
+  if (fromDate) starts.push(fromDate);
+  if (toDate) ends.push(toDate);
 
   if (financialYear) {
     const startYear = Number(financialYear.slice(0, 4));
-    ranges.push([`${startYear}-04-01`, `${startYear + 1}-03-31`]);
+    starts.push(`${startYear}-04-01`);
+    ends.push(`${startYear + 1}-03-31`);
   }
 
   if (calendarYear) {
-    ranges.push([`${calendarYear}-01-01`, `${calendarYear}-12-31`]);
-  }
-
-  if (ranges.length === 0) {
-    return { dateFrom: "", dateTo: "" };
+    starts.push(`${calendarYear}-01-01`);
+    ends.push(`${calendarYear}-12-31`);
   }
 
   return {
-    dateFrom: ranges.map((range) => range[0]).sort().pop(),
-    dateTo: ranges.map((range) => range[1]).sort()[0],
+    dateFrom: starts.length ? starts.sort().pop() : "",
+    dateTo: ends.length ? ends.sort()[0] : "",
   };
+};
+
+// Shared filter boxes (used by both Nu and Ext)
+const datesGroup = {
+  title: "Dates",
+  description: "Shows projects running during the selected period",
+  fields: [
+    { name: "fromDate", label: "From Date", type: "date" },
+    { name: "toDate", label: "To Date", type: "date" },
+    { name: "academicYear", label: "Academic Year", type: "select", options: ACADEMIC_YEARS, allLabel: "All Academic Years" },
+    { name: "financialYear", label: "Financial Year", type: "select", options: FINANCIAL_YEARS, allLabel: "All Financial Years" },
+    { name: "calendarYear", label: "Calendar Year", type: "select", options: CALENDAR_YEARS, allLabel: "All Calendar Years" },
+  ],
+};
+
+const amountDurationGroup = {
+  title: "Amount & Duration",
+  fields: [
+    { name: "minAmount", label: "Minimum Amount", type: "number", placeholder: "Min amount" },
+    { name: "maxAmount", label: "Maximum Amount", type: "number", placeholder: "Max amount" },
+    { name: "minDuration", label: "Minimum Duration", type: "number", placeholder: "Min years" },
+    { name: "maxDuration", label: "Maximum Duration", type: "number", placeholder: "Max years" },
+  ],
 };
 
 // ---------------------------------------------------------
@@ -54,9 +81,14 @@ export const nuProjectConfig = {
   tableMinWidth: "min-w-[1850px]",
 
   defaultFilters: {
+    projectTitle: "",
     piSearch: "",
     coPiSearch: "",
+    fromDate: "",
+    toDate: "",
     academicYear: "",
+    financialYear: "",
+    calendarYear: "",
     projectCategory: "",
     outcome: "",
     minAmount: "",
@@ -65,30 +97,45 @@ export const nuProjectConfig = {
     maxDuration: "",
   },
 
-  filterFields: [
-    { name: "piSearch", label: "Principal Investigator", type: "text", placeholder: "Search PI" },
-    { name: "coPiSearch", label: "Co-Principal Investigator", type: "text", placeholder: "Search Co-PI" },
-    { name: "academicYear", label: "Academic Year", type: "select", options: ACADEMIC_YEARS, allLabel: "All Academic Years" },
-    { name: "projectCategory", label: "Project Category", type: "select", options: NU_CATEGORIES, allLabel: "All Categories" },
-    { name: "outcome", label: "Outcome", type: "select", options: OUTCOME_OPTIONS, allLabel: "All Outcomes" },
-    { name: "minAmount", label: "Minimum Amount", type: "number", placeholder: "Min amount" },
-    { name: "maxAmount", label: "Maximum Amount", type: "number", placeholder: "Max amount" },
-    { name: "minDuration", label: "Minimum Duration", type: "number", placeholder: "Min years" },
-    { name: "maxDuration", label: "Maximum Duration", type: "number", placeholder: "Max years" },
+  filterGroups: [
+    {
+      title: "Search",
+      fields: [
+        { name: "projectTitle", label: "Project Title", type: "text", placeholder: "Search project title" },
+        { name: "piSearch", label: "Principal Investigator", type: "text", placeholder: "Search PI" },
+        { name: "coPiSearch", label: "Co-Principal Investigator", type: "text", placeholder: "Search Co-PI" },
+      ],
+    },
+    datesGroup,
+    {
+      title: "Project Details",
+      fields: [
+        { name: "projectCategory", label: "Project Category", type: "select", options: NU_CATEGORIES, allLabel: "All Categories" },
+        { name: "outcome", label: "Outcome", type: "select", options: OUTCOME_OPTIONS, allLabel: "All Outcomes" },
+      ],
+    },
+    amountDurationGroup,
   ],
 
   // filter state -> query params understood by /api/nu-funded-projects/filter
-  toQueryParams: (filters) => ({
-    pi: filters.piSearch,
-    coPi: filters.coPiSearch,
-    minAmount: filters.minAmount,
-    maxAmount: filters.maxAmount,
-    projectCategory: filters.projectCategory,
-    minDuration: filters.minDuration,
-    maxDuration: filters.maxDuration,
-    academicYear: filters.academicYear,
-    outcome: filters.outcome,
-  }),
+  toQueryParams: (filters) => {
+    const { dateFrom, dateTo } = getDateRange(filters);
+
+    return {
+      projectTitle: filters.projectTitle,
+      pi: filters.piSearch,
+      coPi: filters.coPiSearch,
+      minAmount: filters.minAmount,
+      maxAmount: filters.maxAmount,
+      projectCategory: filters.projectCategory,
+      minDuration: filters.minDuration,
+      maxDuration: filters.maxDuration,
+      academicYear: filters.academicYear,
+      outcome: filters.outcome,
+      dateFrom,
+      dateTo,
+    };
+  },
 
   // type: text | title | bold | multiline | amount | date | duration | link
   // sortKey: makes the column header clickable (must be a field the backend allows)
@@ -144,6 +191,8 @@ export const extProjectConfig = {
     piSearch: "",
     coPiSearch: "",
     fundingAgencyName: "",
+    fromDate: "",
+    toDate: "",
     academicYear: "",
     financialYear: "",
     calendarYear: "",
@@ -155,28 +204,30 @@ export const extProjectConfig = {
     maxDuration: "",
   },
 
-  filterFields: [
-    { name: "projectTitle", label: "Project Title", type: "text", placeholder: "Search project title" },
-    { name: "piSearch", label: "Principal Investigator", type: "text", placeholder: "Search PI" },
-    { name: "coPiSearch", label: "Co-Principal Investigator", type: "text", placeholder: "Search Co-PI" },
-    { name: "fundingAgencyName", label: "Funding Agency", type: "text", placeholder: "Search funding agency" },
-    { name: "academicYear", label: "Academic Year", type: "select", options: ACADEMIC_YEARS, allLabel: "All Academic Years" },
-    { name: "financialYear", label: "Financial Year", type: "select", options: FINANCIAL_YEARS, allLabel: "All Financial Years" },
-    { name: "calendarYear", label: "Calendar Year", type: "select", options: CALENDAR_YEARS, allLabel: "All Calendar Years" },
-    { name: "status", label: "Status", type: "select", options: STATUS_OPTIONS, allLabel: "All Statuses" },
-    { name: "outcome", label: "Outcome", type: "select", options: OUTCOME_OPTIONS, allLabel: "All Outcomes" },
-    { name: "minAmount", label: "Minimum Sanctioned Amount", type: "number", placeholder: "Minimum amount" },
-    { name: "maxAmount", label: "Maximum Sanctioned Amount", type: "number", placeholder: "Maximum amount" },
-    { name: "minDuration", label: "Minimum Duration", type: "number", placeholder: "Minimum duration" },
-    { name: "maxDuration", label: "Maximum Duration", type: "number", placeholder: "Maximum duration" },
+  filterGroups: [
+    {
+      title: "Search",
+      fields: [
+        { name: "projectTitle", label: "Project Title", type: "text", placeholder: "Search project title" },
+        { name: "piSearch", label: "Principal Investigator", type: "text", placeholder: "Search PI" },
+        { name: "coPiSearch", label: "Co-Principal Investigator", type: "text", placeholder: "Search Co-PI" },
+        { name: "fundingAgencyName", label: "Funding Agency", type: "text", placeholder: "Search funding agency" },
+      ],
+    },
+    datesGroup,
+    {
+      title: "Project Details",
+      fields: [
+        { name: "status", label: "Status", type: "select", options: STATUS_OPTIONS, allLabel: "All Statuses" },
+        { name: "outcome", label: "Outcome", type: "select", options: OUTCOME_OPTIONS, allLabel: "All Outcomes" },
+      ],
+    },
+    amountDurationGroup,
   ],
 
   // filter state -> query params understood by /api/external-funded-projects/filter
   toQueryParams: (filters) => {
-    const { dateFrom, dateTo } = getDateRangeFromYears(
-      filters.financialYear,
-      filters.calendarYear
-    );
+    const { dateFrom, dateTo } = getDateRange(filters);
 
     return {
       projectTitle: filters.projectTitle,

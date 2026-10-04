@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.nirma.portal.portal_backend.dto.ExternalFundedProjectRequestDTO;
 import com.nirma.portal.portal_backend.dto.ExternalFundedProjectResponseDTO;
@@ -106,10 +107,12 @@ public class ExternalFundedProjectController {
 
             @RequestParam(required = false) String status,
 
-            @RequestParam(required = false) LocalDate dateFrom,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
 
-            @RequestParam(required = false) LocalDate dateTo,
-
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+            
             @RequestParam(defaultValue = "0") int page,
 
             @RequestParam(defaultValue = "10") int size,

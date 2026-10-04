@@ -9,6 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.nirma.portal.portal_backend.dto.NuFundedProjectRequestDTO;
 import com.nirma.portal.portal_backend.dto.NuFundedProjectResponseDTO;
@@ -87,6 +89,8 @@ public class NuFundedProjectController {
     @GetMapping("/filter")
     public ResponseEntity<Page<NuFundedProjectResponseDTO>> getProjectsWithFilters(
 
+            @RequestParam(required = false) String projectTitle,
+
             @RequestParam(required = false) String pi,
 
             @RequestParam(required = false) String coPi,
@@ -104,6 +108,12 @@ public class NuFundedProjectController {
             @RequestParam(required = false) String academicYear,
 
             @RequestParam(required = false) String outcome,
+
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
 
             @RequestParam(defaultValue = "0") int page,
 
@@ -145,6 +155,7 @@ public class NuFundedProjectController {
 
         Page<NuFundedProjectResponseDTO> result =
                 service.getNuProjectsWithFilters(
+                        projectTitle,
                         pi,
                         coPi,
                         minAmount,
@@ -154,6 +165,8 @@ public class NuFundedProjectController {
                         maxDuration,
                         academicYear,
                         outcome,
+                        dateFrom,
+                        dateTo,
                         pageable
                 );
 
@@ -165,7 +178,6 @@ public class NuFundedProjectController {
 
         return ResponseEntity.ok(result);
     }
-
     // ---------------------------------------------------------
     // UPDATE PROJECT
     // ---------------------------------------------------------
