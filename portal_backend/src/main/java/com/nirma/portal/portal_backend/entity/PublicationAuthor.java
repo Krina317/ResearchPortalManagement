@@ -32,4 +32,7 @@ public class PublicationAuthor {
 	
 	@Column(nullable = false)
 	private Integer authorPosition;
+	
+	@Column(length = 10)
+	private String studentType;
 }

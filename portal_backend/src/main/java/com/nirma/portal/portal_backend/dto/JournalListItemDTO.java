@@ -33,4 +33,7 @@ public class JournalListItemDTO {
     private List<PublicationAuthorResponseDTO> authors;
     private String mergedAuthors;
     private String downloadFileLink;
+    private Boolean isUg;
+    private Boolean isPg;
+    private Boolean isPhd;
 }

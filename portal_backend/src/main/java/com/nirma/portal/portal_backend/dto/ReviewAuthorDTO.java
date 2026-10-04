@@ -9,7 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorRecordResponseDTO {
+public class ReviewAuthorDTO {
+    private Long authorId;
     private String displayName;
-    private Integer authorPosition;
+    private String authorType;          // "NU" or null
+    private String matchReason;
+    private Long suggestedFacultyId;
+    private String suggestedFacultyName;
 }

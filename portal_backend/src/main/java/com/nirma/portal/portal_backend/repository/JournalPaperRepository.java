@@ -13,6 +13,8 @@ public interface JournalPaperRepository extends JpaRepository<JournalPaper, Long
     Optional<JournalPaper> findByPaperTitle(String paperTitle);
 
     boolean existsByPaperTitle(String paperTitle);
+    
+    boolean existsByPaperTitleAndIdNot(String paperTitle, Long id);
 
     @Query(value = "SELECT DISTINCT journal_type FROM journal_paper WHERE journal_type IS NOT NULL ORDER BY journal_type", nativeQuery = true)
     List<String> findDistinctJournalTypes();

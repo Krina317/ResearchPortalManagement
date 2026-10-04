@@ -21,8 +21,8 @@ const navItems = [
   { path: "/journal", label: "Journal", icon: BookOpen },
   { path: "/book-chapters", label: "Book Chapters", icon: BookMarked },
   { path: "/projects/nu", label: "NU Projects", icon: HandCoins },
-  { path: "/projects/ext", label: "External Projects", icon: Landmark}
-
+  { path: "/projects/ext", label: "External Projects", icon: Landmark},
+  { path: "/journal/reports", label: "Journal Reports", icon: FileBarChart }
 ];
 
 export default function Sidebar() {

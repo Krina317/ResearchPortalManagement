@@ -1,5 +1,6 @@
 package com.nirma.portal.portal_backend.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
@@ -13,31 +14,28 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookChapterRequestDTO {
+public class ConferenceRequestDTO {
 
     @NotNull
     private Long sourceId;
 
     @NotBlank
-    private String bookTitle;
+    private String conferenceName;
 
     @NotBlank
-    private String bookChapterTitle;
+    private String conferenceType;
+
+    @NotBlank
+    private String paperTitle;
+
+    private LocalDate fromDate;
+    private LocalDate toDate;
 
     @NotBlank
     private String instituteName;
 
     @NotBlank
-    private String deptName;
-
-    private String nameOfBookPublisher;
-    private Integer month;
-    private Integer year;
-    private String yearOfPublication;
-    private String isbnNo;
-    private String fileName;
-    private String publicationType;
-    private String publicationCity;
+    private String deptCode;
 
     /** Ordered author names; position = index + 1. May be empty, but not missing. */
     @NotNull

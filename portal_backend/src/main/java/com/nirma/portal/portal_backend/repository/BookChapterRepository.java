@@ -14,6 +14,7 @@ public interface BookChapterRepository
     Optional<BookChapter> findByBookChapterTitle(String bookChapterTitle);
 
     boolean existsByBookChapterTitle(String bookChapterTitle);
+    boolean existsByBookChapterTitleAndIdNot(String bookChapterTitle, Long id);
 
     @Query(value = """
             SELECT DISTINCT publication_type

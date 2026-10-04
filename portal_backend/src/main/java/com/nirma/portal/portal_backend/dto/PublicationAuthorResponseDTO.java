@@ -16,4 +16,8 @@ public class PublicationAuthorResponseDTO {
     private Long publicationId;
 
     private PublicationType publicationType;
+    
+    private Long id;
+
+    private String studentType;
 }

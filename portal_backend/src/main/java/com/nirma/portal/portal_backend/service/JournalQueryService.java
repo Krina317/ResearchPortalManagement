@@ -213,6 +213,9 @@ public class JournalQueryService {
         String merged = authorEntities.stream()
         		.map(pa -> pa.getAuthor().getDisplayName())
     	        .collect(Collectors.joining(", "));
+        boolean hasUg = authorEntities.stream().anyMatch(pa -> "UG".equals(pa.getStudentType()));
+        boolean hasPg = authorEntities.stream().anyMatch(pa -> "PG".equals(pa.getStudentType()));
+        boolean hasPhd = authorEntities.stream().anyMatch(pa -> "PHD".equals(pa.getStudentType()));
 
         return new JournalListItemDTO(
                 paper.getId(), paper.getSourceId(), paper.getPaperTitle(), paper.getJournalName(),
@@ -221,7 +224,8 @@ public class JournalQueryService {
                 paper.getIssnNo(), paper.getVolumeNo(), paper.getIssueNo(), paper.getPageNo(),
                 paper.getWebsiteJournalLink(), paper.getArticleLink(), paper.getDoiNumber(),
                 paper.getInstituteName(), paper.getDeptName(),
-                authorDtos, merged, paper.getDownloadFileLink()
+                authorDtos, merged, paper.getDownloadFileLink(),
+                hasUg, hasPg, hasPhd
         );
     }
 

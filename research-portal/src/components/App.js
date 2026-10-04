@@ -16,6 +16,7 @@ import ProjectsPage from "./Projects/NuProjects/ProjectsPage";
 import ProjectSummaryPage from "./Projects/NuProjects/ProjectSummaryPage";
 import FacultyMetricsPage from "./FacultyMetrics/FacultyMetricsPage";
 import ExtProjectsPage from "./Projects/ExternalProjects/ExtProjectsPage";
+import JournalReportsPage from "./JournalReports/JournalReportsPage";
 
 function App() {
   return (
@@ -77,7 +78,7 @@ function App() {
               <Route path = "/projects/ext"
               element = {<ExtProjectsPage/>}
               />
-              
+              <Route path="/journal/reports" element={<JournalReportsPage />} />
             </Routes>
             <Footer />
           </main>

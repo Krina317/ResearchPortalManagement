@@ -13,16 +13,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookChapterRequestDTO {
+public class JournalRequestDTO {
 
     @NotNull
     private Long sourceId;
 
     @NotBlank
-    private String bookTitle;
+    private String paperTitle;
 
     @NotBlank
-    private String bookChapterTitle;
+    private String journalName;
+
+    @NotBlank
+    private String journalType;
 
     @NotBlank
     private String instituteName;
@@ -30,14 +33,20 @@ public class BookChapterRequestDTO {
     @NotBlank
     private String deptName;
 
-    private String nameOfBookPublisher;
-    private Integer month;
-    private Integer year;
-    private String yearOfPublication;
-    private String isbnNo;
     private String fileName;
-    private String publicationType;
-    private String publicationCity;
+    private String impactFactorClarivate;
+    private String impactFactorJournal;
+    private Integer yearOfPublication;
+    private String monthOfPublication;
+    private String indexIn;
+    private String issnNo;
+    private String volumeNo;
+    private String issueNo;
+    private String pageNo;
+    private String websiteJournalLink;
+    private String articleLink;
+    private String doiNumber;
+    private String downloadFileLink;
 
     /** Ordered author names; position = index + 1. May be empty, but not missing. */
     @NotNull

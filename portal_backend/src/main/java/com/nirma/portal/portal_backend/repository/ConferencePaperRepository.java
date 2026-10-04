@@ -11,6 +11,7 @@ import com.nirma.portal.portal_backend.entity.ConferencePaper;
 public interface ConferencePaperRepository extends JpaRepository<ConferencePaper, Long>, ConferencePaperRepositoryCustom {
 
     Optional<ConferencePaper> findByPaperTitle(String paperTitle);
+    boolean existsByPaperTitleAndIdNot(String paperTitle, Long id);
 
     boolean existsByPaperTitle(String paperTitle);
 
