@@ -28,7 +28,7 @@ public class Projects {
     @Column(nullable = false)
     private String principalInvestigator;
 
-    @Column(nullable = false)
+    @Column(nullable = false,length = 2000)
     private String coPrincipalInvestigatorList;
 
     // amount (Nu) / amountTotalSanctioned (External)
@@ -51,10 +51,10 @@ public class Projects {
     @Column(nullable = false)
     private String outcomeOfProject;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String publishedPaperDetails;
 
-    @Column(nullable = false)
+    @Column(nullable = false,length = 2000)
     private String jointPublicationProof;
 
     // Nu projects: always "Nirma" (set automatically)
@@ -69,6 +69,7 @@ public class Projects {
     private String statusOfTheProject;
 
     // Only for NuFundedProject - validate in DTO
+    @Column(length = 2000)
     private String ugStudentDetailList;
 
     @Enumerated(EnumType.STRING)

@@ -32,6 +32,11 @@ public interface ProjectRepository extends JpaRepository<Projects, Long> {
             p.projectType = com.nirma.portal.portal_backend.entity.ProjectType.NuFundedProject
 
             AND
+            (:projectTitle IS NULL OR :projectTitle = ''
+                OR LOWER(p.projectTitle)
+                LIKE LOWER(CONCAT('%', :projectTitle, '%')))
+
+            AND
             (:pi IS NULL OR :pi = ''
                 OR LOWER(p.principalInvestigator)
                 LIKE LOWER(CONCAT('%', :pi, '%')))
@@ -69,8 +74,15 @@ public interface ProjectRepository extends JpaRepository<Projects, Long> {
             (:outcome IS NULL OR :outcome = ''
                 OR LOWER(p.outcomeOfProject)
                 LIKE LOWER(CONCAT('%', :outcome, '%')))
+
+            AND
+            (:dateFrom IS NULL OR p.toDate >= :dateFrom)
+
+            AND
+            (:dateTo IS NULL OR p.fromDate <= :dateTo)
         """)
     Page<Projects> findNuProjectsWithFilters(
+            @Param("projectTitle") String projectTitle,
             @Param("pi") String pi,
             @Param("coPi") String coPi,
             @Param("minAmount") Long minAmount,
@@ -80,6 +92,8 @@ public interface ProjectRepository extends JpaRepository<Projects, Long> {
             @Param("maxDuration") Long maxDuration,
             @Param("academicYear") String academicYear,
             @Param("outcome") String outcome,
+            @Param("dateFrom") LocalDate dateFrom,
+            @Param("dateTo") LocalDate dateTo,
             Pageable pageable
     );
 
@@ -144,14 +158,10 @@ public interface ProjectRepository extends JpaRepository<Projects, Long> {
                 LIKE LOWER(CONCAT('%', :status, '%')))
 
             AND
-            (
-                :dateFrom IS NULL
-                OR :dateTo IS NULL
-                OR (
-                    p.fromDate <= :dateTo
-                    AND p.toDate >= :dateFrom
-                )
-            )
+            (:dateFrom IS NULL OR p.toDate >= :dateFrom)
+
+            AND
+            (:dateTo IS NULL OR p.fromDate <= :dateTo)
         """)
     Page<Projects> findExternalProjectsWithFilters(
             @Param("projectTitle") String projectTitle,

@@ -12,10 +12,10 @@ import Dashboard from "./Dashboard";
 import TopBar from "./TopBar";
 import PublicationPage from "./Publication/PublicationPage";
 import Footer from "./Footer";
-import ProjectsPage from "./Projects/NuProjects/ProjectsPage";
-import ProjectSummaryPage from "./Projects/NuProjects/ProjectSummaryPage";
 import FacultyMetricsPage from "./FacultyMetrics/FacultyMetricsPage";
-import ExtProjectsPage from "./Projects/ExternalProjects/ExtProjectsPage";
+import NuProjectsPage from "./Projects/NuProjectsPage";
+import ExtProjectsPage from "./Projects/ExtProjectsPage";
+
 
 function App() {
   return (
@@ -64,19 +64,10 @@ function App() {
                 element={<UploadPage />}
               />
 
-              <Route
-                path="/projects/nu"
-                element={<ProjectsPage />}
-              />
+              <Route path="/projects/nu" element={<NuProjectsPage />} />
 
-              <Route
-                path="/projects/nu/summary"
-                element={<ProjectSummaryPage />}
-              />
 
-              <Route path = "/projects/ext"
-              element = {<ExtProjectsPage/>}
-              />
+              <Route path="/projects/ext" element={<ExtProjectsPage />} />
               
             </Routes>
             <Footer />

@@ -1,7 +1,7 @@
 package com.nirma.portal.portal_backend.service;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.List; 
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -110,6 +110,7 @@ public class ProjectService {
 
     @Transactional(readOnly = true)
     public Page<NuFundedProjectResponseDTO> getNuProjectsWithFilters(
+            String projectTitle,
             String pi,
             String coPi,
             Long minAmount,
@@ -119,21 +120,23 @@ public class ProjectService {
             Long maxDuration,
             String academicYear,
             String outcome,
+            LocalDate dateFrom,
+            LocalDate dateTo,
             Pageable pageable) {
 
         log.trace("Entered getNuProjectsWithFilters()");
-        log.debug("Applying NU project filters: pi='{}', coPi='{}', minAmount={}, maxAmount={}, "
-                + "category='{}', minDuration={}, maxDuration={}, academicYear='{}', outcome='{}'",
-                pi, coPi, minAmount, maxAmount, projectCategory,
-                minDuration, maxDuration, academicYear, outcome);
+        log.debug("Applying NU project filters: title='{}', pi='{}', coPi='{}', minAmount={}, maxAmount={}, "
+                + "category='{}', minDuration={}, maxDuration={}, academicYear='{}', outcome='{}', "
+                + "dateFrom={}, dateTo={}",
+                projectTitle, pi, coPi, minAmount, maxAmount, projectCategory,
+                minDuration, maxDuration, academicYear, outcome, dateFrom, dateTo);
 
         Page<Projects> projects = repository.findNuProjectsWithFilters(
-                pi, coPi, minAmount, maxAmount, projectCategory,
-                minDuration, maxDuration, academicYear, outcome, pageable);
+                projectTitle, pi, coPi, minAmount, maxAmount, projectCategory,
+                minDuration, maxDuration, academicYear, outcome, dateFrom, dateTo, pageable);
 
         return projects.map(nuMapper::toResponseDTO);
     }
-
     // ---------------------------------------------------------
     // UPDATE PROJECT
     // ---------------------------------------------------------
