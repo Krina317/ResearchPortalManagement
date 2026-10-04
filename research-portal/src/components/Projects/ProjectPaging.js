@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ProjectFilters from "./ProjectFilters";
 import ProjectToolbar from "./ProjectToolbar";
 import ProjectTable from "./ProjectTable";
+import { downloadProjects } from "./projectExport";
 
 const DEFAULT_ROWS_PER_PAGE = 10;
 
@@ -10,13 +11,14 @@ const paginationButtonClass =
   "rounded-md border border-gray-300 bg-white px-3 py-2 cursor-pointer hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white";
 
 function ProjectPaging({
-  config,
-  refreshKey,
-  onAddProject,
-  onOpenSummary,
-  onGenerateReport,
-  onEditProject,
-  onDeleteProject,
+    config,
+    refreshKey,
+    onAddProject,
+    onInvitePis,
+    onOpenSummary,
+    onGenerateReport,
+    onEditProject,
+    onDeleteProject,
 }) {
   const {
     api,
@@ -28,10 +30,15 @@ function ProjectPaging({
     tableMinWidth,
   } = config;
 
-  // draftFilters  = what is typed in the filter boxes
+  // draftFilters   = what is typed in the filter boxes
   // appliedFilters = what the table is actually using (set by "Apply Filters")
   const [draftFilters, setDraftFilters] = useState(defaultFilters);
   const [appliedFilters, setAppliedFilters] = useState(defaultFilters);
+
+  // keys of the columns currently shown (all columns by default)
+  const [visibleColumnKeys, setVisibleColumnKeys] = useState(() =>
+    columns.map((column) => column.key)
+  );
 
   const [projects, setProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,48 +49,114 @@ function ProjectPaging({
   const [direction, setDirection] = useState("asc");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [exporting, setExporting] = useState(false);
 
   const activeFilterCount = Object.values(appliedFilters).filter(
     (value) => value !== "" && value !== null && value !== undefined
   ).length;
 
+  // columns in their original order, only the ones that are selected
+  const visibleColumns = columns.filter((column) =>
+    visibleColumnKeys.includes(column.key)
+  );
+  const allColumnsVisible = visibleColumns.length === columns.length;
+
   // =========================================================
   // LOAD PROJECTS (paging + sorting + filtering are done by the backend)
   // =========================================================
 
-  const loadProjects = async () => {
+    // =========================================================
+  // LOAD PROJECTS (paging + sorting + filtering are done by the backend)
+  // Reloads when applied filters / pagination / sorting change,
+  // or when the page asks for a refresh (after add / edit / delete)
+  // =========================================================
+
+  useEffect(() => {
+    let ignore = false; // set when a newer request replaces this one
+
+    const loadProjects = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const data = await api.fetchWithFilters({
+          params: toQueryParams(appliedFilters),
+          page: currentPage - 1,
+          size: Number(rowsPerPage) || DEFAULT_ROWS_PER_PAGE,
+          sortBy,
+          direction,
+        });
+
+        if (ignore) return;
+
+        setProjects(data.content || []);
+        setTotalProjects(data.totalElements || 0);
+        setTotalPages(Math.max(1, data.totalPages || 1));
+      } catch (err) {
+        if (ignore) return;
+
+        console.error(`Error loading ${title}:`, err);
+
+        setError(err.message || "Failed to load projects.");
+        setProjects([]);
+        setTotalProjects(0);
+        setTotalPages(1);
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadProjects();
+
+    return () => {
+      ignore = true;
+    };
+  }, [
+    api,
+    title,
+    toQueryParams,
+    appliedFilters,
+    currentPage,
+    rowsPerPage,
+    sortBy,
+    direction,
+    refreshKey,
+  ]);
+  // =========================================================
+  // DOWNLOAD (all pages, applied filters, current sort, visible columns)
+  // =========================================================
+
+  const handleDownload = async (format) => {
     try {
-      setLoading(true);
+      setExporting(true);
       setError("");
 
-      const data = await api.fetchWithFilters({
+      const allProjects = await api.fetchAllWithFilters({
         params: toQueryParams(appliedFilters),
-        page: currentPage - 1,
-        size: Number(rowsPerPage) || DEFAULT_ROWS_PER_PAGE,
         sortBy,
         direction,
       });
 
-      setProjects(data.content || []);
-      setTotalProjects(data.totalElements || 0);
-      setTotalPages(Math.max(1, data.totalPages || 1));
-    } catch (err) {
-      console.error(`Error loading ${title}:`, err);
+      if (allProjects.length === 0) {
+        setError("There are no projects to download.");
+        return;
+      }
 
-      setError(err.message || "Failed to load projects.");
-      setProjects([]);
-      setTotalProjects(0);
-      setTotalPages(1);
+      downloadProjects({
+        format,
+        projects: allProjects,
+        columns: visibleColumns,
+        fileName: config.exportFileName,
+        title,
+      });
+    } catch (err) {
+      setError(err.message || "Failed to download projects.");
     } finally {
-      setLoading(false);
+      setExporting(false);
     }
   };
-
-  // reload when applied filters / pagination / sorting change,
-  // or when the page asks for a refresh (after add / edit / delete)
-  useEffect(() => {
-    loadProjects();
-  }, [appliedFilters, currentPage, rowsPerPage, sortBy, direction, refreshKey]);
 
   // =========================================================
   // FILTERS
@@ -98,6 +171,27 @@ function ProjectPaging({
     setDraftFilters(defaultFilters);
     setAppliedFilters(defaultFilters);
     setCurrentPage(1);
+  };
+
+  // =========================================================
+  // COLUMN SELECTOR
+  // =========================================================
+
+  const handleToggleColumn = (key) => {
+    setVisibleColumnKeys((previous) => {
+      if (previous.includes(key)) {
+        // keep at least one column selected
+        return previous.length === 1
+          ? previous
+          : previous.filter((existing) => existing !== key);
+      }
+
+      return [...previous, key];
+    });
+  };
+
+  const handleSelectAllColumns = () => {
+    setVisibleColumnKeys(columns.map((column) => column.key));
   };
 
   // =========================================================
@@ -174,18 +268,25 @@ function ProjectPaging({
       <ProjectToolbar
         title={title}
         totalProjects={totalProjects}
+        exporting={exporting}
         onAddProject={onAddProject}
+        onInvitePis={onInvitePis}
         onOpenSummary={onOpenSummary}
         onGenerateReport={onGenerateReport}
+        onDownload={handleDownload}
       />
 
       <ProjectFilters
         filters={draftFilters}
         groups={filterGroups}
         activeCount={activeFilterCount}
+        columns={columns}
+        visibleColumnKeys={visibleColumnKeys}
         onFiltersChange={setDraftFilters}
         onApply={handleApplyFilters}
         onClear={handleClearFilters}
+        onToggleColumn={handleToggleColumn}
+        onSelectAllColumns={handleSelectAllColumns}
       />
 
       {error && (
@@ -252,11 +353,11 @@ function ProjectPaging({
         </div>
       ) : (
         <ProjectTable
-          columns={columns}
+          columns={visibleColumns}
           projects={projects}
           sortBy={sortBy}
           direction={direction}
-          tableMinWidth={tableMinWidth}
+          tableMinWidth={allColumnsVisible ? tableMinWidth : ""}
           onSort={handleSort}
           onEdit={onEditProject}
           onDelete={onDeleteProject}

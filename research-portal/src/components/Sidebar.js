@@ -11,7 +11,8 @@ import {
   ChevronRight,
   HandCoins,
   Users,
-  Landmark
+  Landmark,
+  FileBarChart
 } from "lucide-react";
 
 const navItems = [

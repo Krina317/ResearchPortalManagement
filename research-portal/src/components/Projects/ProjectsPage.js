@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import ProjectPaging from "./ProjectPaging";
 import ProjectFormModal from "./ProjectFormModal";
+import InvitePisModal from "./InvitePIModal";
 
 function ProjectsPage({ config }) {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ function ProjectsPage({ config }) {
 
   const [showForm, setShowForm] = useState(false);
   const [projectToEdit, setProjectToEdit] = useState(null);
+  const [showInvite, setShowInvite] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const refreshProjects = () => setRefreshKey((previous) => previous + 1);
@@ -68,12 +70,19 @@ function ProjectsPage({ config }) {
     alert("Generate Report functionality will be added later.");
   };
 
+  // INVITE PIs
+  const handleSendInvitations = async (emails) => {
+    // TODO: call the invitations API here (nothing is sent yet)
+    console.log(`Invitations to send for ${config.entityName}:`, emails);
+  };
+
   return (
     <div className="projects-page box-border min-h-screen bg-gray-50 p-6">
       <ProjectPaging
         config={config}
         refreshKey={refreshKey}
         onAddProject={handleOpenAddProject}
+        onInvitePis={() => setShowInvite(true)}
         onOpenSummary={handleOpenSummary}
         onGenerateReport={handleGenerateReport}
         onEditProject={handleEditProject}
@@ -88,6 +97,15 @@ function ProjectsPage({ config }) {
           projectToEdit={projectToEdit}
           onSave={handleSaveProject}
           onClose={handleCloseForm}
+        />
+      )}
+
+      {showInvite && (
+        <InvitePisModal
+          entityName={config.entityName}
+          demoMode
+          onSend={handleSendInvitations}
+          onClose={() => setShowInvite(false)}
         />
       )}
     </div>

@@ -4,7 +4,7 @@ import {
     fetchFacultyScores,
     fetchStudentCounts,
     fetchReviewAuthors
-} from "../api/journalApi";
+} from "../../api/journalApi";
 
 const STUDENT_TYPES = ["UG", "PG", "PHD"];
 

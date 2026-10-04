@@ -1,14 +1,19 @@
 import React from "react";
 
+import DownloadMenu from "./ProjectDownloadMenu";
+
 const secondaryButtonClass =
   "cursor-pointer rounded-[7px] border border-gray-300 bg-white px-4 py-2.5 font-semibold text-gray-700 hover:bg-gray-50";
 
 function ProjectToolbar({
   title,
   totalProjects = 0,
+  exporting = false,
   onAddProject,
+  onInvitePis,
   onOpenSummary,
   onGenerateReport,
+  onDownload,
 }) {
   return (
     <div className="mb-4 flex flex-wrap items-center justify-between gap-4 rounded-[10px] border border-gray-200 bg-white px-5 py-[18px]">
@@ -21,6 +26,12 @@ function ProjectToolbar({
       </div>
 
       <div className="flex flex-wrap gap-2.5">
+        <DownloadMenu
+          disabled={totalProjects === 0}
+          exporting={exporting}
+          onDownload={onDownload}
+        />
+
         <button
           type="button"
           onClick={onOpenSummary}
@@ -35,6 +46,14 @@ function ProjectToolbar({
           className={secondaryButtonClass}
         >
           Generate Report
+        </button>
+
+        <button
+          type="button"
+          onClick={onInvitePis}
+          className="cursor-pointer rounded-[7px] border border-emerald-600 bg-white px-4 py-2.5 font-semibold text-emerald-700 hover:bg-emerald-50"
+        >
+          Invite PIs
         </button>
 
         <button

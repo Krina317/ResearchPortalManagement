@@ -48,6 +48,32 @@ export const createProjectApi = (resource) => {
       const response = await fetch(`${baseUrl}/filter?${query}`);
       return handleResponse(response, "Failed to load projects.");
     },
+    // Fetches every page of the filtered list (used for CSV / Excel download)
+    fetchAllWithFilters: async ({ params = {}, sortBy, direction }) => {
+      const size = 500;
+      const allProjects = [];
+      let page = 0;
+      let totalPages = 1;
+
+      do {
+        const query = buildQueryString({
+          ...params,
+          page,
+          size,
+          sortBy,
+          direction,
+        });
+
+        const response = await fetch(`${baseUrl}/filter?${query}`);
+        const data = await handleResponse(response, "Failed to load projects.");
+
+        allProjects.push(...(data.content || []));
+        totalPages = data.totalPages || 1;
+        page += 1;
+      } while (page < totalPages);
+
+      return allProjects;
+    },
 
     getAll: async () => {
       const response = await fetch(baseUrl);

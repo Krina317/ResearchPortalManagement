@@ -76,6 +76,7 @@ const amountDurationGroup = {
 export const nuProjectConfig = {
   title: "NU Funded Projects",
   entityName: "NU Funded Project",
+  exportFileName: "NU_Funded_Projects",
   api: nuProjectApi,
   summaryPath: "/projects/nu/summary",
   tableMinWidth: "min-w-[1850px]",
@@ -182,6 +183,7 @@ export const nuProjectConfig = {
 export const extProjectConfig = {
   title: "External Funded Projects",
   entityName: "External Funded Project",
+  exportFileName: "External_Funded_Projects",
   api: extProjectApi,
   summaryPath: "/projects/external/summary",
   tableMinWidth: "min-w-[1900px]",

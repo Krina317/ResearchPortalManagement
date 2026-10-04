@@ -13,8 +13,10 @@ import TopBar from "./TopBar";
 import PublicationPage from "./Publication/PublicationPage";
 import Footer from "./Footer";
 import FacultyMetricsPage from "./FacultyMetrics/FacultyMetricsPage";
-import ExtProjectsPage from "./Projects/ExternalProjects/ExtProjectsPage";
+import NuProjectsPage from "./Projects/NuProjectsPage";
+import ExtProjectsPage from "./Projects/ExtProjectsPage";
 import JournalReportsPage from "./JournalReports/JournalReportsPage";
+
 
 function App() {
   return (
@@ -66,10 +68,9 @@ function App() {
               <Route path="/projects/nu" element={<NuProjectsPage />} />
 
 
-              <Route path = "/projects/ext"
-              element = {<ExtProjectsPage/>}
-              />
-              <Route path="/journal/reports" element={<JournalReportsPage />} />
+              <Route path="/projects/ext" element={<ExtProjectsPage />} />
+               <Route path="/journal/reports" element={<JournalReportsPage />} />
+
             </Routes>
             <Footer />
           </main>

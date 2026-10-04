@@ -8,9 +8,13 @@ function ProjectFilters({
   filters,
   groups,
   activeCount = 0,
+  columns = [],
+  visibleColumnKeys = [],
   onFiltersChange,
   onApply,
   onClear,
+  onToggleColumn,
+  onSelectAllColumns,
 }) {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -112,6 +116,66 @@ function ProjectFilters({
                 </div>
               </section>
             ))}
+
+            {/* COLUMN SELECTOR (changes instantly, no Apply needed) */}
+            {columns.length > 0 && (
+              <section className="rounded-lg border border-gray-200 bg-gray-50 p-3.5 lg:col-span-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <h3 className="m-0 text-[13px] font-bold text-gray-800">
+                      Columns
+                    </h3>
+
+                    <p className="m-0 mt-0.5 text-xs text-gray-500">
+                      Choose which columns to show in the table and downloads (
+                      {visibleColumnKeys.length} of {columns.length} selected)
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={onSelectAllColumns}
+                    disabled={visibleColumnKeys.length === columns.length}
+                    className="cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
+                  >
+                    Select All
+                  </button>
+                </div>
+
+                <div className="mt-3 grid grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-x-3 gap-y-2">
+                  {columns.map((column) => {
+                    const isChecked = visibleColumnKeys.includes(column.key);
+                    const isLastChecked =
+                      isChecked && visibleColumnKeys.length === 1;
+
+                    return (
+                      <label
+                        key={column.key}
+                        title={
+                          isLastChecked
+                            ? "At least one column must stay selected"
+                            : undefined
+                        }
+                        className={`flex items-center gap-2 text-sm text-gray-700 ${
+                          isLastChecked
+                            ? "cursor-not-allowed opacity-60"
+                            : "cursor-pointer"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          disabled={isLastChecked}
+                          onChange={() => onToggleColumn(column.key)}
+                          className="h-4 w-4 accent-emerald-600"
+                        />
+                        {column.header}
+                      </label>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
           </div>
 
           {/* ACTIONS */}

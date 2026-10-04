@@ -1,4 +1,4 @@
-import { BarChart3, GraduationCap, Mail } from "lucide-react";
+import { BarChart3, GraduationCap } from "lucide-react";
 
 const developers = [
   { name: "Krina Shah", roll: "24BCE292" },
