@@ -3,7 +3,8 @@ import { Loader2 } from "lucide-react";
 import {
     fetchFacultyScores,
     fetchStudentCounts,
-    fetchReviewAuthors
+    fetchReviewAuthors,
+    decideReviewAuthor
 } from "../../api/journalApi";
 
 const STUDENT_TYPES = ["UG", "PG", "PHD"];
@@ -13,6 +14,7 @@ function useReport(loader) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [tick, setTick] = useState(0);
 
     useEffect(() => {
         let cancelled = false;
@@ -32,9 +34,9 @@ function useReport(loader) {
         return () => {
             cancelled = true;
         };
-    }, [loader]);
+    }, [loader, tick]);
 
-    return { data, loading, error };
+    return { data, loading, error, reload: () => setTick(t => t + 1) };
 }
 
 function ReportCard({ title, subtitle, loading, error, children }) {
@@ -67,6 +69,30 @@ export default function JournalReportsPage() {
     const scores = useReport(fetchFacultyScores);
     const counts = useReport(fetchStudentCounts);
     const review = useReport(fetchReviewAuthors);
+
+    const [busyId, setBusyId] = useState(null);
+    const [actionError, setActionError] = useState("");
+
+    // Confirm = link the author to the suggested faculty; otherwise mark as not faculty.
+    async function handleDecision(author, isFaculty) {
+        setBusyId(author.authorId);
+        setActionError("");
+
+        try {
+            await decideReviewAuthor(
+                author.authorId,
+                isFaculty,
+                isFaculty ? author.suggestedFacultyId : undefined
+            );
+            review.reload();
+            scores.reload(); // scores change once an author is confirmed
+        } catch (err) {
+            console.error(err);
+            setActionError(`Could not save the decision for ${author.displayName}.`);
+        } finally {
+            setBusyId(null);
+        }
+    }
 
     // highest score first
     const sortedScores = [...scores.data].sort(
@@ -170,6 +196,9 @@ export default function JournalReportsPage() {
                     loading={review.loading}
                     error={review.error}
                 >
+                    {actionError && (
+                        <p className="px-5 py-3 text-sm text-red-600 border-b">{actionError}</p>
+                    )}
                     <div className="w-full overflow-x-auto">
                         <table className="w-full min-w-max border-collapse">
                             <thead className="bg-gray-50">
@@ -178,12 +207,13 @@ export default function JournalReportsPage() {
                                     <th className={th}>Author Type</th>
                                     <th className={th}>Why it was flagged</th>
                                     <th className={th}>Suggested Faculty</th>
+                                    <th className={th}>Decision</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {review.data.length === 0 ? (
                                     <tr>
-                                        <td colSpan={4} className="px-6 py-10 text-center text-gray-500">
+                                        <td colSpan={5} className="px-6 py-10 text-center text-gray-500">
                                             Nothing to review.
                                         </td>
                                     </tr>
@@ -196,6 +226,26 @@ export default function JournalReportsPage() {
                                                 {author.matchReason ?? "—"}
                                             </td>
                                             <td className={td}>{author.suggestedFacultyName ?? "—"}</td>
+                                            <td className={td}>
+                                                <div className="flex gap-2">
+                                                    <button
+                                                        type="button"
+                                                        disabled={busyId === author.authorId || author.suggestedFacultyId == null}
+                                                        onClick={() => handleDecision(author, true)}
+                                                        className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-sm hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    >
+                                                        Confirm match
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        disabled={busyId === author.authorId}
+                                                        onClick={() => handleDecision(author, false)}
+                                                        className="px-3 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    >
+                                                        Not faculty
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
                                     ))
                                 )}

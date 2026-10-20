@@ -176,7 +176,7 @@ const PARAM_BUILDERS = {
 | - Journal's is `mergedAuthors` (different name, same shape).
 |--------------------------------------------------------------------------
 */
-function normalizeRecord(record, publicationType) {
+export function normalizeRecord(record, publicationType) {
 
     let result = record;
     // Authors now arrive as { authorPosition, author: { authorId, displayName, authorType } }.

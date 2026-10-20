@@ -45,8 +45,12 @@ public class JournalCRUD {
         }
 
         JournalPaper paper = new JournalPaper();
+        String oldFileName = paper.getFileName();
         apply(paper, req, deptName);
-        paper = journalPaperRepository.save(paper);
+        if (req.getFileName() == null) {
+            paper.setFileName(oldFileName);
+        }
+        journalPaperRepository.save(paper);
 
         publicationAuthorService.replaceAuthors(paper.getId(), PublicationType.JOURNAL, req.getAuthors());
         return journalQueryService.getById(paper.getId());

@@ -48,3 +48,10 @@ export const fetchFacultyScores = () => request("/journal/reports/faculty-scores
 export const fetchStudentCounts = () => request("/journal/reports/student-counts");
 
 export const fetchReviewAuthors = () => request("/journal/reports/review-authors");
+
+/* Review decision: isFaculty true = confirm the suggested match, false = not faculty. */
+export const decideReviewAuthor = (authorId, isFaculty, facultyId) =>
+    request(
+        `/journal/reports/review-authors/${authorId}`,
+        jsonOptions("PUT", facultyId != null ? { isFaculty, facultyId } : { isFaculty })
+    );

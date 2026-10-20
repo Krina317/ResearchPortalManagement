@@ -5,13 +5,16 @@ import {
     searchPublication,
     fetchAllMatchingPublication,
     fetchFilterOptions,
-    fetchColumns
+    fetchColumns,
+    normalizeRecord
 } from "../../api/publicationApi";
+import { setStudentType, deleteJournal } from "../../api/journalApi";
 import PublicationHeader from "./PublicationHeader";
 import PublicationToolbar from "./PublicationToolbar";
 import PublicationFilter from "./PublicationFilter";
 import PublicationTable from "./PublicationTable";
 import PublicationPagination from "./PublicationPagination";
+import JournalFormModal from "./JournalFormModal";
 
 const TYPES_WITH_BACKEND_METADATA = ["conference", "journal","book-chapters"];
 
@@ -31,14 +34,24 @@ function getAuthorColumns() {
     });
 }
 
-function buildAvailableColumns(columns, mergeAuthors) {
+const STUDENT_FLAG_COLUMNS = [
+    { key: "isUg", label: "Is UG Student Involved?", field: "isUg", sortable: false, yesNo: true },
+    { key: "isPg", label: "Is PG Student Involved?", field: "isPg", sortable: false, yesNo: true },
+    { key: "isPhd", label: "Is PhD Student Involved?", field: "isPhd", sortable: false, yesNo: true }
+];
+
+function buildAvailableColumns(columns, mergeAuthors, publicationType) {
     const normalColumns = columns.filter(
         column => column.key !== "authors" && !column.authorPosition
     );
 
+    const flagColumns =
+        publicationType === "journal" ? STUDENT_FLAG_COLUMNS : [];
+
     if (mergeAuthors) {
         return [
             ...normalColumns,
+            ...flagColumns,
             {
                 key: "authors",
                 label: "Authors",
@@ -51,6 +64,7 @@ function buildAvailableColumns(columns, mergeAuthors) {
 
     return [
         ...normalColumns,
+        ...flagColumns,
         ...getAuthorColumns()
     ];
 }
@@ -82,6 +96,8 @@ function getExportValue(record, column, mergeAuthors) {
 
         return "";
     }
+
+    if (column.yesNo) return record[column.field] ? "Yes" : "No";
 
     const value = record[column.field];
 
@@ -137,6 +153,14 @@ export default function PublicationPage({ publicationType }) {
     const [columns, setColumns] = useState([]);
     const [metadataError, setMetadataError] = useState("");
 
+    // Add / Edit / Delete (journal only)
+    const crudEnabled = publicationType === "journal";
+    const [crudMode, setCrudMode] = useState(null); // null | "edit" | "delete"
+    const [selectedIds, setSelectedIds] = useState([]);
+    const [formState, setFormState] = useState(null); // null | { mode: "add" } | { mode: "edit", record }
+    const [deleting, setDeleting] = useState(false);
+    const [crudError, setCrudError] = useState("");
+
     const createDefaultFilters = useCallback(() => {
         if (!publicationConfig) return {};
 
@@ -188,6 +212,11 @@ export default function PublicationPage({ publicationType }) {
 
         setData(null);
         setError("");
+
+        setCrudMode(null);
+        setSelectedIds([]);
+        setFormState(null);
+        setCrudError("");
     }, [publicationType, createDefaultFilters]);
 
     useEffect(() => {
@@ -293,10 +322,12 @@ export default function PublicationPage({ publicationType }) {
      *
      * Merge OFF:
      *   normal columns + Author 1 ... Author 10
+     *
+     * Journal also gets the Is UG / PG / PhD Student Involved? columns.
      */
     const availableColumns = useMemo(
-        () => buildAvailableColumns(columns, mergeAuthors),
-        [columns, mergeAuthors]
+        () => buildAvailableColumns(columns, mergeAuthors, publicationType),
+        [columns, mergeAuthors, publicationType]
     );
 
     /*
@@ -332,13 +363,18 @@ export default function PublicationPage({ publicationType }) {
                 return null;
             }
 
-            const normalKeys = columns
-                .filter(
-                    column =>
-                        column.key !== "authors" &&
-                        !column.authorPosition
-                )
-                .map(column => column.key);
+            const normalKeys = [
+                ...columns
+                    .filter(
+                        column =>
+                            column.key !== "authors" &&
+                            !column.authorPosition
+                    )
+                    .map(column => column.key),
+                ...(publicationType === "journal"
+                    ? STUDENT_FLAG_COLUMNS.map(column => column.key)
+                    : [])
+            ];
 
             const previousNormalSelections = prevSelected.filter(key =>
                 normalKeys.includes(key)
@@ -385,6 +421,150 @@ export default function PublicationPage({ publicationType }) {
 
         setPage(0);
     }
+
+    /*
+     * Saves an author's UG / PG / PHD type, then swaps the updated
+     * record into the table so only that row changes.
+     * Errors are thrown so the table can show a message.
+     */
+    async function handleStudentTypeChange(record, author, studentType) {
+        const updated = await setStudentType(author.id, studentType);
+        const normalized = normalizeRecord(updated, publicationType);
+
+        setData(prev =>
+            prev && {
+                ...prev,
+                content: prev.content.map(r =>
+                    r.id === normalized.id ? normalized : r
+                )
+            }
+        );
+    }
+
+    /* ---------- Add / Edit / Delete (journal) ---------- */
+
+    function startMode(mode) {
+        setCrudMode(mode);
+        setSelectedIds([]);
+        setCrudError("");
+    }
+
+    function cancelMode() {
+        setCrudMode(null);
+        setSelectedIds([]);
+        setCrudError("");
+    }
+
+    function handleToggleSelect(id) {
+        setSelectedIds(prev => {
+            if (prev.includes(id)) return prev.filter(x => x !== id);
+            // edit works on one paper at a time
+            return crudMode === "edit" ? [id] : [...prev, id];
+        });
+    }
+
+    function handleToggleAll(records) {
+        const pageIds = records.map(r => r.id);
+
+        setSelectedIds(prev => {
+            const allSelected = pageIds.every(id => prev.includes(id));
+            if (allSelected) return prev.filter(id => !pageIds.includes(id));
+            return [...new Set([...prev, ...pageIds])];
+        });
+    }
+
+    async function handleConfirm() {
+        setCrudError("");
+
+        if (crudMode === "edit") {
+            const record = (data?.content ?? []).find(
+                r => r.id === selectedIds[0]
+            );
+
+            if (!record) {
+                setCrudError("Select the paper on this page, then try again.");
+                return;
+            }
+
+            setFormState({ mode: "edit", record });
+            return;
+        }
+
+        if (crudMode === "delete") {
+            const count = selectedIds.length;
+
+            const ok = window.confirm(
+                `Delete ${count} paper${count === 1 ? "" : "s"}? This cannot be undone.`
+            );
+
+            if (!ok) return;
+
+            setDeleting(true);
+
+            const failed = [];
+
+            // the delete API takes one id, so delete one by one
+            for (const id of selectedIds) {
+                try {
+                    await deleteJournal(id);
+                } catch (err) {
+                    console.error(err);
+                    failed.push(id);
+                }
+            }
+
+            setDeleting(false);
+
+            const removedCount = count - failed.length;
+            const pageNowEmpty =
+                (data?.content ?? []).filter(r => !selectedIds.includes(r.id) || failed.includes(r.id))
+                    .length === 0;
+
+            if (failed.length > 0) {
+                setSelectedIds(failed);
+                setCrudError(
+                    `Could not delete ${failed.length} paper${failed.length === 1 ? "" : "s"} (ID ${failed.join(", ")}).`
+                );
+            } else {
+                setCrudMode(null);
+                setSelectedIds([]);
+            }
+
+            if (removedCount > 0 && pageNowEmpty && page > 0) {
+                setPage(page - 1); // reloads through the effect
+            } else {
+                loadData();
+            }
+        }
+    }
+
+    function handleFormSaved() {
+        const wasAdd = formState?.mode === "add";
+
+        setFormState(null);
+        setCrudMode(null);
+        setSelectedIds([]);
+        setCrudError("");
+
+        if (wasAdd && page !== 0) {
+            setPage(0);
+        } else {
+            loadData();
+        }
+    }
+
+    const crud = crudEnabled
+        ? {
+            mode: crudMode,
+            selectedCount: selectedIds.length,
+            busy: deleting,
+            onAdd: () => setFormState({ mode: "add" }),
+            onStartEdit: () => startMode("edit"),
+            onStartDelete: () => startMode("delete"),
+            onConfirm: handleConfirm,
+            onCancel: cancelMode
+        }
+        : undefined;
 
     async function handleExport() {
         setExporting(true);
@@ -482,6 +662,7 @@ export default function PublicationPage({ publicationType }) {
                     onColumnsChange={setSelectedColumns}
                     onExport={handleExport}
                     exporting={exporting}
+                    crud={crud}
                 />
 
                 <PublicationFilter
@@ -507,6 +688,12 @@ export default function PublicationPage({ publicationType }) {
                     </div>
                 )}
 
+                {crudError && (
+                    <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-600">
+                        {crudError}
+                    </div>
+                )}
+
                 <div className="mb-6">
                     <PublicationPagination
                         page={page}
@@ -527,9 +714,24 @@ export default function PublicationPage({ publicationType }) {
                     sortDir={sortDir}
                     onSort={handleSort}
                     mergeAuthors={mergeAuthors}
+                    onStudentTypeChange={handleStudentTypeChange}
+                    selectionMode={crudEnabled ? crudMode : null}
+                    selectedIds={selectedIds}
+                    onToggleSelect={handleToggleSelect}
+                    onToggleAll={handleToggleAll}
                 />
 
             </div>
+
+            {crudEnabled && formState && (
+                <JournalFormModal
+                    mode={formState.mode}
+                    record={formState.record}
+                    options={filterOptions}
+                    onClose={() => setFormState(null)}
+                    onSaved={handleFormSaved}
+                />
+            )}
         </div>
     );
 }

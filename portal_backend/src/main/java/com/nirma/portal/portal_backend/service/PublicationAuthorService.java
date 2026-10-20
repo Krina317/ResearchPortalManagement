@@ -47,6 +47,11 @@ public class PublicationAuthorService {
                 .map(pa -> pa.getAuthor().getAuthorId())
                 .distinct()
                 .toList();
+        
+        java.util.Map<Long, String> studentTypeByAuthor = new java.util.HashMap<>();
+        publicationAuthorRepository
+                .findByPublicationIdAndPublicationType(publicationId, type)
+                .forEach(pa -> studentTypeByAuthor.put(pa.getAuthor().getAuthorId(), pa.getStudentType()));
 
         publicationAuthorRepository.deleteByPublicationIdAndPublicationType(publicationId, type);
         publicationAuthorRepository.flush();
@@ -75,6 +80,7 @@ public class PublicationAuthorService {
             link.setPublicationId(publicationId);
             link.setPublicationType(type);
             link.setAuthorPosition(position++);
+            link.setStudentType(studentTypeByAuthor.get(author.getAuthorId()));
             publicationAuthorRepository.save(link);
         }
 
