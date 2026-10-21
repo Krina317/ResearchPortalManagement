@@ -2,8 +2,6 @@ import React from "react";
 
 import DownloadMenu from "./ProjectDownloadMenu";
 
-const secondaryButtonClass =
-  "cursor-pointer rounded-[7px] border border-gray-300 bg-white px-4 py-2.5 font-semibold text-gray-700 hover:bg-gray-50";
 
 function ProjectToolbar({
   title,
@@ -11,8 +9,6 @@ function ProjectToolbar({
   exporting = false,
   onAddProject,
   onInvitePis,
-  onOpenSummary,
-  onGenerateReport,
   onDownload,
 }) {
   return (
@@ -31,23 +27,6 @@ function ProjectToolbar({
           exporting={exporting}
           onDownload={onDownload}
         />
-
-        <button
-          type="button"
-          onClick={onOpenSummary}
-          className={secondaryButtonClass}
-        >
-          View Summary
-        </button>
-
-        <button
-          type="button"
-          onClick={onGenerateReport}
-          className={secondaryButtonClass}
-        >
-          Generate Report
-        </button>
-
         <button
           type="button"
           onClick={onInvitePis}

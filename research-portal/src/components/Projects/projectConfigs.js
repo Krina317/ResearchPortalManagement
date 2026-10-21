@@ -79,7 +79,7 @@ export const nuProjectConfig = {
   exportFileName: "NU_Funded_Projects",
   api: nuProjectApi,
   summaryPath: "/projects/nu/summary",
-  tableMinWidth: "min-w-[1850px]",
+  tableMinWidth: "min-w-[2300px]",
 
   defaultFilters: {
     projectTitle: "",
@@ -155,6 +155,9 @@ export const nuProjectConfig = {
     { key: "publishedPaperDetails", header: "Publication Details", type: "multiline" },
     { key: "jointPublicationProof", header: "Joint Publication Proof", type: "link" },
     { key: "ugStudentDetailList", header: "UG Student Details", type: "multiline" },
+    { key: "sanctionedDate", header: "Sanctioned Date", type: "date" },
+    { key: "fundReceived", header: "Fund Received" },
+    { key: "remarks", header: "Remarks", type: "multiline" },
   ],
 
   formFields: [
@@ -163,7 +166,7 @@ export const nuProjectConfig = {
     { name: "coPrincipalInvestigatorList", label: "Co-Principal Investigator(s)", type: "text", required: true, placeholder: "Enter Co-PI names" },
     { name: "amount", label: "Amount", type: "number", required: true, min: 0, placeholder: "Enter amount" },
     { name: "nuProjectCategory", label: "Project Category", type: "select", required: true, options: NU_CATEGORIES, placeholder: "Select Category" },
-    { name: "duration", label: "Duration (Years)", type: "number", required: true, min: 1, placeholder: "Enter duration" },
+    { name: "duration", label: "Duration (Years, e.g. 1.5 for 18 months)", type: "number", required: true, min: 0.5, step: "0.5", placeholder: "Enter duration in years" },
     { name: "academicYear", label: "Academic Year", type: "select", required: true, options: ACADEMIC_YEARS, placeholder: "Select Academic Year" },
     { name: "fromDate", label: "From Date", type: "date", required: true },
     { name: "toDate", label: "To Date", type: "date", required: true },
@@ -171,6 +174,9 @@ export const nuProjectConfig = {
     { name: "publishedPaperDetails", label: "Published Paper Details", type: "textarea", required: true, rows: 4, fullWidth: true, placeholder: "Enter published paper details" },
     { name: "jointPublicationProof", label: "Joint Publication Proof", type: "text", required: true, fullWidth: true, placeholder: "Enter proof link/reference" },
     { name: "ugStudentDetailList", label: "UG Student Details", type: "textarea", required: true, rows: 3, fullWidth: true, placeholder: "Enter UG student details" },
+    { name: "sanctionedDate", label: "Sanctioned Date", type: "date", required: false },
+    { name: "fundReceived", label: "Fund Received", type: "text", required: false, defaultValue: "-", placeholder: "Enter fund received" },
+    { name: "remarks", label: "Remarks", type: "textarea", required: false, rows: 3, fullWidth: true, placeholder: "e.g. project on hold, with the reason" },
   ],
 
   validate: validateDateOrder,
@@ -186,7 +192,7 @@ export const extProjectConfig = {
   exportFileName: "External_Funded_Projects",
   api: extProjectApi,
   summaryPath: "/projects/external/summary",
-  tableMinWidth: "min-w-[1900px]",
+  tableMinWidth: "min-w-[2350px]",
 
   defaultFilters: {
     projectTitle: "",
@@ -263,6 +269,9 @@ export const extProjectConfig = {
     { key: "publishedPaperDetails", header: "Publication Details", type: "multiline" },
     { key: "jointPublicationProof", header: "Joint Publication Proof", type: "link" },
     { key: "statusOfTheProject", header: "Status" },
+    { key: "sanctionedDate", header: "Sanctioned Date", type: "date" },
+    { key: "fundReceived", header: "Fund Received" },
+    { key: "remarks", header: "Remarks", type: "multiline" },
   ],
 
   formFields: [
@@ -271,7 +280,7 @@ export const extProjectConfig = {
     { name: "coPrincipalInvestigatorList", label: "Co-Principal Investigator", type: "text", required: true, placeholder: "Enter Co-PI" },
     { name: "fundingAgencyName", label: "Funding Agency Name", type: "text", required: true, placeholder: "Enter funding agency" },
     { name: "amount", label: "Total Sanctioned Amount", type: "number", required: true, min: 0, placeholder: "Enter amount" },
-    { name: "duration", label: "Duration", type: "number", required: true, min: 0, placeholder: "Enter duration" },
+    { name: "duration", label: "Duration (Years, e.g. 1.5 for 18 months)", type: "number", required: true, min: 0.5, step: "0.5", placeholder: "Enter duration in years" },
     { name: "academicYear", label: "Academic Year", type: "select", required: true, options: ACADEMIC_YEARS, placeholder: "Select Academic Year" },
     { name: "fromDate", label: "From Date", type: "date", required: true },
     { name: "toDate", label: "To Date", type: "date", required: true },
@@ -279,6 +288,9 @@ export const extProjectConfig = {
     { name: "statusOfTheProject", label: "Status of the Project", type: "select", required: true, options: STATUS_OPTIONS, placeholder: "Select Status" },
     { name: "publishedPaperDetails", label: "Published Paper Details", type: "textarea", required: true, rows: 3, fullWidth: true, placeholder: "Enter published paper details" },
     { name: "jointPublicationProof", label: "Joint Publication Proof", type: "text", required: true, fullWidth: true, placeholder: "Enter joint publication proof" },
+    { name: "sanctionedDate", label: "Sanctioned Date", type: "date", required: false },
+    { name: "fundReceived", label: "Fund Received", type: "text", required: false, defaultValue: "-", placeholder: "Enter fund received" },
+    { name: "remarks", label: "Remarks", type: "textarea", required: false, rows: 3, fullWidth: true, placeholder: "e.g. project on hold, with the reason" },
   ],
 
   validate: validateDateOrder,

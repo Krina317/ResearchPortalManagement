@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Settings, LogOut, ChevronDown } from "lucide-react";
+import { useAuth } from "./AuthContext";
 
 const PAGE_TITLES = [
   { prefix: "/conference", label: "Conference Papers" },
@@ -9,12 +10,12 @@ const PAGE_TITLES = [
   { prefix: "/projects/ext", label: "External Funded Projects" },
   { prefix: "/projects/nu", label: "NU Funded Projects" },
   { prefix: "/consultancy", label: "Consultancy" },
+  { prefix: "/faculty-metrics", label: "Faculty Metrics" },
   { prefix: "/mou", label: "MoUs" },
-  { prefix: "/", label: "Dashboard" },
 ];
 
 function getPageTitle(pathname) {
-  const match = PAGE_TITLES.find((p) => pathname.startsWith(p.prefix) && p.prefix !== "/");
+  const match = PAGE_TITLES.find((p) => pathname.startsWith(p.prefix));
   if (match) return match.label;
   return pathname === "/" ? "Dashboard" : "";
 }
@@ -23,30 +24,24 @@ export default function TopBar() {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
   const location = useLocation();
-
-  const user = {
-    name: "Jitendra Bhatia",
-    email: "jitendrabhatia@nirmauni.ac.in",
-  };
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setOpen(false);
-      }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) setOpen(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const pageTitle = getPageTitle(location.pathname);
-  const initials = user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
+  const name = user?.name || user?.email || "";
+  const initials = name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
 
   return (
     <header className="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-8">
       <div>
-        <p className="text-sm font-semibold text-gray-800">{pageTitle}</p>
-        <p className="text-xs text-gray-400">Nirma IQAC Activity Portal</p>
+        <p className="text-sm font-semibold text-gray-800">{getPageTitle(location.pathname)}</p>
+        <p className="text-xs text-gray-400">FORGE · Nirma University</p>
       </div>
       <div className="relative" ref={dropdownRef}>
         <button
@@ -57,13 +52,10 @@ export default function TopBar() {
             {initials}
           </div>
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-semibold text-gray-800 leading-tight">{user.name}</p>
-            <p className="text-xs text-gray-500 leading-tight">{user.email}</p>
+            <p className="text-sm font-semibold text-gray-800 leading-tight">{user?.name}</p>
+            <p className="text-xs text-gray-500 leading-tight">{user?.email}</p>
           </div>
-          <ChevronDown
-            size={16}
-            className={`text-gray-400 transition-transform ${open ? "rotate-180" : ""}`}
-          />
+          <ChevronDown size={16} className={`text-gray-400 transition-transform ${open ? "rotate-180" : ""}`} />
         </button>
         {open && (
           <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden z-50">
@@ -71,18 +63,19 @@ export default function TopBar() {
               <div className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-semibold shrink-0">
                 {initials}
               </div>
-              <div>
-                <p className="font-semibold text-gray-800">{user.name}</p>
-                <p className="text-xs text-gray-500">{user.email}</p>
+              <div className="min-w-0">
+                <p className="font-semibold text-gray-800 truncate">{user?.name}</p>
+                <p className="text-xs text-gray-500 truncate">{user?.email}</p>
               </div>
             </div>
             <button className="flex items-center gap-3 w-full px-5 py-3 hover:bg-gray-50 text-sm text-gray-700">
-              <Settings size={18} />
-              Settings
+              <Settings size={18} /> Settings
             </button>
-            <button className="flex items-center gap-3 w-full px-5 py-3 hover:bg-red-50 text-sm text-red-600">
-              <LogOut size={18} />
-              Logout
+            <button
+              onClick={logout}
+              className="flex items-center gap-3 w-full px-5 py-3 hover:bg-red-50 text-sm text-red-600"
+            >
+              <LogOut size={18} /> Logout
             </button>
           </div>
         )}

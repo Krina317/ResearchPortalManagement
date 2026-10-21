@@ -18,7 +18,7 @@ public class ExternalFundedProjectResponseDTO {
     private String coPrincipalInvestigatorList;
     private String fundingAgencyName;
     private Long amount;
-    private Long duration;
+    private Double duration;
     private String academicYear;
     private LocalDate fromDate;
     private LocalDate toDate;
@@ -26,4 +26,7 @@ public class ExternalFundedProjectResponseDTO {
     private String publishedPaperDetails;
     private String jointPublicationProof;
     private String statusOfTheProject;
+    private String remarks;
+    private LocalDate sanctionedDate;
+    private String fundReceived;
 }

@@ -97,9 +97,9 @@ public class ExternalFundedProjectController {
 
             @RequestParam(required = false) Long maxAmount,
 
-            @RequestParam(required = false) Long minDuration,
+            @RequestParam(required = false) Double minDuration,
 
-            @RequestParam(required = false) Long maxDuration,
+            @RequestParam(required = false) Double maxDuration,
 
             @RequestParam(required = false) String academicYear,
 

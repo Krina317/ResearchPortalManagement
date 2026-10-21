@@ -10,7 +10,7 @@ const submitButtonClass =
 
 const buildInitialValues = (fields, project) =>
   fields.reduce((values, field) => {
-    values[field.name] = project?.[field.name] ?? "";
+    values[field.name] = project?.[field.name] ?? field.defaultValue ?? "";
     return values;
   }, {});
 
@@ -71,13 +71,14 @@ function ProjectFormModal({
   const buildRequestData = () =>
     fields.reduce((data, field) => {
       const value = formData[field.name];
+      const text = typeof value === "string" ? value.trim() : value;
 
-      if (field.type === "number") {
-        data[field.name] = value === "" ? null : Number(value);
-      } else if (typeof value === "string") {
-        data[field.name] = value.trim();
+      if (text === "" || text === null || text === undefined) {
+        data[field.name] = null;
+      } else if (field.type === "number") {
+        data[field.name] = Number(text);
       } else {
-        data[field.name] = value;
+        data[field.name] = text;
       }
 
       return data;
@@ -143,6 +144,7 @@ function ProjectFormModal({
             {...common}
             type="number"
             min={field.min}
+            step={field.step || "any"}
             placeholder={field.placeholder}
           />
         );

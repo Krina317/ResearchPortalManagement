@@ -18,7 +18,7 @@ public class NuFundedProjectResponseDTO {
     private String coPrincipalInvestigatorList;
     private Long amount;
     private String nuProjectCategory;
-    private Long duration;
+    private Double duration;
     private String academicYear;
     private LocalDate fromDate;
     private LocalDate toDate;
@@ -26,4 +26,7 @@ public class NuFundedProjectResponseDTO {
     private String publishedPaperDetails;
     private String jointPublicationProof;
     private String ugStudentDetailList;
+    private String remarks;
+    private LocalDate sanctionedDate;
+    private String fundReceived;
 }

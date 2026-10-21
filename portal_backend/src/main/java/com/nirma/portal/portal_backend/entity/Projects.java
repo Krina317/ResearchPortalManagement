@@ -36,7 +36,7 @@ public class Projects {
     private Long amount;
 
     @Column(nullable = false)
-    private Long duration;
+    private Double duration;
 
     @Column(nullable = false)
     private String academicYear;
@@ -71,6 +71,16 @@ public class Projects {
     // Only for NuFundedProject - validate in DTO
     @Column(length = 2000)
     private String ugStudentDetailList;
+    
+ // Why a project was put on hold, etc. (editable)
+    @Column(length = 2000)
+    private String remarks;
+
+    // Date the amount was sanctioned (optional)
+    private LocalDate sanctionedDate;
+
+    // Free text, e.g. "10,62,875" or "-"
+    private String fundReceived;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -81,6 +91,10 @@ public class Projects {
     private void applyDefaults() {
         if (projectType == ProjectType.NuFundedProject) {
             this.fundingAgencyName = NIRMA_AGENCY;
+        }
+
+        if (fundReceived == null || fundReceived.isBlank()) {
+            this.fundReceived = "-";
         }
     }
 }

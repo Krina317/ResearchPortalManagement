@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Positive;
 
 @Getter
 @Setter
@@ -31,7 +33,8 @@ public class NuFundedProjectRequestDTO {
     private String nuProjectCategory;
 
     @NotNull(message = "Duration is required")
-    private Long duration;
+    @Positive(message = "Duration must be greater than 0")
+    private Double duration;
 
     @NotBlank(message = "Academic year is required")
     private String academicYear;
@@ -53,4 +56,12 @@ public class NuFundedProjectRequestDTO {
 
     @NotBlank(message = "UG student detail list is required")
     private String ugStudentDetailList;
+    
+    @Size(max = 2000, message = "Remarks cannot exceed 2000 characters")
+    private String remarks;
+
+    private LocalDate sanctionedDate;
+
+    @Size(max = 255, message = "Fund received cannot exceed 255 characters")
+    private String fundReceived;
 }

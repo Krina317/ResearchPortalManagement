@@ -23,9 +23,11 @@ export const ACADEMIC_YEARS = [
   export const OUTCOME_OPTIONS = [
     "Journal Paper Published",
     "Conference Paper Published",
+    "Patent",
     "None",
     "Any activity performed based on research project",
   ];
+  
   
   export const STATUS_OPTIONS = ["Ongoing", "Completed", "Terminated"];
   
