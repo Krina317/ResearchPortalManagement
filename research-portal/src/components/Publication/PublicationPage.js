@@ -174,13 +174,10 @@ export default function PublicationPage({ publicationType }) {
     const [columns, setColumns] = useState([]);
     const [metadataError, setMetadataError] = useState("");
 
-    // Add / Edit / Delete (journal only)
+    // Add / Edit / Delete
     const crudEnabled = CRUD_TYPES.includes(publicationType);
-const FormModal = FORM_BY_TYPE[publicationType];
-    const [crudMode, setCrudMode] = useState(null); // null | "edit" | "delete"
-    const [selectedIds, setSelectedIds] = useState([]);
+    const FormModal = FORM_BY_TYPE[publicationType];
     const [formState, setFormState] = useState(null); // null | { mode: "add" } | { mode: "edit", record }
-    const [deleting, setDeleting] = useState(false);
     const [crudError, setCrudError] = useState("");
 
     const createDefaultFilters = useCallback(() => {
@@ -235,8 +232,6 @@ const FormModal = FORM_BY_TYPE[publicationType];
         setData(null);
         setError("");
 
-        setCrudMode(null);
-        setSelectedIds([]);
         setFormState(null);
         setCrudError("");
     }, [publicationType, createDefaultFilters]);
@@ -478,100 +473,32 @@ const updated = await save(author.id, studentType);
     );
 }
 
-    /* ---------- Add / Edit / Delete (journal) ---------- */
+    /* ---------- Add / Edit / Delete ---------- */
 
-    function startMode(mode) {
-        setCrudMode(mode);
-        setSelectedIds([]);
+    // Edit: one click opens the form for that row
+    function handleEdit(record) {
         setCrudError("");
+        setFormState({ mode: "edit", record });
     }
 
-    function cancelMode() {
-        setCrudMode(null);
-        setSelectedIds([]);
-        setCrudError("");
-    }
-
-    function handleToggleSelect(id) {
-        setSelectedIds(prev => {
-            if (prev.includes(id)) return prev.filter(x => x !== id);
-            // edit works on one paper at a time
-            return crudMode === "edit" ? [id] : [...prev, id];
-        });
-    }
-
-    function handleToggleAll(records) {
-        const pageIds = records.map(r => r.id);
-
-        setSelectedIds(prev => {
-            const allSelected = pageIds.every(id => prev.includes(id));
-            if (allSelected) return prev.filter(id => !pageIds.includes(id));
-            return [...new Set([...prev, ...pageIds])];
-        });
-    }
-
-    async function handleConfirm() {
+    // Delete: the table asks for the confirmation click, then calls this
+    async function handleDelete(record) {
         setCrudError("");
 
-        if (crudMode === "edit") {
-            const record = (data?.content ?? []).find(
-                r => r.id === selectedIds[0]
-            );
-
-            if (!record) {
-                setCrudError("Select the paper on this page, then try again.");
-                return;
-            }
-
-            setFormState({ mode: "edit", record });
+        try {
+            await DELETE_BY_TYPE[publicationType](record.id);
+        } catch (err) {
+            console.error(err);
+            setCrudError(`Could not delete record ${record.id}.`);
             return;
         }
 
-        if (crudMode === "delete") {
-            const count = selectedIds.length;
+        const pageNowEmpty = (data?.content ?? []).length <= 1;
 
-            const ok = window.confirm(
-                `Delete ${count} paper${count === 1 ? "" : "s"}? This cannot be undone.`
-            );
-
-            if (!ok) return;
-
-            setDeleting(true);
-
-            const failed = [];
-
-            // the delete API takes one id, so delete one by one
-            for (const id of selectedIds) {
-                try {
-                    await DELETE_BY_TYPE[publicationType](id);
-                } catch (err) {
-                    console.error(err);
-                    failed.push(id);
-                }
-            }
-
-            setDeleting(false);
-
-            const removedCount = count - failed.length;
-            const pageNowEmpty =
-                (data?.content ?? []).filter(r => !selectedIds.includes(r.id) || failed.includes(r.id))
-                    .length === 0;
-
-            if (failed.length > 0) {
-                setSelectedIds(failed);
-                setCrudError(
-                    `Could not delete ${failed.length} paper${failed.length === 1 ? "" : "s"} (ID ${failed.join(", ")}).`
-                );
-            } else {
-                setCrudMode(null);
-                setSelectedIds([]);
-            }
-
-            if (removedCount > 0 && pageNowEmpty && page > 0) {
-                setPage(page - 1); // reloads through the effect
-            } else {
-                loadData();
-            }
+        if (pageNowEmpty && page > 0) {
+            setPage(page - 1); // reloads through the effect
+        } else {
+            loadData();
         }
     }
 
@@ -579,8 +506,6 @@ const updated = await save(author.id, studentType);
         const wasAdd = formState?.mode === "add";
 
         setFormState(null);
-        setCrudMode(null);
-        setSelectedIds([]);
         setCrudError("");
 
         if (wasAdd && page !== 0) {
@@ -591,16 +516,7 @@ const updated = await save(author.id, studentType);
     }
 
     const crud = crudEnabled
-        ? {
-            mode: crudMode,
-            selectedCount: selectedIds.length,
-            busy: deleting,
-            onAdd: () => setFormState({ mode: "add" }),
-            onStartEdit: () => startMode("edit"),
-            onStartDelete: () => startMode("delete"),
-            onConfirm: handleConfirm,
-            onCancel: cancelMode
-        }
+        ? { onAdd: () => setFormState({ mode: "add" }) }
         : undefined;
 
     async function handleExport() {
@@ -741,7 +657,7 @@ const updated = await save(author.id, studentType);
                     />
                 </div>
 
-                                <PublicationTable
+                <PublicationTable
                     config={publicationConfig}
                     records={data?.content ?? []}
                     loading={loading}
@@ -753,10 +669,8 @@ const updated = await save(author.id, studentType);
                     mergeAuthors={mergeAuthors}
                     onStudentTypeChange={handleStudentTypeChange}
                     onQuartileChange={TYPES_WITH_STUDENT_FLAGS.includes(publicationType) ? handleQuartileChange : undefined}
-                    selectionMode={crudEnabled ? crudMode : null}
-                    selectedIds={selectedIds}
-                    onToggleSelect={handleToggleSelect}
-                    onToggleAll={handleToggleAll}
+                    onEdit={crudEnabled ? handleEdit : undefined}
+                    onDelete={crudEnabled ? handleDelete : undefined}
                 />
             </div>
 

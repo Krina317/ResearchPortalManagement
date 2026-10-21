@@ -121,7 +121,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Publications */}
+            {/* Publications */}
       <div className="mb-8">
         <SectionHeader title="Publications" />
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -131,8 +131,7 @@ export default function Dashboard() {
             icon={FileSpreadsheet}
             loading={loading}
             onClick={() => navigate("/conference")}
-            onAnalysis={() => navigate("/conference/analysis")}
-            onReport={() => navigate("/conference/report")}
+            onReport={() => navigate("/conference/reports")}
           />
           <StatCard
             label="Journal Papers"
@@ -140,8 +139,7 @@ export default function Dashboard() {
             icon={BookOpen}
             loading={loading}
             onClick={() => navigate("/journal")}
-            onAnalysis={() => navigate("/journal/analysis")}
-            onReport={() => navigate("/journal/report")}
+            onReport={() => navigate("/journal/reports")}
           />
           <StatCard
             label="Book Chapters"
@@ -149,8 +147,6 @@ export default function Dashboard() {
             icon={BookMarked}
             loading={loading}
             onClick={() => navigate("/book-chapters")}
-            onAnalysis={() => navigate("/book-chapters/analysis")}
-            onReport={() => navigate("/book-chapters/report")}
           />
         </div>
       </div>

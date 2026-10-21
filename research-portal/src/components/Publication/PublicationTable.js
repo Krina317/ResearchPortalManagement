@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     ArrowUp,
     ArrowDown,
     ArrowUpDown,
-    Loader2
+    Loader2,
+    Pencil,
+    Trash2
 } from "lucide-react";
 import { QUARTILE_OPTIONS } from "../../config/quartiles";
 
@@ -77,20 +79,41 @@ export default function PublicationTable({
     mergeAuthors,
     onStudentTypeChange,
     onQuartileChange,
-    selectionMode,
-    selectedIds = [],
-    onToggleSelect,
-    onToggleAll
+    onEdit,
+    onDelete
 }) {
     const [savingId, setSavingId] = useState(null);
     const [savingQuartileId, setSavingQuartileId] = useState(null);
     const [error, setError] = useState("");
+    const [confirmId, setConfirmId] = useState(null);   // row waiting for the confirmation click
+    const [deletingId, setDeletingId] = useState(null); // row being deleted
+
+    // the "Confirm" state wears off after a few seconds if nobody clicks it
+    useEffect(() => {
+        if (confirmId === null) return;
+        const timer = setTimeout(() => setConfirmId(null), 4000);
+        return () => clearTimeout(timer);
+    }, [confirmId]);
 
     const editable = ["journal", "conference"].includes(config.key) && Boolean(onStudentTypeChange);
 
-    const selecting = Boolean(selectionMode);
-    const allOnPageSelected =
-        records.length > 0 && records.every(r => selectedIds.includes(r.id));
+    const hasActions = Boolean(onEdit || onDelete);
+
+    async function handleDeleteClick(record) {
+        if (confirmId !== record.id) {
+            setConfirmId(record.id); // 1st click: ask
+            return;
+        }
+
+        setConfirmId(null); // 2nd click: do it
+        setDeletingId(record.id);
+
+        try {
+            await onDelete(record);
+        } finally {
+            setDeletingId(null);
+        }
+    }
 
     async function handleTypeChange(record, author, value) {
         if (!value) return;
@@ -293,20 +316,6 @@ export default function PublicationTable({
 
                     <thead className="bg-gray-50">
                         <tr>
-                            {selecting && (
-                                <th className="px-4 py-3 border-b w-10">
-                                    {selectionMode === "delete" && (
-                                        <input
-                                            type="checkbox"
-                                            checked={allOnPageSelected}
-                                            onChange={() => onToggleAll?.(records)}
-                                            className="accent-emerald-600"
-                                            aria-label="Select all on this page"
-                                        />
-                                    )}
-                                </th>
-                            )}
-
                             {columns.map(column => (
                                 <th
                                     key={column.key}
@@ -325,6 +334,12 @@ export default function PublicationTable({
                                     )}
                                 </th>
                             ))}
+
+                            {hasActions && (
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wide border-b whitespace-nowrap sticky right-0 bg-gray-50">
+                                    Actions
+                                </th>
+                            )}
                         </tr>
                     </thead>
 
@@ -332,7 +347,7 @@ export default function PublicationTable({
                         {records.length === 0 ? (
                             <tr>
                                 <td
-                                    colSpan={columns.length + (selecting ? 1 : 0)}
+                                    colSpan={columns.length + (hasActions ? 1 : 0)}
                                     className="px-6 py-12 text-center text-gray-500"
                                 >
                                     No records found.
@@ -340,29 +355,11 @@ export default function PublicationTable({
                             </tr>
                         ) : (
                             records.map((record, rowIndex) => {
-                                const selected = selectedIds.includes(record.id);
-
                                 return (
                                     <tr
                                         key={record.id ?? rowIndex}
-                                        className={`border-b last:border-b-0 transition ${
-                                            selected
-                                                ? "bg-emerald-50"
-                                                : "hover:bg-gray-50"
-                                        }`}
+                                        className="border-b last:border-b-0 transition hover:bg-gray-50"
                                     >
-                                        {selecting && (
-                                            <td className="px-4 py-3 align-top">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selected}
-                                                    onChange={() => onToggleSelect?.(record.id)}
-                                                    className="accent-emerald-600"
-                                                    aria-label={`Select record ${record.id}`}
-                                                />
-                                            </td>
-                                        )}
-
                                         {columns.map(column => (
                                             <td
                                                 key={column.key}
@@ -376,6 +373,47 @@ export default function PublicationTable({
                                                 </div>
                                             </td>
                                         ))}
+
+                                        {hasActions && (
+                                            <td className="px-4 py-3 align-top whitespace-nowrap sticky right-0 bg-white">
+                                                <div className="flex items-center gap-2">
+                                                    {onEdit && (
+                                                        <button
+                                                            onClick={() => onEdit(record)}
+                                                            disabled={deletingId === record.id}
+                                                            title="Edit"
+                                                            className="p-1.5 rounded-md border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-emerald-700 disabled:opacity-50"
+                                                        >
+                                                            <Pencil size={15} />
+                                                        </button>
+                                                    )}
+
+                                                    {onDelete && (
+                                                        <button
+                                                            onClick={() => handleDeleteClick(record)}
+                                                            disabled={deletingId === record.id}
+                                                            title={confirmId === record.id ? "Click again to confirm" : "Delete"}
+                                                            className={
+                                                                confirmId === record.id
+                                                                    ? "flex items-center gap-1 px-2 py-1.5 rounded-md bg-red-600 text-white text-xs font-medium hover:bg-red-700"
+                                                                    : "p-1.5 rounded-md border border-red-200 text-red-600 hover:bg-red-50 disabled:opacity-50"
+                                                            }
+                                                        >
+                                                            {deletingId === record.id ? (
+                                                                <Loader2 size={15} className="animate-spin" />
+                                                            ) : confirmId === record.id ? (
+                                                                <>
+                                                                    <Trash2 size={14} />
+                                                                    Confirm?
+                                                                </>
+                                                            ) : (
+                                                                <Trash2 size={15} />
+                                                            )}
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        )}
                                     </tr>
                                 );
                             })
