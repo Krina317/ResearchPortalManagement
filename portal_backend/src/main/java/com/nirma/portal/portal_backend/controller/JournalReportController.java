@@ -9,6 +9,7 @@ import com.nirma.portal.portal_backend.dto.ReviewAuthorDTO;
 import com.nirma.portal.portal_backend.dto.ReviewDecisionRequestDTO;
 import com.nirma.portal.portal_backend.dto.StudentTypeCountResponseDTO;
 import com.nirma.portal.portal_backend.dto.JournalFacultyResponseDTO;
+import com.nirma.portal.portal_backend.dto.JournalReportFilter;
 import com.nirma.portal.portal_backend.service.AuthorReviewService;
 import com.nirma.portal.portal_backend.service.JournalReportsService;
 
@@ -36,12 +37,12 @@ public class JournalReportController {
     }
     
     @GetMapping("/faculty-scores")
-    public List<JournalFacultyResponseDTO> getFacultyScore(){
-    	return journalReportService.getJournalFacultyScore();
+    public List<JournalFacultyResponseDTO> getFacultyScore(JournalReportFilter filter) {
+        return journalReportService.getJournalFacultyScore(filter);
     }
-    
+
     @GetMapping("/student-counts")
-    public List<StudentTypeCountResponseDTO> getStudentCounts() {
-        return journalReportService.getStudentTypeCounts();
+    public List<StudentTypeCountResponseDTO> getStudentCounts(JournalReportFilter filter) {
+        return journalReportService.getStudentTypeCounts(filter);
     }
 }

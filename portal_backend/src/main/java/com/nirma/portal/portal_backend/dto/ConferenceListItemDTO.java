@@ -25,5 +25,10 @@ public class ConferenceListItemDTO {
     
 
     private List<PublicationAuthorResponseDTO> authors;  // ordered by authorPosition  // ordered by authorPosition
-    private String authorsMerged;                   // "A, B, C" convenience field
+    private String authorsMerged; 
+    
+    private Boolean isUg;
+    private Boolean isPg;
+    private Boolean isPhd;// "A, B, C" convenience field
+    private String quartile;
 }

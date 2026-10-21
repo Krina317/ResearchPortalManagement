@@ -153,11 +153,20 @@ public class ConferenceQueryService {
     	        .map(pa -> pa.getAuthor().getDisplayName())
     	        .collect(Collectors.joining(", "));
 
+        boolean ug = hasStudentType(authorEntities, "UG");
+        boolean pg = hasStudentType(authorEntities, "PG");
+        boolean phd = hasStudentType(authorEntities, "PHD");
+
         return new ConferenceListItemDTO(
                 paper.getId(), paper.getSourceId(), paper.getConferenceName(), paper.getConferenceType(),
                 paper.getPaperTitle(), paper.getFromDate(), paper.getToDate(), paper.getInstituteName(),
-                paper.getDeptCode(), authorDtos, merged
+                paper.getDeptCode(), authorDtos, merged, ug, pg, phd, paper.getQuartile()
+        
         );
+    }
+
+    private boolean hasStudentType(List<PublicationAuthor> authors, String type) {
+        return authors.stream().anyMatch(pa -> type.equalsIgnoreCase(pa.getStudentType()));
     }
 
     private boolean notBlank(String s) {

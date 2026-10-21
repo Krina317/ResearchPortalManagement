@@ -39,7 +39,21 @@ public class AuthorReviewService {
                         a.getFaculty() == null ? null : a.getFaculty().getName()))
                 .toList();
     }
-
+    
+    @Transactional(readOnly = true)
+    public List<ReviewAuthorDTO> getConferenceReviewAuthors() {
+        return publicationAuthorRepository.findAuthorsNeedingReview(PublicationType.CONFERENCE)
+                .stream()
+                .map(a -> new ReviewAuthorDTO(
+                        a.getAuthorId(),
+                        a.getDisplayName(),
+                        a.getAuthorType(),
+                        a.getMatchReason(),
+                        a.getFaculty() == null ? null : a.getFaculty().getId(),
+                        a.getFaculty() == null ? null : a.getFaculty().getName()))
+                .toList();
+    }
+    
     @Transactional
     public void decide(Long authorId, boolean isFaculty, Long facultyId) {
         AuthorMaster author = authorMasterRepository.findById(authorId)

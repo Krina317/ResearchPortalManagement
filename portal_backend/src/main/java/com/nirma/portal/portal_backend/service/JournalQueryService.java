@@ -225,7 +225,9 @@ public class JournalQueryService {
                 paper.getWebsiteJournalLink(), paper.getArticleLink(), paper.getDoiNumber(),
                 paper.getInstituteName(), paper.getDeptName(),
                 authorDtos, merged, paper.getDownloadFileLink(),
-                hasUg, hasPg, hasPhd
+                hasUg, hasPg, hasPhd,
+                paper.getQuartile()
+        
         );
     }
 

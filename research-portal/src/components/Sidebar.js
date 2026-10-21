@@ -23,7 +23,8 @@ const navItems = [
   { path: "/book-chapters", label: "Book Chapters", icon: BookMarked },
   { path: "/projects/nu", label: "NU Projects", icon: HandCoins },
   { path: "/projects/ext", label: "External Projects", icon: Landmark},
-  { path: "/journal/reports", label: "Journal Reports", icon: FileBarChart }
+  { path: "/journal/reports", label: "Journal Reports", icon: FileBarChart },
+  { path: "/conference/reports", label: "Conference Reports", icon: FileBarChart }
 ];
 
 export default function Sidebar() {

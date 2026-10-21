@@ -36,4 +36,5 @@ public class JournalListItemDTO {
     private Boolean isUg;
     private Boolean isPg;
     private Boolean isPhd;
+    private String quartile;
 }

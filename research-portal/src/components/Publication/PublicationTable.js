@@ -5,6 +5,7 @@ import {
     ArrowUpDown,
     Loader2
 } from "lucide-react";
+import { QUARTILE_OPTIONS } from "../../config/quartiles";
 
 const STUDENT_TYPES = ["UG", "PG", "PHD"];
 
@@ -75,15 +76,17 @@ export default function PublicationTable({
     onSort,
     mergeAuthors,
     onStudentTypeChange,
+    onQuartileChange,
     selectionMode,
     selectedIds = [],
     onToggleSelect,
     onToggleAll
 }) {
     const [savingId, setSavingId] = useState(null);
+    const [savingQuartileId, setSavingQuartileId] = useState(null);
     const [error, setError] = useState("");
 
-    const editable = config.key === "journal" && Boolean(onStudentTypeChange);
+    const editable = ["journal", "conference"].includes(config.key) && Boolean(onStudentTypeChange);
 
     const selecting = Boolean(selectionMode);
     const allOnPageSelected =
@@ -102,6 +105,20 @@ export default function PublicationTable({
             setError(`Could not save the type for ${author.displayName}.`);
         } finally {
             setSavingId(null);
+        }
+    }
+
+    async function handleQuartile(record, value) {
+        setSavingQuartileId(record.id);
+        setError("");
+
+        try {
+            await onQuartileChange(record, value);
+        } catch (err) {
+            console.error(err);
+            setError(`Could not save the quartile for paper ${record.id}.`);
+        } finally {
+            setSavingQuartileId(null);
         }
     }
 
@@ -155,6 +172,24 @@ export default function PublicationTable({
 
     /* Author columns render per author (highlight + dropdown); the rest are text. */
     function renderCell(record, column) {
+        if (column.quartile) {
+            if (!onQuartileChange) return getCellValue(record, column);
+
+            return (
+                <select
+                    value={record.quartile ?? ""}
+                    disabled={savingQuartileId === record.id}
+                    onChange={e => handleQuartile(record, e.target.value)}
+                    className="border border-gray-300 rounded px-1.5 py-1 text-xs bg-white text-gray-700 disabled:opacity-50"
+                >
+                    <option value="">—</option>
+                    {QUARTILE_OPTIONS.map(q => (
+                        <option key={q} value={q}>{q}</option>
+                    ))}
+                </select>
+            );
+        }
+
         const authorProps = author => ({
             author,
             editable,

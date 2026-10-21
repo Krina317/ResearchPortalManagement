@@ -109,8 +109,9 @@ public class PublicationAuthorService {
         PublicationAuthor link = publicationAuthorRepository.findById(linkId)
                 .orElseThrow(() -> new PublicationAuthorNotFoundException("Author link " + linkId + " not found"));
 
-        if (link.getPublicationType() != PublicationType.JOURNAL) {
-            throw new IllegalArgumentException("Student levels are only supported for journal papers");
+        if (link.getPublicationType() != PublicationType.JOURNAL
+                && link.getPublicationType() != PublicationType.CONFERENCE) {
+            throw new IllegalArgumentException("Student levels are only supported for journal and conference papers");
         }
 
         if ("NU".equals(link.getAuthor().getAuthorType())) {

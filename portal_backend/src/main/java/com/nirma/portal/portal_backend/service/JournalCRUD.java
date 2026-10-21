@@ -69,7 +69,11 @@ public class JournalCRUD {
             throw new DuplicateJournalPaperException("Journal paper '" + title + "' already exists");
         }
 
+        String oldFileName = paper.getFileName();
         apply(paper, req, deptName);
+        if (req.getFileName() == null) {
+            paper.setFileName(oldFileName);
+        }
         journalPaperRepository.save(paper);
 
         publicationAuthorService.replaceAuthors(id, PublicationType.JOURNAL, req.getAuthors());
@@ -129,6 +133,9 @@ public class JournalCRUD {
         paper.setArticleLink(clean(req.getArticleLink()));
         paper.setDoiNumber(clean(req.getDoiNumber()));
         paper.setDownloadFileLink(clean(req.getDownloadFileLink()));
+        if (req.getQuartile() != null) {
+            paper.setQuartile(QuartileValues.normalize(req.getQuartile()));
+        }
     }
 
     /** Trims; blank becomes null so empty form fields do not store empty strings. */
@@ -137,5 +144,13 @@ public class JournalCRUD {
             return null;
         }
         return s.trim();
+    }
+    @Transactional
+    public JournalListItemDTO setQuartile(Long id, String quartile) {
+        JournalPaper paper = journalPaperRepository.findById(id)
+                .orElseThrow(() -> new JournalPaperNotFoundException("Journal paper " + id + " not found"));
+        paper.setQuartile(QuartileValues.normalize(quartile));
+        journalPaperRepository.save(paper);
+        return journalQueryService.getById(id);
     }
 }

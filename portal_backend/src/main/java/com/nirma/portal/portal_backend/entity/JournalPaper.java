@@ -68,4 +68,5 @@ public class JournalPaper {
 	private String deptName;
 	
 	private String downloadFileLink;
+	private String quartile;
 }

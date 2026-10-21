@@ -103,5 +103,16 @@ public class ConferenceCRUD {
         paper.setToDate(req.getToDate());
         paper.setInstituteName(req.getInstituteName().trim());
         paper.setDeptCode(req.getDeptCode().trim().toUpperCase());
+        if (req.getQuartile() != null) {
+            paper.setQuartile(QuartileValues.normalize(req.getQuartile()));
+        }
+    }
+    @Transactional
+    public ConferenceListItemDTO setQuartile(Long id, String quartile) {
+        ConferencePaper paper = conferencePaperRepository.findById(id)
+                .orElseThrow(() -> new ConferencePaperNotFoundException("Conference paper " + id + " not found"));
+        paper.setQuartile(QuartileValues.normalize(quartile));
+        conferencePaperRepository.save(paper);
+        return conferenceQueryService.getById(id);
     }
 }

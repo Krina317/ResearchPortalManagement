@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import {
     fetchFacultyScores,
@@ -6,6 +6,12 @@ import {
     fetchReviewAuthors,
     decideReviewAuthor
 } from "../../api/journalApi";
+import ReportFilterBar from "../Reports/ReportFilterBar";
+
+const EMPTY_FILTERS = {
+    academicYear: "", financialYear: "", calendarYear: "",
+    fromMonth: "", fromYear: "", toMonth: "", toYear: ""
+};
 
 const STUDENT_TYPES = ["UG", "PG", "PHD"];
 
@@ -18,6 +24,8 @@ function useReport(loader) {
 
     useEffect(() => {
         let cancelled = false;
+        setLoading(true);
+        setError("");
 
         loader()
             .then(result => {
@@ -66,9 +74,21 @@ const th = "px-4 py-3 text-left text-xs font-semibold text-gray-600 border-b whi
 const td = "px-4 py-3 text-sm text-gray-700 border-b last:border-b-0";
 
 export default function JournalReportsPage() {
-    const scores = useReport(fetchFacultyScores);
-    const counts = useReport(fetchStudentCounts);
+    const [filters, setFilters] = useState(EMPTY_FILTERS);
+    const [applied, setApplied] = useState(EMPTY_FILTERS);
+
+    const loadScores = useCallback(() => fetchFacultyScores(applied), [applied]);
+    const loadCounts = useCallback(() => fetchStudentCounts(applied), [applied]);
+
+    const scores = useReport(loadScores);
+    const counts = useReport(loadCounts);
     const review = useReport(fetchReviewAuthors);
+
+    const updateFilter = (field, value) => setFilters(prev => ({ ...prev, [field]: value }));
+    const resetFilters = () => {
+        setFilters(EMPTY_FILTERS);
+        setApplied(EMPTY_FILTERS);
+    };
 
     const [busyId, setBusyId] = useState(null);
     const [actionError, setActionError] = useState("");
@@ -117,6 +137,14 @@ export default function JournalReportsPage() {
                     </p>
                 </div>
 
+                <ReportFilterBar
+                    mode="monthYear"
+                    filters={filters}
+                    onChange={updateFilter}
+                    onApply={() => setApplied(filters)}
+                    onReset={resetFilters}
+                />
+
                 {/* 1. FACULTY SCORES */}
                 <ReportCard
                     title="Faculty scores"
@@ -159,7 +187,7 @@ export default function JournalReportsPage() {
                 {/* 2. STUDENT TYPE COUNT */}
                 <ReportCard
                     title="Student authors"
-                    subtitle="Number of UG, PG and PhD student authors on journal papers."
+                    subtitle="Number of journal papers with at least one UG, PG or PhD student author."
                     loading={counts.loading}
                     error={counts.error}
                 >

@@ -51,4 +51,5 @@ public class JournalRequestDTO {
     /** Ordered author names; position = index + 1. May be empty, but not missing. */
     @NotNull
     private List<String> authors;
+    private String quartile;
 }

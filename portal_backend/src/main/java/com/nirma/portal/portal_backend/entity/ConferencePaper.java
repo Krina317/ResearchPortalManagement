@@ -45,4 +45,5 @@ public class ConferencePaper {
 	
 	@Column(nullable = false)
 	private String deptCode;
+	private String quartile;
 }

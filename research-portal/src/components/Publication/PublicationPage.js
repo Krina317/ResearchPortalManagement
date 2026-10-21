@@ -8,15 +8,33 @@ import {
     fetchColumns,
     normalizeRecord
 } from "../../api/publicationApi";
-import { setStudentType, deleteJournal } from "../../api/journalApi";
+import { setStudentType, deleteJournal, setJournalQuartile } from "../../api/journalApi";
+import { setConferenceStudentType, deleteConference, setConferenceQuartile } from "../../api/conferenceApi";
+import { deleteBookChapter } from "../../api/bookChapterApi";
 import PublicationHeader from "./PublicationHeader";
 import PublicationToolbar from "./PublicationToolbar";
 import PublicationFilter from "./PublicationFilter";
 import PublicationTable from "./PublicationTable";
 import PublicationPagination from "./PublicationPagination";
 import JournalFormModal from "./JournalFormModal";
+import ConferenceFormModal from "./ConferenceFormModal";
+import BookChapterFormModal from "./BookChapterFormModal";
 
-const TYPES_WITH_BACKEND_METADATA = ["conference", "journal","book-chapters"];
+const TYPES_WITH_BACKEND_METADATA = ["conference", "journal", "book-chapters"];
+const TYPES_WITH_STUDENT_FLAGS = ["journal", "conference"];
+const CRUD_TYPES = ["journal", "conference", "book-chapters"];
+
+const DELETE_BY_TYPE = {
+    journal: deleteJournal,
+    conference: deleteConference,
+    "book-chapters": deleteBookChapter
+};
+
+const FORM_BY_TYPE = {
+    journal: JournalFormModal,
+    conference: ConferenceFormModal,
+    "book-chapters": BookChapterFormModal
+};
 
 const AUTHOR_COUNT = 10;
 
@@ -40,13 +58,16 @@ const STUDENT_FLAG_COLUMNS = [
     { key: "isPhd", label: "Is PhD Student Involved?", field: "isPhd", sortable: false, yesNo: true }
 ];
 
+const QUARTILE_COLUMN = { key: "quartile", label: "Quartile", field: "quartile", sortable: false, quartile: true };
+
 function buildAvailableColumns(columns, mergeAuthors, publicationType) {
     const normalColumns = columns.filter(
         column => column.key !== "authors" && !column.authorPosition
     );
 
-    const flagColumns =
-        publicationType === "journal" ? STUDENT_FLAG_COLUMNS : [];
+   const flagColumns = TYPES_WITH_STUDENT_FLAGS.includes(publicationType)
+    ? [QUARTILE_COLUMN, ...STUDENT_FLAG_COLUMNS]
+    : [];
 
     if (mergeAuthors) {
         return [
@@ -154,7 +175,8 @@ export default function PublicationPage({ publicationType }) {
     const [metadataError, setMetadataError] = useState("");
 
     // Add / Edit / Delete (journal only)
-    const crudEnabled = publicationType === "journal";
+    const crudEnabled = CRUD_TYPES.includes(publicationType);
+const FormModal = FORM_BY_TYPE[publicationType];
     const [crudMode, setCrudMode] = useState(null); // null | "edit" | "delete"
     const [selectedIds, setSelectedIds] = useState([]);
     const [formState, setFormState] = useState(null); // null | { mode: "add" } | { mode: "edit", record }
@@ -371,9 +393,9 @@ export default function PublicationPage({ publicationType }) {
                             !column.authorPosition
                     )
                     .map(column => column.key),
-                ...(publicationType === "journal"
-                    ? STUDENT_FLAG_COLUMNS.map(column => column.key)
-                    : [])
+                ...(TYPES_WITH_STUDENT_FLAGS.includes(publicationType)
+    ? [QUARTILE_COLUMN, ...STUDENT_FLAG_COLUMNS].map(column => column.key)
+    : [])
             ];
 
             const previousNormalSelections = prevSelected.filter(key =>
@@ -428,7 +450,8 @@ export default function PublicationPage({ publicationType }) {
      * Errors are thrown so the table can show a message.
      */
     async function handleStudentTypeChange(record, author, studentType) {
-        const updated = await setStudentType(author.id, studentType);
+        const save = publicationType === "conference" ? setConferenceStudentType : setStudentType;
+const updated = await save(author.id, studentType);
         const normalized = normalizeRecord(updated, publicationType);
 
         setData(prev =>
@@ -440,6 +463,20 @@ export default function PublicationPage({ publicationType }) {
             }
         );
     }
+    async function handleQuartileChange(record, quartile) {
+    const save = publicationType === "conference" ? setConferenceQuartile : setJournalQuartile;
+    const updated = await save(record.id, quartile);
+    const normalized = normalizeRecord(updated, publicationType);
+
+    setData(prev =>
+        prev && {
+            ...prev,
+            content: prev.content.map(r =>
+                r.id === normalized.id ? normalized : r
+            )
+        }
+    );
+}
 
     /* ---------- Add / Edit / Delete (journal) ---------- */
 
@@ -506,7 +543,7 @@ export default function PublicationPage({ publicationType }) {
             // the delete API takes one id, so delete one by one
             for (const id of selectedIds) {
                 try {
-                    await deleteJournal(id);
+                    await DELETE_BY_TYPE[publicationType](id);
                 } catch (err) {
                     console.error(err);
                     failed.push(id);
@@ -704,7 +741,7 @@ export default function PublicationPage({ publicationType }) {
                     />
                 </div>
 
-                <PublicationTable
+                                <PublicationTable
                     config={publicationConfig}
                     records={data?.content ?? []}
                     loading={loading}
@@ -715,23 +752,23 @@ export default function PublicationPage({ publicationType }) {
                     onSort={handleSort}
                     mergeAuthors={mergeAuthors}
                     onStudentTypeChange={handleStudentTypeChange}
+                    onQuartileChange={TYPES_WITH_STUDENT_FLAGS.includes(publicationType) ? handleQuartileChange : undefined}
                     selectionMode={crudEnabled ? crudMode : null}
                     selectedIds={selectedIds}
                     onToggleSelect={handleToggleSelect}
                     onToggleAll={handleToggleAll}
                 />
-
             </div>
 
-            {crudEnabled && formState && (
-                <JournalFormModal
-                    mode={formState.mode}
-                    record={formState.record}
-                    options={filterOptions}
-                    onClose={() => setFormState(null)}
-                    onSaved={handleFormSaved}
-                />
-            )}
+            {crudEnabled && formState && FormModal && (
+    <FormModal
+        mode={formState.mode}
+        record={formState.record}
+        options={filterOptions}
+        onClose={() => setFormState(null)}
+        onSaved={handleFormSaved}
+    />
+)}
         </div>
     );
 }

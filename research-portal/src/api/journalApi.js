@@ -1,3 +1,4 @@
+import { reportQuery } from "./reportQuery";
 const BASE_URL = "http://localhost:8080/api";
 
 async function request(path, options) {
@@ -43,9 +44,11 @@ export const setStudentType = (linkId, studentType) =>
 
 /* ---------- Reports ---------- */
 
-export const fetchFacultyScores = () => request("/journal/reports/faculty-scores");
+export const fetchFacultyScores = (filters) =>
+    request(`/journal/reports/faculty-scores${reportQuery(filters)}`);
 
-export const fetchStudentCounts = () => request("/journal/reports/student-counts");
+export const fetchStudentCounts = (filters) =>
+    request(`/journal/reports/student-counts${reportQuery(filters)}`);
 
 export const fetchReviewAuthors = () => request("/journal/reports/review-authors");
 
@@ -55,3 +58,6 @@ export const decideReviewAuthor = (authorId, isFaculty, facultyId) =>
         `/journal/reports/review-authors/${authorId}`,
         jsonOptions("PUT", facultyId != null ? { isFaculty, facultyId } : { isFaculty })
     );
+
+export const setJournalQuartile = (id, quartile) =>
+request(`/journal/${id}/quartile`, jsonOptions("PUT", { quartile }));
