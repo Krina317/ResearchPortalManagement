@@ -16,7 +16,10 @@ import ExtProjectsPage from "./Projects/ExtProjectsPage";
 import JournalReportsPage from "./JournalReports/JournalReportsPage";
 import ConferenceReportsPage from "./ConferenceReports/ConferenceReportsPage";
 import ExternalProjectReport from "./ExternalProjectReport";
+import NuProjectReport from "./NuProjectReport";
 import ConsultancyPage from "./ConsultancyPage";
+import PatentsPage from "./PatentsPage";
+import MoUsPage from "./MoUsPage";
 
 // Everything inside requires login; the shell (sidebar + topbar) lives here
 function ProtectedLayout() {
@@ -64,7 +67,10 @@ function App() {
             <Route path="/journal/reports" element={<JournalReportsPage />} />
             <Route path="/conference/reports" element={<ConferenceReportsPage />} />
             <Route path="/projects/ext/reports" element={<ExternalProjectReport />} />
+            <Route path="/projects/nu/reports" element={<NuProjectReport />} />
             <Route path="/consultancy" element={<ConsultancyPage />} />
+            <Route path="/patents" element={<PatentsPage />} />
+            <Route path="/mou" element={<MoUsPage />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

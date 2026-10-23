@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
 import {
-  FileSpreadsheet,
-  BookOpen,
-  BookMarked,
-  Landmark,
-  HandCoins,
-  Briefcase,
-  FileSignature,
-  BarChart3,
-  FileOutput,
+  FileSpreadsheet, BookOpen, BookMarked, Landmark, HandCoins,
+  Briefcase, FileSignature, BarChart3, FileOutput, Lightbulb,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { fetchDashboardSummary } from "../api/dashboardApi";
@@ -28,18 +21,12 @@ function StatCard({ label, value, icon: Icon, onClick, loading, sub, onAnalysis,
       {(onAnalysis || onReport) && (
         <div className="flex gap-4 mt-4 pt-3 border-t border-gray-100">
           {onAnalysis && (
-            <button
-              onClick={onAnalysis}
-              className="flex items-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium"
-            >
+            <button onClick={onAnalysis} className="flex items-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium">
               <BarChart3 size={15} /> Analysis
             </button>
           )}
           {onReport && (
-            <button
-              onClick={onReport}
-              className="flex items-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium"
-            >
+            <button onClick={onReport} className="flex items-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium">
               <FileOutput size={15} /> Generate Report
             </button>
           )}
@@ -51,9 +38,7 @@ function StatCard({ label, value, icon: Icon, onClick, loading, sub, onAnalysis,
 
 function SectionHeader({ title }) {
   return (
-    <h2 className="text-sm font-semibold tracking-wide text-gray-500 uppercase mb-3">
-      {title}
-    </h2>
+    <h2 className="text-sm font-semibold tracking-wide text-gray-500 uppercase mb-3">{title}</h2>
   );
 }
 
@@ -67,6 +52,7 @@ export default function Dashboard() {
     externalProjectAmount: 0,
     nuProjectCount: 0,
     nuProjectAmount: 0,
+    patentCount: 0,
     consultancyCount: 0,
     mouCount: 0,
   });
@@ -90,6 +76,7 @@ export default function Dashboard() {
         externalProjectAmount: data.externalProjectAmount ?? 0,
         nuProjectCount: data.nuProjectCount ?? 0,
         nuProjectAmount: data.nuProjectAmount ?? 0,
+        patentCount: data.patentCount ?? 0,
         consultancyCount: data.consultancyCount ?? 0,
         mouCount: data.mouCount ?? 0,
       });
@@ -101,17 +88,14 @@ export default function Dashboard() {
     }
   };
 
-  const formatAmount = (val) =>
-    val ? `₹${Number(val).toLocaleString("en-IN")}` : "₹0";
+  const formatAmount = (val) => (val ? `₹${Number(val).toLocaleString("en-IN")}` : "₹0");
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Nirma IQAC Activity Portal
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-800">FORGE</h1>
         <p className="mt-2 text-gray-500">
-          Centralized tracking for institutional research, funding, and outreach activity
+          Faculty, Outreach, Research, Grants and Engagements: institutional activity in one place
         </p>
       </div>
 
@@ -121,7 +105,7 @@ export default function Dashboard() {
         </div>
       )}
 
-            {/* Publications */}
+      {/* Publications */}
       <div className="mb-8">
         <SectionHeader title="Publications" />
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -161,9 +145,8 @@ export default function Dashboard() {
             sub={`Total sanctioned: ${formatAmount(dashboardData.externalProjectAmount)}`}
             icon={Landmark}
             loading={loading}
-            onClick={() => navigate("/projects/external")}
-            onAnalysis={() => navigate("/projects/external/analysis")}
-            onReport={() => navigate("/projects/external/report")}
+            onClick={() => navigate("/projects/ext")}
+            onReport={() => navigate("/projects/ext/reports")}
           />
           <StatCard
             label="NU Funded Projects"
@@ -172,8 +155,21 @@ export default function Dashboard() {
             icon={HandCoins}
             loading={loading}
             onClick={() => navigate("/projects/nu")}
-            onAnalysis={() => navigate("/projects/nu/analysis")}
             onReport={() => navigate("/projects/nu/report")}
+          />
+        </div>
+      </div>
+
+      {/* Patents */}
+      <div className="mb-8">
+        <SectionHeader title="Patents" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <StatCard
+            label="Patents"
+            value={dashboardData.patentCount}
+            icon={Lightbulb}
+            loading={loading}
+            onClick={() => navigate("/patents")}
           />
         </div>
       </div>
@@ -188,7 +184,6 @@ export default function Dashboard() {
             icon={Briefcase}
             loading={loading}
             onClick={() => navigate("/consultancy")}
-            onAnalysis={() => navigate("/consultancy/analysis")}
             onReport={() => navigate("/consultancy/report")}
           />
           <StatCard
@@ -197,7 +192,6 @@ export default function Dashboard() {
             icon={FileSignature}
             loading={loading}
             onClick={() => navigate("/mou")}
-            onAnalysis={() => navigate("/mou/analysis")}
             onReport={() => navigate("/mou/report")}
           />
         </div>

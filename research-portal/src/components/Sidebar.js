@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import {
   Newspaper, BookOpen, BookMarked, LayoutDashboard, Menu, X,
   ChevronLeft, ChevronRight, ChevronDown, HandCoins, Users, Landmark,
-  FileBarChart, Library, Briefcase, FolderOpen, Settings, LogOut,
+  FileBarChart, Library, Briefcase, FolderOpen, Settings, LogOut, FileSignature, Lightbulb,
 } from "lucide-react";
 import { useAuth } from "./AuthContext";
 
@@ -31,6 +31,7 @@ const groups = [
       { path: "/journal/reports", label: "Journal Reports", icon: FileBarChart },
       { path: "/conference/reports", label: "Conference Reports", icon: FileBarChart },
       { path: "/projects/ext/reports", label: "External Project Reports", icon: FileBarChart },
+      { path: "/projects/nu/reports", label: "NU Project Reports", icon: FileBarChart },
     ],
   },
   {
@@ -45,7 +46,11 @@ const groups = [
 ];
 
 // Shown after the groups
-const bottomItems = [{ path: "/consultancy", label: "Consultancy", icon: Briefcase }];
+const bottomItems = [
+  { path: "/patents", label: "Patents", icon: Lightbulb },
+  { path: "/consultancy", label: "Consultancy", icon: Briefcase },
+  { path: "/mou", label: "MoUs", icon: FileSignature },
+];
 
 export default function Sidebar() {
   const { pathname } = useLocation();

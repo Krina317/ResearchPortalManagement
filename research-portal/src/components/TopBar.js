@@ -11,6 +11,7 @@ const PAGE_TITLES = [
   { prefix: "/projects/nu", label: "NU Funded Projects" },
   { prefix: "/consultancy", label: "Consultancy" },
   { prefix: "/faculty-metrics", label: "Faculty Metrics" },
+  { prefix: "/patents", label: "Patents" },
   { prefix: "/mou", label: "MoUs" },
 ];
 

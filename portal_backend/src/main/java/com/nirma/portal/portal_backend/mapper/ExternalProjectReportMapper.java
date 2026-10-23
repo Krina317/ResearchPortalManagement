@@ -31,7 +31,7 @@ public class ExternalProjectReportMapper {
 
     private record Entry(Projects project, int start, int end, boolean completed) {}
 
-    public ExternalProjectReportDTO toReport(List<Projects> projects, int cay) {
+    public ExternalProjectReportDTO toReport(List<Projects> projects, int realCay) {
 
         List<Entry> entries = projects.stream()
                 .map(this::toEntry)
@@ -39,8 +39,13 @@ public class ExternalProjectReportMapper {
                 .sorted(Comparator.comparing(e -> e.project().getId()))
                 .toList();
 
+        // The "current" year is the real current academic year, but never later than
+        // the newest year that actually has data (no data for 2026-27 -> CAY = 2025-26).
+        int maxStart = entries.stream().mapToInt(Entry::start).max().orElse(realCay);
+        int cay = Math.min(realCay, maxStart);
+
         int first = entries.stream().mapToInt(Entry::start).min().orElse(cay);
-        int last = Math.max(cay, entries.stream().mapToInt(Entry::start).max().orElse(cay));
+        int last = Math.max(cay, maxStart);
 
         List<Integer> years = new ArrayList<>();
         for (int y = last; y >= first; y--) {
