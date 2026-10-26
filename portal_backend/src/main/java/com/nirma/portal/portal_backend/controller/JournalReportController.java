@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.nirma.portal.portal_backend.dto.ReviewAuthorDTO;
 import com.nirma.portal.portal_backend.dto.ReviewDecisionRequestDTO;
 import com.nirma.portal.portal_backend.dto.StudentTypeCountResponseDTO;
+import com.nirma.portal.portal_backend.dto.JournalChartsResponseDTO;
 import com.nirma.portal.portal_backend.dto.JournalFacultyResponseDTO;
 import com.nirma.portal.portal_backend.dto.JournalReportFilter;
 import com.nirma.portal.portal_backend.service.AuthorReviewService;
@@ -23,6 +24,7 @@ public class JournalReportController {
 
     private final AuthorReviewService authorReviewService;
     private final JournalReportsService journalReportService;
+    
 
     @GetMapping("/review-authors")
     public List<ReviewAuthorDTO> getReviewAuthors() {
@@ -44,5 +46,9 @@ public class JournalReportController {
     @GetMapping("/student-counts")
     public List<StudentTypeCountResponseDTO> getStudentCounts(JournalReportFilter filter) {
         return journalReportService.getStudentTypeCounts(filter);
+    }
+    @GetMapping("/charts")
+    public JournalChartsResponseDTO charts(JournalReportFilter filter) {
+        return journalReportService.getJournalCharts(filter);
     }
 }

@@ -22,6 +22,7 @@ export function reportQuery(filters = {}) {
     add("fromYear", filters.fromYear);
     add("toMonth", filters.toMonth);
     add("toYear", filters.toYear);
+    add("quartile", filters.quartile);
 
     const query = params.toString();
     return query ? `?${query}` : "";

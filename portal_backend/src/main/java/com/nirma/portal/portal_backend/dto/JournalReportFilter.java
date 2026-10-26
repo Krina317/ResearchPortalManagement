@@ -54,4 +54,17 @@ public class JournalReportFilter {
         if (idx < 0) throw new IllegalArgumentException("Unrecognized month: " + month);
         return idx + 1;
     }
+    
+    private String quartile;   // "ALL", "Q1", "Q2", "Q1_Q2"
+
+    /** null means no quartile filter. */
+    public List<String> quartiles() {
+        if (quartile == null || quartile.isBlank()) return null;
+        return switch (quartile.toUpperCase().replaceAll("[^A-Z0-9]", "")) {
+            case "Q1" -> List.of("Q1");
+            case "Q2" -> List.of("Q2");
+            case "Q1Q2" -> List.of("Q1", "Q2");
+            default -> null;   // "ALL" or anything unknown
+        };
+    }
 }

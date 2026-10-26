@@ -18,4 +18,6 @@ public interface JournalPaperRepositoryCustom {
             List<Long> authorIds,
             Pageable pageable
     );
+
+    List<Object[]> findChartRows(Integer fromTotal, Integer toTotal, List<String> quartiles);
 }

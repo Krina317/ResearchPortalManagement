@@ -187,4 +187,32 @@ public class JournalPaperRepositoryImpl implements JournalPaperRepositoryCustom 
     private boolean notBlank(String s) {
         return s != null && !s.isBlank();
     }
+    @Override
+    public List<Object[]> findChartRows(Integer fromTotal, Integer toTotal, List<String> quartiles) {
+        StringBuilder where = new StringBuilder(" WHERE jp.year_of_publication IS NOT NULL ");
+        Map<String, Object> params = new HashMap<>();
+
+        if (fromTotal != null) {
+            where.append(" AND ").append(MONTH_EXPR).append(" >= :fromTotal ");
+            params.put("fromTotal", fromTotal);
+        }
+        if (toTotal != null) {
+            where.append(" AND ").append(MONTH_EXPR).append(" <= :toTotal ");
+            params.put("toTotal", toTotal);
+        }
+        if (quartiles != null && !quartiles.isEmpty()) {
+            where.append(" AND UPPER(TRIM(jp.quartile)) IN (:quartiles) ");
+            params.put("quartiles", quartiles);
+        }
+
+        String sql = "SELECT " + MONTH_EXPR + " AS month_total, "
+                + "jp.impact_factor_clarivate, jp.index_in FROM journal_paper jp" + where;
+
+        Query q = entityManager.createNativeQuery(sql);
+        params.forEach(q::setParameter);
+
+        @SuppressWarnings("unchecked")
+        List<Object[]> rows = q.getResultList();
+        return rows;
+    }
 }

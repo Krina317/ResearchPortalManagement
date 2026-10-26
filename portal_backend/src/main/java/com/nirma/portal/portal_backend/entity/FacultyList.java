@@ -32,6 +32,10 @@ public class FacultyList {
 
     @Column(nullable = false)
     private String dept;
+    
+	@Column(nullable = true)
+	private String FacultyStatus;
+	
 
     // Backend-only: never sent to the browser.
     @JsonIgnore

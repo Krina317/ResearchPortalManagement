@@ -67,20 +67,24 @@ public interface PublicationAuthorRepository extends JpaRepository<PublicationAu
 		                       year_of_publication * 12
 		                         + COALESCE(NULLIF(FIELD(UPPER(month_of_publication),
 		                             'JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE',
-		                             'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'), 0), 1) AS period
+		                             'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'), 0), 1) AS period,
+		                       UPPER(TRIM(quartile)) AS quartile
 		                FROM journal_paper
 		            ) jp ON jp.id = pa2.publication_id
 		            WHERE pa2.publication_type = 'JOURNAL'
 		              AND am2.faculty_id IS NOT NULL
 		              AND (:fromTotal IS NULL OR jp.period >= :fromTotal)
 		              AND (:toTotal IS NULL OR jp.period <= :toTotal)
+		              AND (:hasQuartiles = false OR jp.quartile IN (:quartiles))
 		            GROUP BY pa2.publication_id
 		        ) c ON c.publication_id = pa.publication_id
 		        WHERE pa.publication_type = 'JOURNAL'
 		        GROUP BY f.id, f.name
 		        """, nativeQuery = true)
 		List<FacultyScoreView> findJournalFacultyScores(@Param("fromTotal") Integer fromTotal,
-		                                                @Param("toTotal") Integer toTotal);
+		                                                @Param("toTotal") Integer toTotal,
+		                                                @Param("hasQuartiles") boolean hasQuartiles,
+		                                                @Param("quartiles") List<String> quartiles);
 
 		@Query(value = """
 		        SELECT UPPER(TRIM(pa.student_type)) AS studentType,
@@ -91,18 +95,21 @@ public interface PublicationAuthorRepository extends JpaRepository<PublicationAu
 		                   year_of_publication * 12
 		                     + COALESCE(NULLIF(FIELD(UPPER(month_of_publication),
 		                         'JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE',
-		                         'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'), 0), 1) AS period
+		                         'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'), 0), 1) AS period,
+		                   UPPER(TRIM(quartile)) AS quartile
 		            FROM journal_paper
 		        ) jp ON jp.id = pa.publication_id
 		        WHERE pa.publication_type = 'JOURNAL'
 		          AND pa.student_type IS NOT NULL
 		          AND (:fromTotal IS NULL OR jp.period >= :fromTotal)
 		          AND (:toTotal IS NULL OR jp.period <= :toTotal)
+		          AND (:hasQuartiles = false OR jp.quartile IN (:quartiles))
 		        GROUP BY UPPER(TRIM(pa.student_type))
 		        """, nativeQuery = true)
 		List<StudentTypeCountView> countJournalStudentsByType(@Param("fromTotal") Integer fromTotal,
-		                                                      @Param("toTotal") Integer toTotal);
-		
+		                                                      @Param("toTotal") Integer toTotal,
+		                                                      @Param("hasQuartiles") boolean hasQuartiles,
+		                                                      @Param("quartiles") List<String> quartiles);
 		void deleteByPublicationIdAndPublicationType(Long publicationId, PublicationType publicationType);
 
 		long countByAuthor_AuthorId(Long authorId);
