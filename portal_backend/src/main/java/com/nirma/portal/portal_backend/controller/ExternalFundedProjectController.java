@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.nirma.portal.portal_backend.dto.ExternalFundedProjectRequestDTO;
 import com.nirma.portal.portal_backend.dto.ExternalFundedProjectResponseDTO;
@@ -35,23 +35,14 @@ public class ExternalFundedProjectController {
     public ResponseEntity<ExternalFundedProjectResponseDTO> createProject(
             @Valid @RequestBody ExternalFundedProjectRequestDTO dto) {
 
-        log.trace(
-                "Entered createProject() controller for project '{}'",
-                dto.getProjectTitle()
-        );
-
-        log.debug(
-                "Creating external funded project '{}'",
-                dto.getProjectTitle()
-        );
+        log.trace("Entered createProject() controller for project '{}'", dto.getProjectTitle());
+        log.debug("Creating external funded project '{}'", dto.getProjectTitle());
 
         ExternalFundedProjectResponseDTO createdProject =
                 service.createExternalProject(dto);
 
-        log.info(
-                "External funded project '{}' created successfully",
-                createdProject.getProjectTitle()
-        );
+        log.info("External funded project '{}' created successfully",
+                createdProject.getProjectTitle());
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -70,16 +61,13 @@ public class ExternalFundedProjectController {
         List<ExternalFundedProjectResponseDTO> projects =
                 service.getAllExternalProjects();
 
-        log.debug(
-                "Returning {} external funded projects",
-                projects.size()
-        );
+        log.debug("Returning {} external funded projects", projects.size());
 
         return ResponseEntity.ok(projects);
     }
 
     // ---------------------------------------------------------
-    // FILTER + PAGINATION
+    // FILTER + PAGINATION + SORTING
     // ---------------------------------------------------------
 
     @GetMapping("/filter")
@@ -101,18 +89,22 @@ public class ExternalFundedProjectController {
 
             @RequestParam(required = false) Double maxDuration,
 
+            // sanctioned in this academic year, e.g. 2024-2025
             @RequestParam(required = false) String academicYear,
+
+            // sanctioned / ongoing / completed in this academic year (same rule as the report)
+            @RequestParam(required = false) String activeYear,
 
             @RequestParam(required = false) String outcome,
 
             @RequestParam(required = false) String status,
 
             @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sanctionedFrom,
 
             @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
-            
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate sanctionedTo,
+
             @RequestParam(defaultValue = "0") int page,
 
             @RequestParam(defaultValue = "10") int size,
@@ -122,14 +114,8 @@ public class ExternalFundedProjectController {
             @RequestParam(defaultValue = "asc") String direction) {
 
         log.trace("Entered findProjectsWithFilters() controller");
-
-        log.debug(
-                "Filtering external funded projects: page={}, size={}, sortBy={}, direction={}",
-                page,
-                size,
-                sortBy,
-                direction
-        );
+        log.debug("Filtering external funded projects: page={}, size={}, sortBy={}, direction={}",
+                page, size, sortBy, direction);
 
         Page<ExternalFundedProjectResponseDTO> projects =
                 service.findExternalProjectsWithFilters(
@@ -142,20 +128,19 @@ public class ExternalFundedProjectController {
                         minDuration,
                         maxDuration,
                         academicYear,
+                        activeYear,
                         outcome,
                         status,
-                        dateFrom,
-                        dateTo,
+                        sanctionedFrom,
+                        sanctionedTo,
                         page,
                         size,
                         sortBy,
                         direction
                 );
 
-        log.info(
-                "External funded project filter returned {} projects",
-                projects.getTotalElements()
-        );
+        log.info("External funded project filter returned {} projects",
+                projects.getTotalElements());
 
         return ResponseEntity.ok(projects);
     }
@@ -168,18 +153,12 @@ public class ExternalFundedProjectController {
     public ResponseEntity<ExternalFundedProjectResponseDTO> getProjectById(
             @PathVariable Long id) {
 
-        log.trace(
-                "Entered getProjectById() controller for id {}",
-                id
-        );
+        log.trace("Entered getProjectById() controller for id {}", id);
 
         ExternalFundedProjectResponseDTO project =
                 service.getExternalProjectById(id);
 
-        log.debug(
-                "Returning external funded project id {}",
-                id
-        );
+        log.debug("Returning external funded project id {}", id);
 
         return ResponseEntity.ok(project);
     }
@@ -193,23 +172,13 @@ public class ExternalFundedProjectController {
             @PathVariable Long id,
             @Valid @RequestBody ExternalFundedProjectRequestDTO dto) {
 
-        log.trace(
-                "Entered updateProject() controller for id {}",
-                id
-        );
-
-        log.debug(
-                "Updating external funded project id {}",
-                id
-        );
+        log.trace("Entered updateProject() controller for id {}", id);
+        log.debug("Updating external funded project id {}", id);
 
         ExternalFundedProjectResponseDTO updatedProject =
                 service.updateExternalProject(id, dto);
 
-        log.info(
-                "External funded project id {} updated successfully",
-                id
-        );
+        log.info("External funded project id {} updated successfully", id);
 
         return ResponseEntity.ok(updatedProject);
     }
@@ -222,22 +191,12 @@ public class ExternalFundedProjectController {
     public ResponseEntity<Void> deleteProject(
             @PathVariable Long id) {
 
-        log.trace(
-                "Entered deleteProject() controller for id {}",
-                id
-        );
-
-        log.debug(
-                "Deleting external funded project id {}",
-                id
-        );
+        log.trace("Entered deleteProject() controller for id {}", id);
+        log.debug("Deleting external funded project id {}", id);
 
         service.deleteExternalProject(id);
 
-        log.info(
-                "External funded project id {} deleted successfully",
-                id
-        );
+        log.info("External funded project id {} deleted successfully", id);
 
         return ResponseEntity.noContent().build();
     }

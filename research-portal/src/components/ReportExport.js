@@ -1,6 +1,7 @@
-// npm install jspdf@2.5.2 jspdf-autotable@3.8.4
+// npm install jspdf@2.5.2 jspdf-autotable@3.8.4 xlsx
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import * as XLSX from "xlsx";
 
 const INSTITUTE = [
   "Nirma University",
@@ -139,4 +140,93 @@ export const downloadWord = (groups, currentYear, fileName = FILE_NAME) => {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
+};
+
+// ---------------------------------------------------------------- Excel
+// One sheet per report group (Table I, Table II, ...). Groups that hold
+// several tables (one per academic year) are stacked inside their sheet.
+const makeSheetName = (group, used) => {
+  const base = String(group.sheet || group.id || "Sheet")
+    .replace(/[:\\/?*[\]]/g, "-")
+    .slice(0, 31);
+
+  let name = base;
+  let n = 2;
+  while (used.has(name.toLowerCase())) {
+    const suffix = ` (${n++})`;
+    name = base.slice(0, 31 - suffix.length) + suffix;
+  }
+  used.add(name.toLowerCase());
+  return name;
+};
+
+export const downloadExcel = (groups, currentYear, fileName = FILE_NAME) => {
+  const workbook = XLSX.utils.book_new();
+  const usedNames = new Set();
+
+  groups.forEach((group) => {
+    const rows = [];
+    const merges = [];
+    const widths = [];
+    let maxCols = 1;
+
+    const track = (row) =>
+      row.forEach((cell, i) => {
+        const len = String(cell ?? "").length + 2;
+        widths[i] = Math.max(widths[i] || 10, Math.min(60, len));
+      });
+
+    // header block
+    INSTITUTE.forEach((line) => rows.push([line]));
+    rows.push([]);
+    rows.push([group.heading]);
+    rows.push([]);
+
+    if (group.tables.length === 0) {
+      rows.push(["No projects."]);
+    }
+
+    group.tables.forEach((t) => {
+      const cols = t.head.length;
+      maxCols = Math.max(maxCols, cols);
+
+      if (t.caption) {
+        merges.push({ s: { r: rows.length, c: 0 }, e: { r: rows.length, c: cols - 1 } });
+        rows.push([t.caption]);
+      }
+
+      rows.push(t.head);
+      track(t.head);
+
+      t.rows.forEach((r) => {
+        rows.push(r);
+        track(r);
+      });
+
+      t.summary.forEach((s) => {
+        const row = new Array(cols).fill("");
+        row[0] = s.label;
+        row[cols - 1] = s.value;
+        if (cols - 2 >= 1) {
+          merges.push({ s: { r: rows.length, c: 0 }, e: { r: rows.length, c: cols - 2 } });
+        }
+        rows.push(row);
+      });
+
+      rows.push([]); // gap between tables
+    });
+
+    const signRow = new Array(maxCols).fill("");
+    signRow[0] = "Prepared By:";
+    signRow[Math.max(1, maxCols - 1)] = "Verified By:";
+    rows.push(signRow);
+
+    const sheet = XLSX.utils.aoa_to_sheet(rows);
+    sheet["!merges"] = merges;
+    sheet["!cols"] = widths.map((w) => ({ wch: w }));
+
+    XLSX.utils.book_append_sheet(workbook, sheet, makeSheetName(group, usedNames));
+  });
+
+  XLSX.writeFile(workbook, `${fileName}_${currentYear}.xlsx`);
 };

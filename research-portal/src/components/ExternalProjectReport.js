@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { fetchExternalProjectReport } from "../api/externalReportApi";
 import { buildReportGroups } from "./ExternalReportModel";
-import { downloadPdf, downloadWord } from "./ExternalReportExport";
+import { downloadPdf, downloadWord, downloadExcel } from "./ReportExport";
 import "./ExternalProjectReport.css";
 
 const ReportTable = ({ table }) => {
@@ -76,6 +76,9 @@ export default function ExternalProjectReport() {
           <button className="erp-btn" onClick={load} disabled={loading}>Refresh</button>
           <button className="erp-btn" onClick={() => downloadWord(groups, cay)} disabled={!report}>
             Download Word
+          </button>
+          <button className="erp-btn" onClick={() => downloadExcel(groups, cay)} disabled={!report}>
+            Download Excel
           </button>
           <button className="erp-btn erp-btn-primary" onClick={() => downloadPdf(groups, cay)} disabled={!report}>
             Download PDF

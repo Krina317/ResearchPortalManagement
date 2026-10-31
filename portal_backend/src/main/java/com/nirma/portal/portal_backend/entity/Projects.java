@@ -41,12 +41,6 @@ public class Projects {
     @Column(nullable = false)
     private String academicYear;
 
-    @Column(nullable = false)
-    private LocalDate fromDate;
-
-    @Column(nullable = false)
-    private LocalDate toDate;
-
     // outcomeOfResearchProject (Nu) / outcomeOfProject (External)
     @Column(nullable = false)
     private String outcomeOfProject;

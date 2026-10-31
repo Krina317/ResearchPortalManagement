@@ -20,8 +20,6 @@ public class ExternalFundedProjectResponseDTO {
     private Long amount;
     private Double duration;
     private String academicYear;
-    private LocalDate fromDate;
-    private LocalDate toDate;
     private String outcomeOfProject;
     private String publishedPaperDetails;
     private String jointPublicationProof;

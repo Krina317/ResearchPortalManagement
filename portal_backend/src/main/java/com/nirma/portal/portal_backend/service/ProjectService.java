@@ -1,7 +1,8 @@
 package com.nirma.portal.portal_backend.service;
 
 import java.time.LocalDate;
-import java.util.List; 
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +36,10 @@ public class ProjectService {
     private final ProjectRepository repository;
     private final NuFundedProjectMapper nuMapper;
     private final ExternalFundedProjectMapper externalMapper;
+
+    // Only these fields may be used for sorting (stops a stale/invalid sort key from crashing the query)
+    private static final Set<String> EXTERNAL_SORT_FIELDS = Set.of(
+            "id", "amount", "sanctionedDate", "academicYear", "duration", "projectTitle");
 
     // =========================================================
     //                    NU FUNDED PROJECTS
@@ -120,23 +125,21 @@ public class ProjectService {
             Double maxDuration,
             String academicYear,
             String outcome,
-            LocalDate dateFrom,
-            LocalDate dateTo,
             Pageable pageable) {
 
         log.trace("Entered getNuProjectsWithFilters()");
         log.debug("Applying NU project filters: title='{}', pi='{}', coPi='{}', minAmount={}, maxAmount={}, "
-                + "category='{}', minDuration={}, maxDuration={}, academicYear='{}', outcome='{}', "
-                + "dateFrom={}, dateTo={}",
+                + "category='{}', minDuration={}, maxDuration={}, academicYear='{}', outcome='{}'",
                 projectTitle, pi, coPi, minAmount, maxAmount, projectCategory,
-                minDuration, maxDuration, academicYear, outcome, dateFrom, dateTo);
+                minDuration, maxDuration, academicYear, outcome);
 
         Page<Projects> projects = repository.findNuProjectsWithFilters(
                 projectTitle, pi, coPi, minAmount, maxAmount, projectCategory,
-                minDuration, maxDuration, academicYear, outcome, dateFrom, dateTo, pageable);
+                minDuration, maxDuration, academicYear, outcome, pageable);
 
         return projects.map(nuMapper::toResponseDTO);
     }
+
     // ---------------------------------------------------------
     // UPDATE PROJECT
     // ---------------------------------------------------------
@@ -259,7 +262,13 @@ public class ProjectService {
     }
 
     // ---------------------------------------------------------
-    // FILTER + PAGINATION
+    // FILTER + PAGINATION + SORTING
+    //
+    //  academicYear  = sanctioned in that academic year
+    //  activeYear    = sanctioned / ongoing / completed in that academic year
+    //                  (same rule as the report)
+    //  sanctionedFrom / sanctionedTo = sanctioned-date range
+    //                  (used by the Financial Year / Calendar Year filters)
     // ---------------------------------------------------------
 
     @Transactional(readOnly = true)
@@ -273,35 +282,49 @@ public class ProjectService {
             Double minDuration,
             Double maxDuration,
             String academicYear,
+            String activeYear,
             String outcome,
             String status,
-            LocalDate dateFrom,
-            LocalDate dateTo,
+            LocalDate sanctionedFrom,
+            LocalDate sanctionedTo,
             int page,
             int size,
             String sortBy,
             String direction) {
 
         log.trace("Entered findExternalProjectsWithFilters()");
-        log.debug("Filtering external funded projects: page={}, size={}, sortBy={}, direction={}",
-                page, size, sortBy, direction);
+        log.debug("Filtering external funded projects: page={}, size={}, sortBy={}, direction={}, "
+                + "academicYear='{}', activeYear='{}', status='{}', sanctionedFrom={}, sanctionedTo={}",
+                page, size, sortBy, direction, academicYear, activeYear, status,
+                sanctionedFrom, sanctionedTo);
 
         // SORTING
         Sort.Direction sortDirection = "desc".equalsIgnoreCase(direction)
                 ? Sort.Direction.DESC
                 : Sort.Direction.ASC;
 
-        Sort sort = Sort.by(sortDirection, sortBy);
+        String safeSortBy = EXTERNAL_SORT_FIELDS.contains(sortBy) ? sortBy : "id";
 
         // PAGINATION
-        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, safeSortBy));
+
+        // "2024-2025" -> 2024
+        Integer activeStartYear = null;
+        if (activeYear != null && activeYear.length() >= 4) {
+            try {
+                activeStartYear = Integer.parseInt(activeYear.substring(0, 4));
+            } catch (NumberFormatException ignored) {
+                // leave null -> filter not applied
+            }
+        }
 
         try {
             // DATABASE QUERY
             Page<Projects> projectPage = repository.findExternalProjectsWithFilters(
                     projectTitle, pi, coPi, fundingAgencyName,
                     minAmount, maxAmount, minDuration, maxDuration,
-                    academicYear, outcome, status, dateFrom, dateTo, pageable);
+                    academicYear, activeStartYear, outcome, status,
+                    sanctionedFrom, sanctionedTo, pageable);
 
             log.info("External funded project filter returned {} projects",
                     projectPage.getTotalElements());

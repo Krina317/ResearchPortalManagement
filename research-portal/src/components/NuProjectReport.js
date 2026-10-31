@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { fetchNuProjectReport } from "../api/nuReportApi";
 import { buildNuReportGroups } from "./nuReportModel";
-import { downloadPdf, downloadWord } from "./ReportExport";
+import { downloadPdf, downloadWord, downloadExcel } from "./ReportExport";
 import "./ExternalProjectReport.css"; // same look as the external report
 
 const FILE_NAME = "NU_Funded_Projects_Report";
@@ -78,6 +78,9 @@ export default function NuProjectReport() {
           <button className="erp-btn" onClick={load} disabled={loading}>Refresh</button>
           <button className="erp-btn" onClick={() => downloadWord(groups, cay, FILE_NAME)} disabled={!report}>
             Download Word
+          </button>
+          <button className="erp-btn" onClick={() => downloadExcel(groups, cay, FILE_NAME)} disabled={!report}>
+            Download Excel
           </button>
           <button className="erp-btn erp-btn-primary" onClick={() => downloadPdf(groups, cay, FILE_NAME)} disabled={!report}>
             Download PDF

@@ -40,8 +40,8 @@ export const buildNuReportGroups = (r) => {
   }));
 
   return [
-    { id: "a", heading: "Table A: Summary of NU Funded Research Projects", tables: [tableA] },
-    { id: "b", heading: "Table 5.11: Bifurcation of external and NU funded projects", tables: [table511] },
-    { id: "c", heading: "Table 5.12: Funded major research projects (NU Funded)", tables: detailTables },
+    { id: "a", sheet: "Table A", heading: "Table A: Summary of NU Funded Research Projects", tables: [tableA] },
+    { id: "b", sheet: "Table 5.11", heading: "Table 5.11: Bifurcation of external and NU funded projects", tables: [table511] },
+    { id: "c", sheet: "Table 5.12", heading: "Table 5.12: Funded major research projects (NU Funded)", tables: detailTables },
   ];
 };

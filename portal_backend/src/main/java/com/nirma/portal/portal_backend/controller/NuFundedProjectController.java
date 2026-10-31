@@ -109,12 +109,6 @@ public class NuFundedProjectController {
 
             @RequestParam(required = false) String outcome,
 
-            @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-
-            @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
-
             @RequestParam(defaultValue = "0") int page,
 
             @RequestParam(defaultValue = "10") int size,
@@ -165,8 +159,6 @@ public class NuFundedProjectController {
                         maxDuration,
                         academicYear,
                         outcome,
-                        dateFrom,
-                        dateTo,
                         pageable
                 );
 

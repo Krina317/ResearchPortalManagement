@@ -39,11 +39,6 @@ public class ExternalFundedProjectRequestDTO {
     @NotBlank(message = "Academic year is required")
     private String academicYear;
 
-    @NotNull(message = "From date is required")
-    private LocalDate fromDate;
-
-    @NotNull(message = "To date is required")
-    private LocalDate toDate;
 
     @NotBlank(message = "Outcome of project is required")
     private String outcomeOfProject;

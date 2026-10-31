@@ -19,10 +19,10 @@ export default function Footer() {
           </div>
           <div>
             <p className="text-sm font-semibold text-gray-800 leading-tight">
-              Nirma IQAC Activity Portal
+              Nirma FORGE Activity Portal
             </p>
             <p className="text-xs text-gray-400 leading-tight">
-              Internal Quality Assurance Cell
+              Faculty, Outreach, Research, Grants and Engagements
             </p>
           </div>
         </div>

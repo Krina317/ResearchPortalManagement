@@ -36,12 +36,6 @@ public class NuFundedProjectRequestDTO {
     @Positive(message = "Duration must be greater than 0")
     private Double duration;
 
-    @NotBlank(message = "Academic year is required")
-    private String academicYear;
-
-    @NotNull(message = "From date is required")
-    private LocalDate fromDate;
-
     @NotNull(message = "To date is required")
     private LocalDate toDate;
 

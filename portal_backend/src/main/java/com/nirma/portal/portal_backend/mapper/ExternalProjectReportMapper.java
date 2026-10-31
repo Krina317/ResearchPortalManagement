@@ -1,5 +1,6 @@
 package com.nirma.portal.portal_backend.mapper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -14,7 +15,7 @@ import com.nirma.portal.portal_backend.entity.Projects;
 /**
  * Builds the 4 report tables from the External Funded projects.
  *
- * Year logic (uses statusOfTheProject + academicYear + duration, NOT toDate):
+ * Tables II, III, IV use the ACADEMIC year (Jul-Jun):
  *  - SANCTIONED : the project's academicYear is this year.
  *  - ONGOING    : after the sanctioned year, up to the last planned year
  *                 (start + ceil(duration) - 1). If the status is anything other
@@ -23,13 +24,17 @@ import com.nirma.portal.portal_backend.entity.Projects;
  *  - COMPLETED  : status is "completed" and this is the last planned year.
  *  Each project has exactly one phase per year, so
  *  total = sanctioned + ongoing + completed.
+ *
+ * Table I uses the FINANCIAL year (Apr-Mar), taken from sanctionedDate.
+ * A project sanctioned in Apr-Jun belongs to the next financial year than
+ * its academic year. If sanctionedDate is missing, the academic year is used.
  */
 @Component
 public class ExternalProjectReportMapper {
 
     private enum Phase { SANCTIONED, ONGOING, COMPLETED }
 
-    private record Entry(Projects project, int start, int end, boolean completed) {}
+    private record Entry(Projects project, int start, int end, int fy, boolean completed) {}
 
     public ExternalProjectReportDTO toReport(List<Projects> projects, int realCay) {
 
@@ -54,25 +59,29 @@ public class ExternalProjectReportMapper {
 
         return new ExternalProjectReportDTO(
                 ay(cay),
-                tableOne(entries, years, cay),
+                tableOne(entries, cay),
                 tableTwo(entries, years, cay),
                 tableThree(entries, years, cay),
                 tableFour(entries, years, cay));
     }
 
     // =====================================================================
-    // Table I
+    // Table I  (FINANCIAL year, from sanctionedDate)
     // =====================================================================
-    private SanctionedSummary tableOne(List<Entry> entries, List<Integer> years, int cay) {
-        List<YearSanctioned> rows = years.stream().map(y -> {
-            List<Entry> sanctioned = sanctionedIn(entries, y);
-            return new YearSanctioned(ay(y), label(y, cay), sanctioned.size(), sumAmount(sanctioned));
-        }).toList();
+    private SanctionedSummary tableOne(List<Entry> entries, int cay) {
+        int first = entries.stream().mapToInt(Entry::fy).min().orElse(cay);
+
+        List<YearSanctioned> rows = new ArrayList<>();
+        for (int y = cay; y >= first; y--) {
+            final int fyYear = y;
+            List<Entry> sanctioned = entries.stream().filter(e -> e.fy() == fyYear).toList();
+            rows.add(new YearSanctioned(ay(y), label(y, cay), sanctioned.size(), sumAmount(sanctioned)));
+        }
 
         return new SanctionedSummary(
                 rows,
-                sumSanctioned(entries, cay - 3, cay - 1),
-                sumSanctioned(entries, cay - 3, cay));
+                sumByFy(entries, cay - 3, cay - 1),
+                sumByFy(entries, cay - 3, cay));
     }
 
     // =====================================================================
@@ -99,7 +108,7 @@ public class ExternalProjectReportMapper {
     }
 
     // =====================================================================
-    // Table III  (projects sanctioned that year)
+    // Table III  (projects sanctioned that academic year)
     // =====================================================================
     private List<YearSanctionedDetails> tableThree(List<Entry> entries, List<Integer> years, int cay) {
         List<YearSanctionedDetails> result = new ArrayList<>();
@@ -121,7 +130,7 @@ public class ExternalProjectReportMapper {
     }
 
     // =====================================================================
-    // Table IV  (sanctioned + ongoing + completed that year)
+    // Table IV  (sanctioned + ongoing + completed that academic year)
     // =====================================================================
     private List<YearProjectDetails> tableFour(List<Entry> entries, List<Integer> years, int cay) {
         List<YearProjectDetails> result = new ArrayList<>();
@@ -162,10 +171,16 @@ public class ExternalProjectReportMapper {
         int years = (int) Math.max(1, Math.ceil(duration - 1e-9));
         int end = start + years - 1;
 
+        // Financial year (Apr-Mar) of the sanctioned date; falls back to the academic year.
+        LocalDate sd = p.getSanctionedDate();
+        int fy = sd != null
+                ? (sd.getMonthValue() >= 4 ? sd.getYear() : sd.getYear() - 1)
+                : start;
+
         String status = p.getStatusOfTheProject();
         boolean completed = status != null && status.toLowerCase().contains("complet");
 
-        return new Entry(p, start, end, completed);
+        return new Entry(p, start, end, fy, completed);
     }
 
     private Phase phaseIn(Entry e, int y, int cay) {
@@ -187,6 +202,13 @@ public class ExternalProjectReportMapper {
     private long sumSanctioned(List<Entry> entries, int fromYear, int toYear) {
         return entries.stream()
                 .filter(e -> e.start() >= fromYear && e.start() <= toYear)
+                .mapToLong(e -> amount(e.project()))
+                .sum();
+    }
+
+    private long sumByFy(List<Entry> entries, int fromYear, int toYear) {
+        return entries.stream()
+                .filter(e -> e.fy() >= fromYear && e.fy() <= toYear)
                 .mapToLong(e -> amount(e.project()))
                 .sum();
     }
