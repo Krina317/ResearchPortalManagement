@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import com.nirma.portal.portal_backend.dto.FacultyScoreView;
 import com.nirma.portal.portal_backend.entity.AuthorMaster;
 import com.nirma.portal.portal_backend.entity.PublicationAuthor;
@@ -111,6 +110,42 @@ public interface PublicationAuthorRepository extends JpaRepository<PublicationAu
 		                                                      @Param("hasQuartiles") boolean hasQuartiles,
 		                                                      @Param("quartiles") List<String> quartiles);
 		void deleteByPublicationIdAndPublicationType(Long publicationId, PublicationType publicationType);
+		
+		
+
+		@Query(value = """
+		        SELECT f.id             AS facultyId,
+		               f.name           AS facultyName,
+		               f.faculty_status AS facultyStatus,
+		               x.academic_year  AS academicYear,
+		               x.paper_count    AS paperCount
+		        FROM faculty_list f
+		        LEFT JOIN (
+		            SELECT am.faculty_id AS faculty_id,
+		                   jp.academic_year AS academic_year,
+		                   COUNT(DISTINCT pa.publication_id) AS paper_count
+		            FROM publication_author pa
+		            JOIN author_master am ON am.author_id = pa.author_id
+		            JOIN (
+		                SELECT id,
+		                       (year_of_publication * 12
+		                         + COALESCE(NULLIF(FIELD(UPPER(month_of_publication),
+		                             'JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE',
+		                             'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'), 0), 1)
+		                         - 7) DIV 12 AS academic_year
+		                FROM journal_paper
+		                WHERE year_of_publication IS NOT NULL
+		            ) jp ON jp.id = pa.publication_id
+		            WHERE pa.publication_type = 'JOURNAL'
+		              AND am.faculty_id IS NOT NULL
+		              AND jp.academic_year BETWEEN :fromYear AND :toYear
+		            GROUP BY am.faculty_id, jp.academic_year
+		        ) x ON x.faculty_id = f.id
+		        ORDER BY f.name, x.academic_year
+		        """, nativeQuery = true)
+		List<FacultyYearCountView> findJournalPapersPerFacultyByAcademicYear(
+		        @Param("fromYear") int fromYear,
+		        @Param("toYear") int toYear);
 
 		long countByAuthor_AuthorId(Long authorId);
 		@Query(value = """

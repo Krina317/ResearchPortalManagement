@@ -51,4 +51,8 @@ public class JournalReportController {
     public JournalChartsResponseDTO charts(JournalReportFilter filter) {
         return journalReportService.getJournalCharts(filter);
     }
+    @GetMapping("/statistics")
+    public List<JournalChartsResponseDTO.StatisticsRow> getStatistics() {
+        return journalReportService.getJournalStatistics();
+    }
 }

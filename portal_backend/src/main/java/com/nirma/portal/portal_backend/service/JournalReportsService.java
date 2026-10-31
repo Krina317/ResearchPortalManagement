@@ -22,6 +22,7 @@ import com.nirma.portal.portal_backend.dto.StudentTypeCountView;
 import com.nirma.portal.portal_backend.repository.JournalPaperRepository;
 import com.nirma.portal.portal_backend.repository.PublicationAuthorRepository;
 import com.nirma.portal.portal_backend.dto.JournalReportFilter;
+import com.nirma.portal.portal_backend.repository.FacultyYearCountView;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -133,5 +134,49 @@ public class JournalReportsService {
         } catch (NumberFormatException e) {
             return "No IF";   // "N/A", "-", blank, etc.
         }
+    }
+    
+ // academic years shown in Journal Statistics, by start year (2025 = 2025-26). Extend LAST to add more.
+    private static final int STATS_FIRST_YEAR = 2025;
+    private static final int STATS_LAST_YEAR = 2026;
+
+    @Transactional(readOnly = true)
+    public List<JournalChartsResponseDTO.StatisticsRow> getJournalStatistics() {
+    	List<FacultyYearCountView> rows =
+    	        publicationAuthorRepository.findJournalPapersPerFacultyByAcademicYear(
+    	                STATS_FIRST_YEAR, STATS_LAST_YEAR);
+
+        Map<Long, String> names = new LinkedHashMap<>();
+        Map<Long, Boolean> former = new HashMap<>();
+        Map<Long, Map<Integer, Long>> counts = new HashMap<>();
+
+        for (FacultyYearCountView r : rows) {     Long id = r.getFacultyId();
+        
+            names.putIfAbsent(id, r.getFacultyName());
+            former.putIfAbsent(id, isFormer(r.getFacultyStatus()));
+            if (r.getAcademicYear() != null) {
+                long n = r.getPaperCount() == null ? 0L : r.getPaperCount();
+                counts.computeIfAbsent(id, k -> new HashMap<>())
+                      .merge(r.getAcademicYear().intValue(), n, Long::sum);
+            }
+        }
+
+        List<JournalChartsResponseDTO.StatisticsRow> result = new ArrayList<>();
+        for (Map.Entry<Long, String> e : names.entrySet()) {
+            Long id = e.getKey();
+            Map<Integer, Long> perYear = counts.getOrDefault(id, Map.of());
+            Map<String, Object> yearCounts = new LinkedHashMap<>();
+            for (int y = STATS_FIRST_YEAR; y <= STATS_LAST_YEAR; y++) {
+                long n = perYear.getOrDefault(y, 0L);
+                String label = y + "-" + String.format("%02d", (y + 1) % 100);   // "2025-26"
+                yearCounts.put(label, (n == 0 && former.get(id)) ? (Object) "NA" : (Object) n);
+            }
+            result.add(new JournalChartsResponseDTO.StatisticsRow(id, e.getValue(), yearCounts));
+        }
+        return result;
+    }
+
+    private boolean isFormer(String status) {
+        return status != null && status.trim().equalsIgnoreCase("Former");
     }
 }

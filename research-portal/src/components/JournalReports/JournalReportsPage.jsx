@@ -356,9 +356,20 @@ export default function JournalReportsPage() {
         ...new Set(stats.data.flatMap(r => Object.keys(r.counts ?? {})))
     ].sort();
 
-    const visibleStats = showAllStats
-        ? stats.data
-        : stats.data.slice(0, COLLAPSED_ROWS);
+   // most papers first: total across all years (NA counts as 0), ties by name
+const rowTotal = row =>
+    statYears.reduce((sum, year) => {
+        const v = row.counts?.[year];
+        return typeof v === "number" ? sum + v : sum;
+    }, 0);
+
+const sortedStats = [...stats.data].sort(
+    (a, b) => rowTotal(b) - rowTotal(a) || a.facultyName.localeCompare(b.facultyName)
+);
+
+const visibleStats = showAllStats
+    ? sortedStats
+    : sortedStats.slice(0, COLLAPSED_ROWS);
 
     // only real numbers are added; "NA*" / "NA#" and empty cells are skipped
     const statTotals = Object.fromEntries(
@@ -597,7 +608,7 @@ export default function JournalReportsPage() {
                     {activeTab === "stats" && (
                         <ReportCard
                             title="Journal statistics"
-                            subtitle="Number of publications in referred / SCI journals, year by year."
+                            subtitle="Journal papers each faculty took part in, by academic year. NA = former faculty with no papers that year."
                             loading={stats.loading}
                             error={stats.error}
                         >
@@ -626,7 +637,11 @@ export default function JournalReportsPage() {
                                                     <td className={td}>{row.facultyName}</td>
                                                     {statYears.map(year => (
                                                         <td key={year} className={td}>
-                                                            {row.counts?.[year] ?? "—"}
+                                                            {row.counts?.[year] === "NA" ? (
+                                                                <span className="text-gray-400">NA</span>
+                                                            ) : (
+                                                                row.counts?.[year] ?? "—"
+                                                            )}
                                                         </td>
                                                     ))}
                                                 </tr>
