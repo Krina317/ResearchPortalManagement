@@ -1,150 +1,229 @@
 # Research Portal Management
 
-A full-stack research portal application with:
-- **Backend:** Spring Boot (Java 21) + MySQL — `portal_backend/`
-- **Frontend:** React (Create React App) — `research-portal/`
-
-This guide walks you through pulling the code and running the full application on your own computer.
+A full-stack web application for managing research activity, built with a **Spring Boot** REST API, a **MySQL** database and a **React** frontend.
 
 ---
 
-## 1. Prerequisites
+## Tech Stack
 
-Install the following before you begin:
 
-| Tool | Version | Notes |
-|---|---|---|
-| [Git](https://git-scm.com/downloads) | any recent | to clone the repo |
-| [Java JDK](https://adoptium.net/) | 21 | backend requires Java 21 |
-| [MySQL Server](https://dev.mysql.com/downloads/mysql/) | 8.x | database |
-| [Node.js](https://nodejs.org/) | 18 LTS or later | includes `npm`, needed for the frontend |
+| Layer    | Technology                                                   |
+| -------- | ------------------------------------------------------------ |
+| Frontend | React 19, React Router, Tailwind CSS, Lucide icons           |
+| Backend  | Java 21, Spring Boot, Spring Data JPA, Bean Validation       |
+| Database | MySQL                                                        |
+| Other    | MapStruct, Lombok, Apache POI (Excel), jsoup, jsPDF, SheetJS |
 
-You do **not** need to install Maven separately — the project includes a Maven Wrapper (`mvnw` / `mvnw.cmd`).
+
+
+
+## Features
+
+
+
+- Research record management (create, view, update, delete)
+- Role-based access for portal users
+- Export of data to Excel (`.xlsx`) and PDF
+- Data import from Excel files
+- Input validation on all forms and API endpoints
 
 ---
 
-## 2. Clone the repository
+
+
+## Project Structure
+
+
+
+```
+ResearchPortalManagement/
+├── portal_backend/     # Spring Boot REST API (Maven)
+├── research-portal/    # React frontend
+└── README.md
+```
+
+---
+
+
+
+## Prerequisites
+
+Install the following before you begin.
+
+
+| Software | Version                                   | Download                                                                                 | Check with        |
+| -------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------- |
+| Git      | Any recent                                | [https://git-scm.com/downloads](https://git-scm.com/downloads)                           | `git --version`   |
+| JDK      | **21**                                    | [https://adoptium.net](https://adoptium.net) (Temurin 21)                                | `java -version`   |
+| Maven    | 3.9+ *(optional if* `mvnw` *is included)* | [https://maven.apache.org/download.cgi](https://maven.apache.org/download.cgi)           | `mvn -version`    |
+| Node.js  | 18 or newer (LTS)                         | [https://nodejs.org](https://nodejs.org)                                                 | `node --version`  |
+| npm      | 9 or newer (comes with Node)              | -                                                                                        | `npm --version`   |
+| MySQL    | 8.0 or newer                              | [https://dev.mysql.com/downloads/installer/](https://dev.mysql.com/downloads/installer/) | `mysql --version` |
+
+
+> **Windows users:** after installing the JDK, make sure `JAVA_HOME` is set and `java -version` prints version 21. If it prints an older version, the backend will not start.
+
+---
+
+
+
+## Installation
+
+
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/Krina317/ResearchPortalManagement.git
 cd ResearchPortalManagement
 ```
 
-The repo has two main folders you'll work in:
+
+
+### 2. Set up the database
+
+Make sure the MySQL server is running, then create an empty database:
+
+```bash
+mysql -u root -p
 ```
-ResearchPortalManagement/
-├── portal_backend/     ← Spring Boot API (runs on port 8080)
-└── research-portal/    ← React app (runs on port 3000)
-```
-
----
-
-## 3. Set up the database
-
-1. Start your local MySQL server.
-2. Create the database the backend expects:
 
 ```sql
 CREATE DATABASE nirma_portal;
+EXIT;
 ```
 
-3. The backend is currently configured (in
-   `portal_backend/src/main/resources/application.properties`) to connect with:
+You do **not** need to create any tables. The backend creates and updates them automatically on first start (`spring.jpa.hibernate.ddl-auto=update`).
+
+### 3. Configure the backend
+
+Open `portal_backend/src/main/resources/application.properties` and set your own MySQL credentials:
 
 ```properties
+spring.application.name=portal_backend
+
 spring.datasource.url=jdbc:mysql://localhost:3306/nirma_portal
 spring.datasource.username=root
-spring.datasource.password=admin
+spring.datasource.password=YOUR_MYSQL_PASSWORD
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
 ```
 
-   If your local MySQL `root` password is **not** `admin`, edit that file and update
-   `spring.datasource.username` / `spring.datasource.password` to match your MySQL credentials.
+Change `YOUR_MYSQL_PASSWORD` to the root password you chose when installing MySQL. If your MySQL runs on a different port or uses a different user, update the URL and username as well.
 
-   Tables are created/updated automatically on startup (`spring.jpa.hibernate.ddl-auto=update`), so you don't need to run any schema scripts manually.
+### 4. Run the backend
 
-> **Security note:** For anything beyond local testing, avoid using the `root` account or committing real credentials — consider a dedicated MySQL user and environment variables instead.
-
----
-
-## 4. Run the backend (Spring Boot)
-
-From the project root:
+Open a terminal in the backend folder:
 
 ```bash
 cd portal_backend
 ```
 
-**macOS/Linux:**
+**macOS / Linux**
+
 ```bash
 ./mvnw spring-boot:run
 ```
 
-**Windows:**
+**Windows (Command Prompt / PowerShell)**
+
 ```bash
 mvnw.cmd spring-boot:run
 ```
 
-The first run will download dependencies, so it may take a few minutes. Once started, the backend will be available at:
-
-```
-http://localhost:8080
-```
-
-Leave this terminal window running.
-
----
-
-## 5. Run the frontend (React)
-
-Open a **new terminal window**, then:
+If the project has no `mvnw` file, use your installed Maven instead:
 
 ```bash
-cd ResearchPortalManagement/research-portal
+mvn spring-boot:run
+```
+
+The first run downloads dependencies and can take a few minutes. The backend is ready when you see a line like `Started PortalBackendApplication` in the console. By default it runs at **[http://localhost:8080](http://localhost:8080)**.
+
+Leave this terminal open.
+
+### 5. Run the frontend
+
+Open a **second** terminal:
+
+```bash
+cd research-portal
 npm install
 npm start
 ```
 
-This will start the React development server and automatically open the app in your browser at:
+The app opens automatically at **[http://localhost:3000](http://localhost:3000)**. If it does not, open that address in your browser.
 
-```
-http://localhost:3000
-```
-
-The frontend is already configured to call the backend at `http://localhost:8080/api`, so as long as both servers are running, the app should work end to end.
+> The frontend talks to the backend at `http://localhost:8080`. Both must be running at the same time.
 
 ---
 
-## 6. Verify everything works
 
-1. Backend running → visit `http://localhost:8080` (you should get a response, not a connection error).
-2. Frontend running → visit `http://localhost:3000` and confirm the portal loads and can fetch data (e.g., dashboard/project/publication pages).
+
+## Quick Start Summary
+
+```bash
+# Terminal 1: backend
+cd portal_backend
+./mvnw spring-boot:run
+
+# Terminal 2: frontend
+cd research-portal
+npm install
+npm start
+```
+
+Then open [http://localhost:3000](http://localhost:3000).
 
 ---
+
+
 
 ## Troubleshooting
 
-| Problem | Likely cause / fix |
-|---|---|
-| `Access denied for user 'root'@'localhost'` | MySQL password doesn't match `application.properties`. Update the password there, or reset your MySQL root password. |
-| `Unknown database 'nirma_portal'` | You skipped step 3 — create the database first. |
-| Backend won't start / port 8080 in use | Stop whatever else is using port 8080, or change `server.port` in `application.properties`. |
-| Frontend shows network errors / blank data | Make sure the backend is running **first** and reachable at `http://localhost:8080`. |
-| `npm start` fails | Delete `node_modules` and `package-lock.json`, then re-run `npm install`. |
-| `mvnw: Permission denied` (macOS/Linux) | Run `chmod +x mvnw` then try again. |
+`Communications link failure` **or** `Access denied for user 'root'`
+MySQL is not running, or the username/password in `application.properties` is wrong. Start MySQL and double-check the credentials.
+
+`Unknown database 'nirma_portal'`
+You skipped step 2. Create the database with `CREATE DATABASE nirma_portal;`.
+
+`Port 8080 is already in use`
+Another program is using the port. Close it, or add `server.port=8081` to `application.properties` (and update the API URL in the frontend to match).
+
+`Port 3000 is already in use`
+When `npm start` asks to use another port, type `Y`.
+
+`invalid target release: 21` **or** `release version 21 not supported`
+Your JDK is older than 21. Install JDK 21 and make sure `java -version` shows it.
+
+`npm install` **fails with dependency or peer-dependency errors**
+Try:
+
+```bash
+npm install --legacy-peer-deps
+```
+
+**Frontend loads but shows no data / network errors**
+The backend is not running, or it is running on a different port than the frontend expects.
+
+`mvnw: Permission denied` **(macOS / Linux)**
+Run `chmod +x mvnw` once, then try again.
 
 ---
 
-## Summary — quick start
 
-```bash
-# Terminal 1 — backend
-cd ResearchPortalManagement/portal_backend
-./mvnw spring-boot:run
 
-# Terminal 2 — frontend
-cd ResearchPortalManagement/research-portal
-npm install
-npm start
-```
+## Notes
 
-Then open **http://localhost:3000** in your browser.
+- Never commit real database passwords to a public repository. For production, supply credentials through environment variables (for example `SPRING_DATASOURCE_PASSWORD`) instead of editing `application.properties`.
+- `spring.jpa.hibernate.ddl-auto=update` is convenient for development. For production, consider `validate` and manage schema changes through migrations.
+
+---
+
+
+
+## Author
+
+Developed by **Krina, Krisha**.   
+For questions or support, contact: [24bce293@nirmauni.ac.in](mailto:24bce293@nirmauni.ac.in), krishabr2007@gmail.com, 24bce292@nirmauni.ac.in, krinabr2007@gmail.com
