@@ -63,7 +63,10 @@ public class JournalReportFilter {
         return switch (quartile.toUpperCase().replaceAll("[^A-Z0-9]", "")) {
             case "Q1" -> List.of("Q1");
             case "Q2" -> List.of("Q2");
+            case "Q3" -> List.of("Q3");
+            case "Q4" -> List.of("Q4");
             case "Q1Q2" -> List.of("Q1", "Q2");
+            case "SCOPUSONLY" -> List.of("SCOPUS ONLY");   // queries compare against UPPER(TRIM(quartile))
             default -> null;   // "ALL" or anything unknown
         };
     }

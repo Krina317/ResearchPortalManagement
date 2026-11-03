@@ -8,7 +8,10 @@ const QUARTILE_OPTIONS = [
     { value: "", label: "All" },
     { value: "Q1", label: "Q1" },
     { value: "Q2", label: "Q2" },
-    { value: "Q1+Q2", label: "Q1 + Q2" }
+    { value: "Q3", label: "Q3" },
+    { value: "Q4", label: "Q4" },
+    { value: "Q1+Q2", label: "Q1 + Q2" },
+    { value: "Scopus Only", label: "Scopus Only" }
 ];
 
 function YearSelect({ label, hint, value, options, onChange }) {
@@ -38,7 +41,7 @@ function QuartileFilter({ value, onChange }) {
             <label className="block text-sm font-medium text-gray-700 mb-2">
                 Quartile
             </label>
-            <div className="inline-flex rounded-lg border border-gray-300 overflow-hidden">
+            <div className="inline-flex flex-wrap rounded-lg border border-gray-300 overflow-hidden">
                 {QUARTILE_OPTIONS.map(o => {
                     const active = (value || "") === o.value;
                     return (
@@ -62,7 +65,7 @@ function QuartileFilter({ value, onChange }) {
 }
 
 /* mode: "date" (conference) or "monthYear" (journal) */
-export default function ReportFilterBar({ mode, filters, onChange, onApply, onReset }) {
+export default function ReportFilterBar({ mode, filters, onChange, onApply, onReset, showQuartile = true }) {
     const { months, years, academicYears, financialYears } = getDateOptions();
     const [open, setOpen] = useState(false);
 
@@ -121,10 +124,12 @@ export default function ReportFilterBar({ mode, filters, onChange, onApply, onRe
                         />
                     </div>
 
-                    <QuartileFilter
-                        value={filters.quartile}
-                        onChange={v => onChange("quartile", v)}
-                    />
+                    {showQuartile && (
+                        <QuartileFilter
+                            value={filters.quartile}
+                            onChange={v => onChange("quartile", v)}
+                        />
+                    )}
 
                     {mode === "date" ? (
                         <DateFilter

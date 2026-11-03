@@ -206,8 +206,7 @@ public class JournalPaperRepositoryImpl implements JournalPaperRepositoryCustom 
         }
 
         String sql = "SELECT " + MONTH_EXPR + " AS month_total, "
-                + "jp.impact_factor_clarivate, jp.index_in FROM journal_paper jp" + where;
-
+                + "jp.impact_factor_clarivate, jp.index_in, jp.quartile FROM journal_paper jp" + where;
         Query q = entityManager.createNativeQuery(sql);
         params.forEach(q::setParameter);
 

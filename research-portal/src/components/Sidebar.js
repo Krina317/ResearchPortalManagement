@@ -30,6 +30,7 @@ const groups = [
     items: [
       { path: "/journal/reports", label: "Journal Reports", icon: FileBarChart },
       { path: "/conference/reports", label: "Conference Reports", icon: FileBarChart },
+      { path: "/book-chapters/reports", label: "Book Chapter Reports", icon: FileBarChart },
       { path: "/projects/ext/reports", label: "External Project Reports", icon: FileBarChart },
       { path: "/projects/nu/reports", label: "NU Project Reports", icon: FileBarChart },
     ],

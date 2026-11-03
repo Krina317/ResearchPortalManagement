@@ -185,4 +185,34 @@ public interface PublicationAuthorRepository extends JpaRepository<PublicationAu
 		        """, nativeQuery = true)
 		List<StudentTypeCountView> countConferencePapersByStudentType(@Param("fromDate") LocalDate fromDate,
 		                                                              @Param("toDate") LocalDate toDate);
+		
+		@Query(value = """
+		        SELECT f.id             AS facultyId,
+		               f.name           AS facultyName,
+		               f.faculty_status AS facultyStatus,
+		               x.academic_year  AS academicYear,
+		               x.paper_count    AS paperCount
+		        FROM faculty_list f
+		        LEFT JOIN (
+		            SELECT am.faculty_id AS faculty_id,
+		                   bc.academic_year AS academic_year,
+		                   COUNT(DISTINCT pa.publication_id) AS paper_count
+		            FROM publication_author pa
+		            JOIN author_master am ON am.author_id = pa.author_id
+		            JOIN (
+		                SELECT id,
+		                       (year * 12 + COALESCE(month, 1) - 7) DIV 12 AS academic_year
+		                FROM book_chapter
+		                WHERE year IS NOT NULL
+		            ) bc ON bc.id = pa.publication_id
+		            WHERE pa.publication_type = 'BOOK_CHAPTER'
+		              AND am.faculty_id IS NOT NULL
+		              AND bc.academic_year BETWEEN :fromYear AND :toYear
+		            GROUP BY am.faculty_id, bc.academic_year
+		        ) x ON x.faculty_id = f.id
+		        ORDER BY f.name, x.academic_year
+		        """, nativeQuery = true)
+		List<FacultyYearCountView> findBookChapterPapersPerFacultyByAcademicYear(
+		        @Param("fromYear") int fromYear,
+		        @Param("toYear") int toYear);
 }

@@ -2,6 +2,7 @@ import "./App.css";
 
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 
+
 import { AuthProvider, useAuth } from "./AuthContext";
 import Login from "./Login";
 import Sidebar from "./Sidebar";
@@ -20,6 +21,7 @@ import NuProjectReport from "./NuProjectReport";
 import ConsultancyPage from "./ConsultancyPage";
 import PatentsPage from "./PatentsPage";
 import MoUsPage from "./MoUsPage";
+import BookChapterReportsPage from "./BookChapterReports/BookChapterReportsPage";
 
 // Everything inside requires login; the shell (sidebar + topbar) lives here
 function ProtectedLayout() {
@@ -71,6 +73,7 @@ function App() {
             <Route path="/consultancy" element={<ConsultancyPage />} />
             <Route path="/patents" element={<PatentsPage />} />
             <Route path="/mou" element={<MoUsPage />} />
+            <Route path="/book-chapters/reports" element={<BookChapterReportsPage />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

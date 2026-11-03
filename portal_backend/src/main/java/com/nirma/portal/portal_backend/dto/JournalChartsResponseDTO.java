@@ -7,7 +7,8 @@ public record JournalChartsResponseDTO(
         long totalPapers,
         List<Bucket> impactFactor,
         List<MonthCount> monthly,
-        List<IndexCount> indexing) {
+        List<IndexCount> indexing,
+        List<Bucket> quartiles) {
 
     public record Bucket(String label, long count) {}
     public record MonthCount(String month, long count) {}

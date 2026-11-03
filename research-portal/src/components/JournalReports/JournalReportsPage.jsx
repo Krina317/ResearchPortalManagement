@@ -10,7 +10,7 @@ import {
 } from "../../api/journalApi";
 import ReportFilterBar from "../Reports/ReportFilterBar";
 
-const EMPTY_FILTERS = {
+export const EMPTY_FILTERS = {
     academicYear: "", financialYear: "", calendarYear: "",
     fromMonth: "", fromYear: "", toMonth: "", toYear: "",
     quartile: ""
@@ -25,11 +25,11 @@ const BAR_COLORS = ["bg-emerald-700", "bg-emerald-500", "bg-emerald-300"];
 const PIE_COLORS = ["#047857", "#10b981", "#6ee7b7", "#f59e0b", "#6366f1", "#ec4899"];
 
 // how many rows are visible before "View all"
-const COLLAPSED_ROWS = 5;
+export const COLLAPSED_ROWS = 5;
 
 // stable references so useReport's effect doesn't re-run on every render
 const NO_DATA = [];
-const EMPTY_CHARTS = { totalPapers: 0, impactFactor: [], monthly: [], indexing: [] };
+const EMPTY_CHARTS = { totalPapers: 0, impactFactor: [], monthly: [], indexing: [], quartiles: [] };
 
 const TABS = [
     { id: "scores", label: "Faculty Scores" },
@@ -38,7 +38,7 @@ const TABS = [
 ];
 
 /* Loads one report and tracks its own loading / error state. */
-function useReport(loader, initial = NO_DATA) {
+export function useReport(loader, initial = NO_DATA) {
     const [data, setData] = useState(initial);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -69,7 +69,7 @@ function useReport(loader, initial = NO_DATA) {
     return { data, loading, error, reload: () => setTick(t => t + 1) };
 }
 
-function ReportCard({ title, subtitle, loading, error, className = "", children }) {
+export function ReportCard({ title, subtitle, loading, error, className = "", children }) {
     return (
         <section className={`bg-white rounded-xl border border-gray-200 overflow-hidden ${className}`}>
             <div className="px-5 py-4 border-b">
@@ -120,7 +120,7 @@ function ReportTabs({ active, onChange }) {
 }
 
 /* Footer with "Showing X of N" and the View all / Show less toggle. */
-function ViewAllFooter({ shown, total, expanded, onToggle, noun }) {
+export function ViewAllFooter({ shown, total, expanded, onToggle, noun }) {
     if (total <= COLLAPSED_ROWS) return null;
 
     return (
@@ -141,7 +141,7 @@ function ViewAllFooter({ shown, total, expanded, onToggle, noun }) {
 
 /* Simple vertical bar chart, no chart library needed. data: [{ label, value }]
    compact = narrower bars, for 12 months. */
-function BarChart({ data, compact = false }) {
+export function BarChart({ data, compact = false }) {
     const max = Math.max(...data.map(d => d.value), 0) || 1;
 
     return (
@@ -238,7 +238,7 @@ function PieChart({ data }) {
 
 /* Horizontal table: labels across the top, one row of counts below.
    data: [{ label, value }] */
-function CountTable({ data, rowLabel = "Papers" }) {
+export function CountTable({ data, rowLabel = "Papers" }) {
     return (
         <div className="w-full overflow-x-auto">
             <table className="w-full min-w-max border-collapse">
@@ -263,9 +263,9 @@ function CountTable({ data, rowLabel = "Papers" }) {
     );
 }
 
-const th = "px-4 py-3 text-left text-xs font-semibold text-gray-600 border-b whitespace-nowrap";
-const td = "px-4 py-3 text-sm text-gray-700 border-b last:border-b-0";
-const tdTotal = "px-4 py-3 text-sm font-semibold text-gray-800 border-t-2 border-gray-200";
+export const th = "px-4 py-3 text-left text-xs font-semibold text-gray-600 border-b whitespace-nowrap";
+export const td = "px-4 py-3 text-sm text-gray-700 border-b last:border-b-0";
+export const tdTotal = "px-4 py-3 text-sm font-semibold text-gray-800 border-t-2 border-gray-200";
 
 export default function JournalReportsPage() {
     const [filters, setFilters] = useState(EMPTY_FILTERS);
@@ -276,7 +276,8 @@ export default function JournalReportsPage() {
 
     const loadScores = useCallback(() => fetchFacultyScores(applied), [applied]);
     const loadCounts = useCallback(() => fetchStudentCounts(applied), [applied]);
-    const loadCharts = useCallback(() => fetchJournalCharts(applied), [applied]);
+    // graphs keep the year/month filters but ignore the quartile filter
+    const loadCharts = useCallback(() => fetchJournalCharts({ ...applied, quartile: "" }), [applied]);
 
     const scores = useReport(loadScores);
     const counts = useReport(loadCounts);
@@ -343,35 +344,36 @@ export default function JournalReportsPage() {
         value: Number(countByType[type] ?? 0)
     }));
 
-    /* ---------- Journal charts (impact factor, monthly, indexing) ---------- */
+    /* ---------- Journal charts (impact factor, quartiles, monthly, indexing) ---------- */
 
     const impactData = charts.data.impactFactor.map(b => ({ label: b.label, value: b.count }));
     const monthlyData = charts.data.monthly.map(m => ({ label: m.month, value: m.count }));
     const indexingData = charts.data.indexing.map(i => ({ label: i.index, value: i.count }));
+    const quartileData = (charts.data.quartiles ?? []).map(q => ({ label: q.label, value: q.count }));
 
     /* ---------- Journal statistics ---------- */
 
-    // each row: { facultyName, counts: { "2021-22": 62, "2022-23": "NA*", ... } }
+    // each row: { facultyName, counts: { "2021-22": 62, "2022-23": "NA", ... } }
     const statYears = [
         ...new Set(stats.data.flatMap(r => Object.keys(r.counts ?? {})))
     ].sort();
 
-   // most papers first: total across all years (NA counts as 0), ties by name
-const rowTotal = row =>
-    statYears.reduce((sum, year) => {
-        const v = row.counts?.[year];
-        return typeof v === "number" ? sum + v : sum;
-    }, 0);
+    // most papers first: total across all years (NA counts as 0), ties by name
+    const rowTotal = row =>
+        statYears.reduce((sum, year) => {
+            const v = row.counts?.[year];
+            return typeof v === "number" ? sum + v : sum;
+        }, 0);
 
-const sortedStats = [...stats.data].sort(
-    (a, b) => rowTotal(b) - rowTotal(a) || a.facultyName.localeCompare(b.facultyName)
-);
+    const sortedStats = [...stats.data].sort(
+        (a, b) => rowTotal(b) - rowTotal(a) || a.facultyName.localeCompare(b.facultyName)
+    );
 
-const visibleStats = showAllStats
-    ? sortedStats
-    : sortedStats.slice(0, COLLAPSED_ROWS);
+    const visibleStats = showAllStats
+        ? sortedStats
+        : sortedStats.slice(0, COLLAPSED_ROWS);
 
-    // only real numbers are added; "NA*" / "NA#" and empty cells are skipped
+    // only real numbers are added; "NA" and empty cells are skipped
     const statTotals = Object.fromEntries(
         statYears.map(year => [
             year,
@@ -546,7 +548,6 @@ const visibleStats = showAllStats
                                 subtitle="Papers with at least one UG, PG or PhD student author."
                                 loading={counts.loading}
                                 error={counts.error}
-                                
                             >
                                 <CountTable data={studentPieData} />
                                 <PieChart data={studentPieData} />
@@ -557,7 +558,6 @@ const visibleStats = showAllStats
                                 subtitle="Papers by Clarivate impact factor. Papers without a usable value count as No IF."
                                 loading={charts.loading}
                                 error={charts.error}
-                                
                             >
                                 <CountTable data={impactData} />
                                 <BarChart data={impactData} />
@@ -565,11 +565,21 @@ const visibleStats = showAllStats
                             </ReportCard>
 
                             <ReportCard
-                                title="Journal indexing comparison"
-                                subtitle="A paper listed in more than one index counts once in each."
+                                title="Journal quartiles"
+                                subtitle="Papers in each Scopus quartile, plus Scopus Only. Papers with no quartile set yet are not counted."
                                 loading={charts.loading}
                                 error={charts.error}
-                                
+                            >
+                                <CountTable data={quartileData} />
+                                <BarChart data={quartileData} />
+                                <PieChart data={quartileData} />
+                            </ReportCard>
+
+                            <ReportCard
+                                title="Journal indexing comparison"
+                                subtitle="Papers indexed in Scopus and Web of Science. A paper in both counts once in each."
+                                loading={charts.loading}
+                                error={charts.error}
                             >
                                 {indexingData.length === 0 ? (
                                     <p className="px-5 py-10 text-center text-gray-500">
@@ -588,7 +598,6 @@ const visibleStats = showAllStats
                                 subtitle={`${charts.data.totalPapers} papers in the selected period.`}
                                 loading={charts.loading}
                                 error={charts.error}
-                                
                             >
                                 {monthlyData.length === 0 ? (
                                     <p className="px-5 py-10 text-center text-gray-500">

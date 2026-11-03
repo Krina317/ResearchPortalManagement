@@ -65,6 +65,10 @@ public class JournalReportsService {
     
     private static final List<String> IF_LABELS =
             List.of("No IF", "IF<2", "2<=IF<5", "5<=IF<10", "IF>=10");
+    private static final List<String> INDEX_LABELS = List.of("Scopus", "WoS", "No Scopus");
+    
+    private static final List<String> QUARTILE_LABELS =
+            List.of("Q1", "Q2", "Q3", "Q4", "Scopus Only");
 
     @Transactional(readOnly = true)
     public JournalChartsResponseDTO getJournalCharts(JournalReportFilter filter) {
@@ -76,7 +80,9 @@ public class JournalReportsService {
         IF_LABELS.forEach(l -> buckets.put(l, 0L));
         Map<Integer, Long> perMonth = new HashMap<>();
         Map<String, Long> indexCounts = new LinkedHashMap<>();
-        Map<String, String> indexDisplay = new HashMap<>();
+        INDEX_LABELS.forEach(l -> indexCounts.put(l, 0L));   // "No Scopus" stays 0 for now
+        Map<String, Long> quartileBuckets = new LinkedHashMap<>();
+        QUARTILE_LABELS.forEach(l -> quartileBuckets.put(l, 0L));
 
         for (Object[] r : rows) {
             // impact factor (Clarivate)
@@ -84,17 +90,25 @@ public class JournalReportsService {
 
             // month
             if (r[0] != null) perMonth.merge(((Number) r[0]).intValue(), 1L, Long::sum);
+            
+            // quartile (papers with blank / N/A quartile are not counted in any bar)
+            String qRaw = r.length > 3 ? (String) r[3] : null;
+            if (qRaw != null) {
+                for (String l : QUARTILE_LABELS) {
+                    if (l.equalsIgnoreCase(qRaw.trim())) {
+                        quartileBuckets.merge(l, 1L, Long::sum);
+                        break;
+                    }
+                }
+            }
 
             // indexing: a paper counts once in each index it belongs to
             String indexIn = (String) r[2];
             if (indexIn != null) {
-                Set<String> seen = new HashSet<>();
-                for (String part : indexIn.split("[,;/]")) {
-                    String name = part.trim();
-                    if (name.isEmpty()) continue;
-                    String key = name.toUpperCase(Locale.ROOT);
-                    indexDisplay.putIfAbsent(key, name);
-                    if (seen.add(key)) indexCounts.merge(key, 1L, Long::sum);
+                String up = indexIn.toUpperCase(Locale.ROOT);
+                if (up.contains("SCOPUS")) indexCounts.merge("Scopus", 1L, Long::sum);
+                if (up.contains("WEB OF SCIENCE") || up.matches(".*\\bWOS\\b.*")) {
+                    indexCounts.merge("WoS", 1L, Long::sum);
                 }
             }
         }
@@ -118,8 +132,10 @@ public class JournalReportsService {
                         .map(e -> new JournalChartsResponseDTO.Bucket(e.getKey(), e.getValue())).toList(),
                 monthly,
                 indexCounts.entrySet().stream()
-                        .map(e -> new JournalChartsResponseDTO.IndexCount(indexDisplay.get(e.getKey()), e.getValue()))
-                        .toList());
+                .map(e -> new JournalChartsResponseDTO.IndexCount(e.getKey(), e.getValue()))
+                .toList(),
+                quartileBuckets.entrySet().stream()
+                        .map(e -> new JournalChartsResponseDTO.Bucket(e.getKey(), e.getValue())).toList());
     }
 
     private String impactBucket(String raw) {

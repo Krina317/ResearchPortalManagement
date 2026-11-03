@@ -1,3 +1,7 @@
+import { reportQuery } from "./reportQuery";
+
+
+
 const BASE_URL = "http://localhost:8080/api";
 
 async function request(path, options) {
@@ -29,3 +33,11 @@ export const updateBookChapter = (id, payload) =>
 
 export const deleteBookChapter = (id) =>
     request(`/book-chapters/${id}`, { method: "DELETE" });
+
+/* ---------- Reports ---------- */
+
+export const fetchBookChapterMonthly = (filters) =>
+    request(`/book-chapters/reports/monthly${reportQuery(filters)}`);
+
+export const fetchBookChapterStatistics = () =>
+    request("/book-chapters/reports/statistics");
