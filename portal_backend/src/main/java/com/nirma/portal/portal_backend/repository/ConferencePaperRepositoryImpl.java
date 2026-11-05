@@ -123,4 +123,31 @@ public class ConferencePaperRepositoryImpl implements ConferencePaperRepositoryC
     private boolean notBlank(String s) {
         return s != null && !s.isBlank();
     }
+    
+    @Override
+    public List<Object[]> findChartRows(LocalDate fromDate, LocalDate toDate, List<String> quartiles) {
+        StringBuilder where = new StringBuilder(" WHERE cp.from_date IS NOT NULL ");
+        Map<String, Object> params = new HashMap<>();
+
+        if (fromDate != null) {
+            where.append(" AND cp.from_date >= :fromDate ");
+            params.put("fromDate", fromDate);
+        }
+        if (toDate != null) {
+            where.append(" AND cp.from_date <= :toDate ");
+            params.put("toDate", toDate);
+        }
+        if (quartiles != null && !quartiles.isEmpty()) {
+            where.append(" AND UPPER(TRIM(cp.quartile)) IN (:quartiles) ");
+            params.put("quartiles", quartiles);
+        }
+
+        String sql = "SELECT cp.from_date, cp.conference_type, cp.quartile FROM conference_paper cp" + where;
+        Query q = entityManager.createNativeQuery(sql);
+        params.forEach(q::setParameter);
+
+        @SuppressWarnings("unchecked")
+        List<Object[]> rows = q.getResultList();
+        return rows;
+    }
 }

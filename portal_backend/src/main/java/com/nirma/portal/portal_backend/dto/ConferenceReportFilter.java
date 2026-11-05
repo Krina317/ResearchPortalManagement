@@ -1,6 +1,7 @@
 package com.nirma.portal.portal_backend.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -35,5 +36,15 @@ public class ConferenceReportFilter {
         if (financialYear != null) return LocalDate.of(financialYear + 1, 3, 31);
         if (calendarYear != null) return LocalDate.of(calendarYear, 12, 31);
         return null;
+    }
+    
+    private String quartile;
+
+    /** Q1+Q2 means both; blank or "All" means no quartile filter. */
+    public List<String> resolveQuartiles() {
+        if (quartile == null || quartile.isBlank() || "All".equalsIgnoreCase(quartile)) return List.of();
+        String q = quartile.trim().toUpperCase();
+        if (q.replace(" ", "").equals("Q1+Q2")) return List.of("Q1", "Q2");
+        return List.of(q);   // Q3, Q4, SCOPUS ONLY, N/A
     }
 }

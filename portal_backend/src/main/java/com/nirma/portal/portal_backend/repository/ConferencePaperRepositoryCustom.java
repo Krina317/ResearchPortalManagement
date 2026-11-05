@@ -18,4 +18,5 @@ public interface ConferencePaperRepositoryCustom {
             List<Long> authorIds,
             Pageable pageable
     );
+    List<Object[]> findChartRows(LocalDate fromDate, LocalDate toDate, List<String> quartiles);
 }

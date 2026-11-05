@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, Download } from "lucide-react";
 import {
     fetchConferenceFacultyScores,
     fetchConferenceStudentCounts,
+    fetchConferenceCharts,
+    fetchConferenceStatistics,
     fetchConferenceReviewAuthors,
     decideConferenceReviewAuthor
 } from "../../api/conferenceApi";
 import ReportFilterBar from "../Reports/ReportFilterBar";
+import { exportReportToExcel } from "../../utils/exportReportToExcel";
 
 const EMPTY_FILTERS = {
     academicYear: "", financialYear: "", calendarYear: "",
@@ -15,6 +18,17 @@ const EMPTY_FILTERS = {
 };
 
 const STUDENT_TYPES = ["UG", "PG", "PHD"];
+
+// value goes to the backend as-is; "Q1+Q2" means Q1 and Q2 together
+export const QUARTILE_OPTIONS = [
+    { value: "", label: "All" },
+    { value: "Q1+Q2", label: "Q1 + Q2" },
+    { value: "Q1", label: "Q1" },
+    { value: "Q2", label: "Q2" },
+    { value: "Q3", label: "Q3" },
+    { value: "Q4", label: "Q4" },
+    { value: "Scopus Only", label: "Scopus Only" }
+];
 
 // pie colours (hex, used in SVG + legend)
 const PIE_COLORS = ["#047857", "#10b981", "#6ee7b7", "#f59e0b", "#6366f1", "#ec4899"];
@@ -188,6 +202,34 @@ function PieChart({ data }) {
     );
 }
 
+/* Simple bar chart, no chart library needed. data: [{ label, value }] */
+function BarChart({ data }) {
+    if (data.length === 0) {
+        return <p className="px-5 py-10 text-center text-gray-500">No data for these filters.</p>;
+    }
+
+    const max = Math.max(1, ...data.map(d => d.value));
+
+    return (
+        <div className="w-full overflow-x-auto px-5 py-6">
+            <div className="flex items-end gap-3 min-w-max">
+                {data.map(d => (
+                    <div key={d.label} className="flex flex-col items-center w-16">
+                        <div className="h-44 flex flex-col items-center justify-end">
+                            <span className="text-xs font-semibold text-gray-700 mb-1">{d.value}</span>
+                            <div
+                                className="w-8 rounded-t bg-emerald-500"
+                                style={{ height: `${Math.round((d.value / max) * 150)}px` }}
+                            />
+                        </div>
+                        <span className="text-xs text-gray-500 mt-2 text-center whitespace-nowrap">{d.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 /* Horizontal table: labels across the top, one row of counts below.
    data: [{ label, value }] */
 function CountTable({ data, rowLabel = "Papers" }) {
@@ -224,12 +266,17 @@ export default function ConferenceReportsPage() {
     const [applied, setApplied] = useState(EMPTY_FILTERS);
     const [activeTab, setActiveTab] = useState("scores");
     const [showAllScores, setShowAllScores] = useState(false);
+    const [showAllStats, setShowAllStats] = useState(false);
+    const [exporting, setExporting] = useState(false);
 
     const loadScores = useCallback(() => fetchConferenceFacultyScores(applied), [applied]);
     const loadCounts = useCallback(() => fetchConferenceStudentCounts(applied), [applied]);
+    const loadCharts = useCallback(() => fetchConferenceCharts(applied), [applied]);
 
     const scores = useReport(loadScores);
     const counts = useReport(loadCounts);
+    const charts = useReport(loadCharts);
+    const stats = useReport(fetchConferenceStatistics);
     const review = useReport(fetchConferenceReviewAuthors);
 
     const updateFilter = (field, value) => setFilters(prev => ({ ...prev, [field]: value }));
@@ -254,6 +301,7 @@ export default function ConferenceReportsPage() {
             );
             review.reload();
             scores.reload(); // scores change once an author is confirmed
+            stats.reload();  // so do the per-year statistics
         } catch (err) {
             console.error(err);
             setActionError(`Could not save the decision for ${author.displayName}.`);
@@ -279,7 +327,7 @@ export default function ConferenceReportsPage() {
         0
     );
 
-    /* ---------- Student counts (graphs tab) ---------- */
+    /* ---------- Graphs tab ---------- */
 
     // always show UG, PG, PHD in that order, even if the API omits one
     const countByType = Object.fromEntries(
@@ -291,17 +339,122 @@ export default function ConferenceReportsPage() {
         value: Number(countByType[type] ?? 0)
     }));
 
+    const monthlyBarData = (charts.data.monthly ?? []).map(m => ({ label: m.month, value: Number(m.count) }));
+    const typePieData = (charts.data.types ?? []).map(t => ({ label: t.label, value: Number(t.count) }));
+    const quartileBarData = (charts.data.quartiles ?? []).map(q => ({ label: q.label, value: Number(q.count) }));
+
+    /* ---------- Statistics tab ---------- */
+
+    // the API returns a plain list of rows, the year columns come from the keys
+    const statRows = Array.isArray(stats.data) ? stats.data : [];
+    const statYears = Object.keys(statRows[0]?.counts ?? {});
+    const visibleStatRows = showAllStats ? statRows : statRows.slice(0, COLLAPSED_ROWS);
+
+    /* ---------- Excel export ---------- */
+
+    const exportReady = !(scores.loading || counts.loading || charts.loading || stats.loading);
+
+    async function handleExport() {
+        setExporting(true);
+        try {
+            const toRows = data => data.map(d => [d.label, d.value]);
+
+            await exportReportToExcel({
+                fileName: "Conference Reports",
+                sheets: [
+                    {
+                        name: "Faculty Scores",
+                        blocks: [
+                            {
+                                title: "Faculty scores",
+                                columns: ["Sr. No.", "Faculty Name", "Score"],
+                                rows: sortedScores.map((r, i) => [
+                                    i + 1,
+                                    r.facultyName,
+                                    Number(Number(r.conferenceScore).toFixed(2))
+                                ]),
+                                totalRow: sortedScores.length > 0
+                                    ? ["", `Total (${sortedScores.length} faculty)`, Number(totalScore.toFixed(2))]
+                                    : undefined
+                            }
+                        ]
+                    },
+                    {
+                        name: "Graphs",
+                        blocks: [
+                            {
+                                title: "Student authors",
+                                columns: ["Student type", "Papers"],
+                                rows: toRows(studentPieData),
+                                chart: "pie"
+                            },
+                            {
+                                title: "Monthly publications",
+                                columns: ["Month", "Papers"],
+                                rows: toRows(monthlyBarData),
+                                chart: "bar"
+                            },
+                            {
+                                title: "National vs International",
+                                columns: ["Conference type", "Papers"],
+                                rows: toRows(typePieData),
+                                chart: "pie"
+                            },
+                            {
+                                title: "Papers per quartile",
+                                columns: ["Quartile", "Papers"],
+                                rows: toRows(quartileBarData),
+                                chart: "bar"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Conference Statistics",
+                        blocks: [
+                            {
+                                title: "Conference statistics (N/A = former faculty with no papers that year)",
+                                columns: ["Sr. No.", "Faculty Name", ...statYears],
+                                rows: statRows.map((r, i) => [
+                                    i + 1,
+                                    r.facultyName,
+                                    ...statYears.map(y => r.counts?.[y] ?? "N/A")
+                                ])
+                            }
+                        ]
+                    }
+                ]
+            });
+        } catch (err) {
+            console.error(err);
+            alert("Could not export the report to Excel.");
+        } finally {
+            setExporting(false);
+        }
+    }
+
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-800">
-                        Conference Reports
-                    </h1>
-                    <p className="mt-1 text-sm text-gray-500">
-                        Faculty scores, student author graphs and conference statistics.
-                    </p>
+                <div className="flex items-start justify-between gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-800">
+                            Conference Reports
+                        </h1>
+                        <p className="mt-1 text-sm text-gray-500">
+                            Faculty scores, student author graphs and conference statistics.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={handleExport}
+                        disabled={!exportReady || exporting}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {exporting ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
+                        Export Excel
+                    </button>
                 </div>
 
                 <ReportFilterBar
@@ -459,6 +612,35 @@ export default function ConferenceReportsPage() {
                                 <CountTable data={studentPieData} />
                                 <PieChart data={studentPieData} />
                             </ReportCard>
+
+                            <ReportCard
+                                title="Monthly publications"
+                                subtitle="Conference papers per month, based on the conference start date."
+                                loading={charts.loading}
+                                error={charts.error}
+                            >
+                                <BarChart data={monthlyBarData} />
+                            </ReportCard>
+
+                            <ReportCard
+                                title="National vs International"
+                                subtitle="Conference papers by conference type."
+                                loading={charts.loading}
+                                error={charts.error}
+                            >
+                                <CountTable data={typePieData} />
+                                <PieChart data={typePieData} />
+                            </ReportCard>
+
+                            <ReportCard
+                                title="Papers per quartile"
+                                subtitle="Number of conference papers in each quartile."
+                                loading={charts.loading}
+                                error={charts.error}
+                            >
+                                <CountTable data={quartileBarData} />
+                                <BarChart data={quartileBarData} />
+                            </ReportCard>
                         </div>
                     )}
 
@@ -466,11 +648,52 @@ export default function ConferenceReportsPage() {
                     {activeTab === "stats" && (
                         <ReportCard
                             title="Conference statistics"
-                            subtitle="Number of conference papers, year by year."
+                            subtitle="Papers published by each faculty member per academic year (July to June). N/A means a former faculty member with no papers that year."
+                            loading={stats.loading}
+                            error={stats.error}
                         >
-                            <p className="px-5 py-10 text-center text-gray-500">
-                                Conference statistics are not available yet.
-                            </p>
+                            <div className="w-full overflow-x-auto">
+                                <table className="w-full min-w-max border-collapse">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th className={th}>Sr. No.</th>
+                                            <th className={th}>Faculty Name</th>
+                                            {statYears.map(y => (
+                                                <th key={y} className={`${th} text-center`}>{y}</th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {statRows.length === 0 ? (
+                                            <tr>
+                                                <td colSpan={2 + statYears.length} className="px-6 py-10 text-center text-gray-500">
+                                                    No faculty found.
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            visibleStatRows.map((row, index) => (
+                                                <tr key={row.facultyId} className="hover:bg-gray-50">
+                                                    <td className={td}>{index + 1}</td>
+                                                    <td className={td}>{row.facultyName}</td>
+                                                    {statYears.map(y => (
+                                                        <td key={y} className={`${td} text-center`}>
+                                                            {row.counts?.[y] ?? "N/A"}
+                                                        </td>
+                                                    ))}
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <ViewAllFooter
+                                shown={visibleStatRows.length}
+                                total={statRows.length}
+                                expanded={showAllStats}
+                                onToggle={() => setShowAllStats(v => !v)}
+                                noun="faculty"
+                            />
                         </ReportCard>
                     )}
                 </div>

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, Download } from "lucide-react";
 import {
     fetchFacultyScores,
     fetchStudentCounts,
@@ -9,6 +9,7 @@ import {
     fetchJournalStatistics
 } from "../../api/journalApi";
 import ReportFilterBar from "../Reports/ReportFilterBar";
+import { exportReportToExcel } from "../../utils/exportReportToExcel";
 
 export const EMPTY_FILTERS = {
     academicYear: "", financialYear: "", calendarYear: "",
@@ -273,6 +274,7 @@ export default function JournalReportsPage() {
     const [activeTab, setActiveTab] = useState("scores");
     const [showAllScores, setShowAllScores] = useState(false);
     const [showAllStats, setShowAllStats] = useState(false);
+    const [exporting, setExporting] = useState(false);
 
     const loadScores = useCallback(() => fetchFacultyScores(applied), [applied]);
     const loadCounts = useCallback(() => fetchStudentCounts(applied), [applied]);
@@ -384,17 +386,120 @@ export default function JournalReportsPage() {
         ])
     );
 
+    /* ---------- Excel export ---------- */
+
+    const exportReady = !(scores.loading || counts.loading || charts.loading || stats.loading);
+
+    async function handleExport() {
+        setExporting(true);
+        try {
+            const toRows = data => data.map(d => [d.label, d.value]);
+
+            await exportReportToExcel({
+                fileName: "Journal Reports",
+                sheets: [
+                    {
+                        name: "Faculty Scores",
+                        blocks: [
+                            {
+                                title: "Faculty scores",
+                                columns: ["Sr. No.", "Faculty Name", "Score"],
+                                rows: sortedScores.map((r, i) => [
+                                    i + 1,
+                                    r.facultyName,
+                                    Number(Number(r.journalScore).toFixed(2))
+                                ]),
+                                totalRow: sortedScores.length > 0
+                                    ? ["", `Total (${sortedScores.length} faculty)`, Number(totalScore.toFixed(2))]
+                                    : undefined
+                            }
+                        ]
+                    },
+                    {
+                        name: "Graphs",
+                        blocks: [
+                            {
+                                title: "Student authors",
+                                columns: ["Student type", "Papers"],
+                                rows: toRows(studentPieData),
+                                chart: "pie"
+                            },
+                            {
+                                title: "Journal impact factors",
+                                columns: ["Impact factor", "Papers"],
+                                rows: toRows(impactData),
+                                chart: "bar"
+                            },
+                            {
+                                title: "Journal quartiles",
+                                columns: ["Quartile", "Papers"],
+                                rows: toRows(quartileData),
+                                chart: "bar"
+                            },
+                            {
+                                title: "Journal indexing comparison",
+                                columns: ["Index", "Papers"],
+                                rows: toRows(indexingData),
+                                chart: "bar"
+                            },
+                            {
+                                title: `Month-wise journal publications (${charts.data.totalPapers} papers)`,
+                                columns: ["Month", "Papers"],
+                                rows: toRows(monthlyData),
+                                chart: "bar"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Journal Statistics",
+                        blocks: [
+                            {
+                                title: "Journal statistics (NA = former faculty with no papers that year)",
+                                columns: ["S. No.", "Name", ...statYears],
+                                rows: sortedStats.map((r, i) => [
+                                    i + 1,
+                                    r.facultyName,
+                                    ...statYears.map(y => r.counts?.[y] ?? "")
+                                ]),
+                                totalRow: sortedStats.length > 0
+                                    ? ["", `Total (${sortedStats.length} faculty)`, ...statYears.map(y => statTotals[y])]
+                                    : undefined
+                            }
+                        ]
+                    }
+                ]
+            });
+        } catch (err) {
+            console.error(err);
+            alert("Could not export the report to Excel.");
+        } finally {
+            setExporting(false);
+        }
+    }
+
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-800">
-                        Journal Reports
-                    </h1>
-                    <p className="mt-1 text-sm text-gray-500">
-                        Faculty scores, student author graphs and journal statistics.
-                    </p>
+                <div className="flex items-start justify-between gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-800">
+                            Journal Reports
+                        </h1>
+                        <p className="mt-1 text-sm text-gray-500">
+                            Faculty scores, student author graphs and journal statistics.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={handleExport}
+                        disabled={!exportReady || exporting}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {exporting ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
+                        Export Excel
+                    </button>
                 </div>
 
                 <ReportFilterBar

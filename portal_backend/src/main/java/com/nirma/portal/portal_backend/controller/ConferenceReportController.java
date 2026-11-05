@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.nirma.portal.portal_backend.dto.ConferenceChartsResponseDTO;
 import com.nirma.portal.portal_backend.dto.ConferenceFacultyResponseDTO;
 import com.nirma.portal.portal_backend.dto.ConferenceReportFilter;
 import com.nirma.portal.portal_backend.dto.ReviewAuthorDTO;
@@ -44,5 +45,15 @@ public class ConferenceReportController {
     @GetMapping("/student-counts")
     public List<StudentTypeCountResponseDTO> getStudentCounts(ConferenceReportFilter filter) {
         return conferenceReportsService.getStudentTypeCounts(filter);
+    }
+    
+    @GetMapping("/charts")
+    public ConferenceChartsResponseDTO getCharts(ConferenceReportFilter filter) {
+        return conferenceReportsService.getConferenceCharts(filter);
+    }
+
+    @GetMapping("/statistics")
+    public List<ConferenceChartsResponseDTO.StatisticsRow> getStatistics() {
+        return conferenceReportsService.getConferenceStatistics();
     }
 }

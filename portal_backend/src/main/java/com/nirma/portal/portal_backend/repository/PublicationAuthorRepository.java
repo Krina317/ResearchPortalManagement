@@ -164,13 +164,16 @@ public interface PublicationAuthorRepository extends JpaRepository<PublicationAu
 		              AND am2.faculty_id IS NOT NULL
 		              AND (:fromDate IS NULL OR cp.from_date >= :fromDate)
 		              AND (:toDate IS NULL OR cp.from_date <= :toDate)
+		              AND (:hasQuartiles = false OR UPPER(TRIM(cp.quartile)) IN (:quartiles))
 		            GROUP BY pa2.publication_id
 		        ) c ON c.publication_id = pa.publication_id
 		        WHERE pa.publication_type = 'CONFERENCE'
 		        GROUP BY f.id, f.name
 		        """, nativeQuery = true)
 		List<ConferenceFacultyScoreView> findConferenceFacultyScores(@Param("fromDate") LocalDate fromDate,
-		                                                             @Param("toDate") LocalDate toDate);
+		                                                             @Param("toDate") LocalDate toDate,
+		                                                             @Param("hasQuartiles") boolean hasQuartiles,
+		                                                             @Param("quartiles") List<String> quartiles);
 
 		@Query(value = """
 		        SELECT UPPER(TRIM(pa.student_type)) AS studentType,
@@ -181,10 +184,44 @@ public interface PublicationAuthorRepository extends JpaRepository<PublicationAu
 		          AND pa.student_type IS NOT NULL
 		          AND (:fromDate IS NULL OR cp.from_date >= :fromDate)
 		          AND (:toDate IS NULL OR cp.from_date <= :toDate)
+		          AND (:hasQuartiles = false OR UPPER(TRIM(cp.quartile)) IN (:quartiles))
 		        GROUP BY UPPER(TRIM(pa.student_type))
 		        """, nativeQuery = true)
 		List<StudentTypeCountView> countConferencePapersByStudentType(@Param("fromDate") LocalDate fromDate,
-		                                                              @Param("toDate") LocalDate toDate);
+		                                                              @Param("toDate") LocalDate toDate,
+		                                                              @Param("hasQuartiles") boolean hasQuartiles,
+		                                                              @Param("quartiles") List<String> quartiles);
+		
+		@Query(value = """
+		        SELECT f.id             AS facultyId,
+		               f.name           AS facultyName,
+		               f.faculty_status AS facultyStatus,
+		               x.academic_year  AS academicYear,
+		               x.paper_count    AS paperCount
+		        FROM faculty_list f
+		        LEFT JOIN (
+		            SELECT am.faculty_id AS faculty_id,
+		                   cp.academic_year AS academic_year,
+		                   COUNT(DISTINCT pa.publication_id) AS paper_count
+		            FROM publication_author pa
+		            JOIN author_master am ON am.author_id = pa.author_id
+		            JOIN (
+		                SELECT id,
+		                       (YEAR(from_date) * 12 + MONTH(from_date) - 7) DIV 12 AS academic_year
+		                FROM conference_paper
+		                WHERE from_date IS NOT NULL
+		            ) cp ON cp.id = pa.publication_id
+		            WHERE pa.publication_type = 'CONFERENCE'
+		              AND am.faculty_id IS NOT NULL
+		              AND cp.academic_year BETWEEN :fromYear AND :toYear
+		            GROUP BY am.faculty_id, cp.academic_year
+		        ) x ON x.faculty_id = f.id
+		        ORDER BY f.name, x.academic_year
+		        """, nativeQuery = true)
+		List<FacultyYearCountView> findConferencePapersPerFacultyByAcademicYear(
+		        @Param("fromYear") int fromYear,
+		        @Param("toYear") int toYear);
+		
 		
 		@Query(value = """
 		        SELECT f.id             AS facultyId,

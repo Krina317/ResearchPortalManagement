@@ -54,3 +54,9 @@ export const deleteConference = (id) =>
 
 export const setConferenceQuartile = (id, quartile) =>
     request(`/conference/${id}/quartile`, jsonOptions("PUT", { quartile }));
+
+export const fetchConferenceCharts = (filters) =>
+    request(`/conference/reports/charts${reportQuery(filters)}`);
+
+export const fetchConferenceStatistics = () =>
+    request("/conference/reports/statistics");
